@@ -38,7 +38,10 @@ jobs:
           git config --global user.email 'action@github.com'
           git fetch                         # fetch branches
           git checkout $TARGET_BRANCH       # checkout to your branch
-          cp -r dist/browser/* .
+          shopt -s extglob        # Enable extended globbing
+          rm -rf !(dist)          # Delete everything except 'dist' folder
+          cp -r dist/browser/* .  # Copy contents from dist/browser to current directory
+          rm -rf dist             # Delete everything 'dist' folder
           git add -A
           git diff-index --quiet HEAD ||  git commit -am "deploy files"  # commit to the repository (ignore if no modification)
           git push origin $TARGET_BRANCH # push to remote branch
