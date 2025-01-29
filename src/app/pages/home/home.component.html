@@ -1,4 +1,4 @@
-<div class="grid grid-cols-12 h-full w-full">
+<div class="grid grid-cols-12 h-full w-full px-8">
 
   <div class="flex flex-col gap-8 col-span-9">
     <div tuiHeader="h1" class="!mb-8">
@@ -15,8 +15,9 @@
     </div>
 
     <div class="text-sm">
-      Born in <span class="text-lg rounded-lg fi fi-ar"></span>, 
-      currently living in <span class="text-lg rounded-lg fi fi-au"></span>.
+      Born in <span class="text-lg rounded-lg fi fi-ar"></span>. 
+      <br/>
+      Living in <span class="text-lg rounded-lg fi fi-au"></span>.
     </div>
   </div>
   
@@ -26,5 +27,45 @@
       src="assets/images/me.png" 
       alt="portrait"
     >
+  </div>
+
+  <div class="col-span-12">
+    <div tuiHeader class="!mb-8">
+      <h1 tuiTitle>
+        Experience
+      </h1>
+    </div>
+
+
+    <div class="flex flex-col gap-4 mx-8">
+
+      @for (exp of experiences; track exp) {
+        <cz-card>
+          <div cz-card-header-title>
+            {{ exp.title }}
+          </div>
+    
+          <div cz-card-header-right>
+            <span class="text-sm font-normal align-end">
+              {{ exp.company }} - 
+              <a href="{{ exp.url }}" target="_blank"> {{ exp.url }} </a> 
+              <span class="text-lg opacity-50 title-color">|</span> 
+              {{ exp.startDate }} – {{ exp.endDate }}
+              <span class="text-lg opacity-50 title-color">|</span> 
+              {{ exp.country }}
+            </span>
+          </div>
+          
+          <ul class="tui-list tui-list_large">
+            @for (itm of exp.items; track itm) {
+              <li class="tui-list__item !text-md !font-normal">
+                <span [innerHTML]="itm"></span>
+              </li>      
+            }
+          </ul>
+        </cz-card>  
+      }
+    </div>
+
   </div>
 </div>

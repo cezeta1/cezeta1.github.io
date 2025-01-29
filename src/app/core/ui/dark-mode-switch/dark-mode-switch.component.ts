@@ -3,7 +3,7 @@ import { TuiThemeColorService } from '@taiga-ui/cdk/services';
 import { TUI_DARK_MODE, TuiButton } from '@taiga-ui/core';
 
 @Component({
-  selector: 'dark-mode-switch',
+  selector: 'cz-dark-mode-switch',
   imports: [ TuiButton ],
   template: `
     <button tuiIconButton 

@@ -17,6 +17,7 @@ import { FooterComponent } from '../../core/footer/footer.component';
 import { IconButtonComponent } from "../../core/ui/icon-button/icon-button.component";
 
 import { environment as env } from '../../../environment/environment';
+import { LanguageSelectorComponent } from "../../core/ui/language-selector/language-selector.component";
 
 @Component({
   selector: 'app-layout',
@@ -25,7 +26,6 @@ import { environment as env } from '../../../environment/environment';
     RouterLinkActive,
     RouterLink,
     TuiFallbackSrcPipe,
-    
     TuiAvatar,
     TuiHeader,
     TuiTitle,
@@ -36,10 +36,10 @@ import { environment as env } from '../../../environment/environment';
     TuiDropdown,
     TuiNavigation,
     TuiTabs,
-
     DarkModeSwitchComponent,
     FooterComponent,
-    IconButtonComponent
+    IconButtonComponent,
+    LanguageSelectorComponent
 ],
   templateUrl: './layout.component.html'
 })

@@ -8,7 +8,8 @@
   <div tuiHeader class="flex !items-center w-full">
     <h1 tuiTitle> {{ headerTitle() }} </h1>
     <div tuiAccessories>
-      <dark-mode-switch></dark-mode-switch>
+      <cz-language-selector></cz-language-selector>
+      <cz-dark-mode-switch></cz-dark-mode-switch>
     </div>
   </div>
 
@@ -18,7 +19,7 @@
 
 <main tuiNavigationMain>
   
-  <nav compact tuiSubheader class="mb-4 ">
+  <nav compact tuiSubheader class="mb-8">
     <div class="flex justify-between w-full">
       <tui-tabs 
         class="!h-[2.5rem] !shadow-none"
@@ -46,7 +47,7 @@
 
 </main>
 
-<app-footer class="absolute bottom-0 w-full"></app-footer>
+<app-footer class="w-full self-end"></app-footer>
 
 <!-- Templates -->
 

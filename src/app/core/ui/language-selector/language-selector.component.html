@@ -1,0 +1,29 @@
+<button tuiButton
+  type="button"
+  class="!h-fit !m-0 !px-2 !py-1 !rounded-lg"
+  size="l"
+  appearance="flat"
+  tuiDropdownAlign="right"
+  [tuiAppearanceState]="open() ? 'active' : null"
+  [tuiDropdown]="dropdown"
+  [tuiDropdownSided]="false"
+  [(tuiDropdownOpen)]="open"
+>
+  <span [class]="selectedLang().icon + ' text-lg'"></span>
+</button>
+
+<ng-template #dropdown let-close>
+  <tui-data-list>
+    <tui-opt-group>
+      @for (item of items; track item.code) {
+        <button
+          tuiOption
+          type="button"
+          (click)="onClick()"
+        >
+          <span [class]="item.icon + ' mr-2'"></span> {{ item.name }}
+        </button>
+      }
+    </tui-opt-group>
+  </tui-data-list>
+</ng-template>
