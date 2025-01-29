@@ -1,15 +1,16 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { TuiTitle } from '@taiga-ui/core';
+import { TuiHeader } from '@taiga-ui/layout';
 
 @Component({
   selector: 'home',
   imports: [
-    ReactiveFormsModule
+    CommonModule,
+    TuiHeader,
+    TuiTitle
   ],
-  template: `
-    <div>
-      <h1>Home</h1>
-    </div>
-  `
+  templateUrl: './home.component.html',
+  styleUrl: './home.component.scss'
 })
 export class HomeComponent { }

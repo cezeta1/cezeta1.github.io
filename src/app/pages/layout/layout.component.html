@@ -6,7 +6,7 @@
   </span>
 
   <div tuiHeader class="flex !items-center w-full">
-    <h1 tuiTitle> Cezeta </h1>
+    <h1 tuiTitle> {{ headerTitle() }} </h1>
     <div tuiAccessories>
       <dark-mode-switch></dark-mode-switch>
     </div>
@@ -18,10 +18,10 @@
 
 <main tuiNavigationMain>
   
-  <nav compact tuiSubheader class="mb-4">
-    <div>
+  <nav compact tuiSubheader class="mb-4 ">
+    <div class="flex justify-between w-full">
       <tui-tabs 
-        class="!h-[2.5rem]"
+        class="!h-[2.5rem] !shadow-none"
         size="l" 
         underline="true" 
         [activeItemIndex]="tabIdx()" 
@@ -38,10 +38,28 @@
         }
       </tui-tabs>
     </div>
+
+    <ng-container *ngTemplateOutlet="socials"></ng-container>
   </nav>
 
-  <ng-content>
-
-  </ng-content>
+  <ng-content></ng-content>
 
 </main>
+
+<app-footer class="absolute bottom-0 w-full"></app-footer>
+
+<!-- Templates -->
+
+<ng-template #socials>
+  <div class="inline-flex items-center gap-2 h-full pl-6">
+    <icon-button
+      appearance="flat" size="s" icon="@tui.linkedin"
+      (click)="onSocialsClick('linkedin')"
+    ></icon-button>
+
+    <icon-button
+      appearance="flat-destructive" size="s" icon="@tui.github"
+      (click)="onSocialsClick('github')"
+    ></icon-button>
+  </div>
+</ng-template>

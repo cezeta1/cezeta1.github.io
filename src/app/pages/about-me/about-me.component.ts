@@ -1,15 +1,10 @@
 import { Component } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'about-me',
-  imports: [
-    ReactiveFormsModule
-  ],
+  imports: [],
   template: `
-    <div>
-      <h1>About me</h1>
-    </div>
+    <h1>About me</h1>
   `
 })
 export class AboutMeComponent { }

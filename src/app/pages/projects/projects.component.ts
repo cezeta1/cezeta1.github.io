@@ -1,15 +1,10 @@
 import { Component } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'projects',
-  imports: [
-    ReactiveFormsModule
-  ],
+  imports: [],
   template: `
-    <div>
-      <h1>Projects</h1>
-    </div>
+    <h1>Projects</h1>
   `
 })
 export class ProjectsComponent { }
