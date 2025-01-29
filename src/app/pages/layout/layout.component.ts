@@ -12,12 +12,12 @@ import {
   TuiTitle
 } from '@taiga-ui/core';
 
-import { DarkModeSwitchComponent } from '../../core/ui/dark-mode-switch/dark-mode-switch.component';
-import { FooterComponent } from '../../core/footer/footer.component';
-import { IconButtonComponent } from "../../core/ui/icon-button/icon-button.component";
+import { DarkModeSwitchComponent } from '../../core/components/ui/dark-mode-switch/dark-mode-switch.component';
+import { FooterComponent } from '../../core/components/footer/footer.component';
+import { IconButtonComponent } from "../../core/components/ui/icon-button/icon-button.component";
 
 import { environment as env } from '../../../environment/environment';
-import { LanguageSelectorComponent } from "../../core/ui/language-selector/language-selector.component";
+import { LanguageSelectorComponent } from "../../core/components/ui/language-selector/language-selector.component";
 
 @Component({
   selector: 'app-layout',

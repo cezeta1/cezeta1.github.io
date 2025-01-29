@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { TuiTitle } from '@taiga-ui/core';
 import { TuiHeader } from '@taiga-ui/layout';
-import { CardComponent } from "../../core/ui/card/card.component";
+import { CardComponent } from "../../core/components/ui/card/card.component";
 
 interface WorkExperience {
   title: string;
@@ -21,7 +21,7 @@ interface WorkExperience {
     TuiHeader,
     TuiTitle,
     CardComponent
-],
+  ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
