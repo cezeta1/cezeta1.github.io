@@ -12,7 +12,7 @@ import {
   TuiTextfield,
   TuiTitle
 } from '@taiga-ui/core';
-import { TuiAvatar, TuiBadge, TuiTabs } from '@taiga-ui/kit';
+import { TuiAvatar, TuiTabs } from '@taiga-ui/kit';
 import { TuiHeader, TuiNavigation } from '@taiga-ui/layout';
 
 @Component({
@@ -28,7 +28,6 @@ import { TuiHeader, TuiNavigation } from '@taiga-ui/layout';
     FormsModule,
     TuiAppearance,
     TuiAvatar,
-    TuiBadge,
     TuiHeader,
     TuiTitle,
     TuiNavigation,
@@ -48,9 +47,7 @@ export class LayoutComponent {
   protected tabs = signal([
     { title: 'Home', icon: '@tui.home', route: 'home' },
     { title: 'About me', icon: '@tui.info', route: 'about-me' },
+    { title: 'Projects', icon: '@tui.star', route: 'projects' },
     { title: 'Contact', icon: '@tui.mail', route: 'contact' },
   ]);
-  
-
-  onClick = (idx: number) => this.tabIdx.set(idx);
 }
