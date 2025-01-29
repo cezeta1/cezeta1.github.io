@@ -1,18 +1,12 @@
 <!-- Header -->
 
-<header tuiNavigationHeader>
-  <div tuiHeader class="w-full">
-    <tui-avatar class="mr-2">
-      <img
-        alt="market"
-        size="xl"
-        [src]="avatarSource()"
-        tuiBadge
-      />
-    </tui-avatar>
+<header tuiNavigationHeader class="!py-8">
+  <span tuiNavigationLogo>
+    <tui-avatar size="m"[src]="avatarSource() | tuiFallbackSrc: '@tui.user' | async" />
+  </span>
 
+  <div tuiHeader class="flex !items-center w-full">
     <h1 tuiTitle> Cezeta </h1>
-
     <div tuiAccessories>
       <dark-mode-switch></dark-mode-switch>
     </div>

@@ -8,6 +8,7 @@ import {
   TuiAppearance,
   TuiDataList,
   TuiDropdown,
+  TuiFallbackSrcPipe,
   TuiTextfield,
   TuiTitle
 } from '@taiga-ui/core';
@@ -21,6 +22,7 @@ import { TuiHeader, TuiNavigation } from '@taiga-ui/layout';
     RouterLinkActive, 
     RouterLink, 
     DarkModeSwitchComponent,
+    TuiFallbackSrcPipe,
     TuiAvatar,
     TuiHeader,
     FormsModule,

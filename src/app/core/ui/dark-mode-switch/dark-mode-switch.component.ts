@@ -8,6 +8,7 @@ import { TUI_DARK_MODE, TuiButton } from '@taiga-ui/core';
   template: `
     <button tuiIconButton 
       type="button"
+      size="m"
       [iconStart]="isDarkMode() ? '@tui.moon': '@tui.sun'"
       tuiAppearance="secondary"
       class="!rounded-full"
