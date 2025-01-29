@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" class="w-full h-full">
+<html lang="en" class="app-root">
   <head>
     <meta charset="utf-8">
     <title>Cezeta's Virtual Cyberdeck</title>
@@ -8,7 +8,13 @@
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.3.2/css/flag-icons.min.css"/>
   </head>
-  <body class="w-full h-full">
-    <app-root></app-root>
+  <body class="app-root">
+    
+    <script type="module" defer>
+      import { polyfillCountryFlagEmojis } from "https://cdn.skypack.dev/country-flag-emoji-polyfill";
+      polyfillCountryFlagEmojis();
+    </script>
+
+    <app-root class="app-root"></app-root>
   </body>
 </html>

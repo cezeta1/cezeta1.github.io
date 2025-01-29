@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { TuiTitle } from '@taiga-ui/core';
+import { TuiLink, TuiTitle } from '@taiga-ui/core';
 import { TuiHeader } from '@taiga-ui/layout';
 import { CardComponent } from "../../core/components/ui/card/card.component";
+import { VerticalBarComponent } from "../../core/components/ui/vertical-bar/vertical-bar.component";
 
 interface WorkExperience {
   title: string;
@@ -20,8 +21,10 @@ interface WorkExperience {
     CommonModule,
     TuiHeader,
     TuiTitle,
-    CardComponent
-  ],
+    TuiLink,
+    CardComponent,
+    VerticalBarComponent
+],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })

@@ -40,18 +40,29 @@
     <div class="flex flex-col gap-4 mx-8">
 
       @for (exp of experiences; track exp) {
+
         <cz-card>
           <div cz-card-header-title>
             {{ exp.title }}
           </div>
     
-          <div cz-card-header-right>
-            <span class="text-sm font-normal align-end">
-              {{ exp.company }} - 
-              <a href="{{ exp.url }}" target="_blank"> {{ exp.url }} </a> 
-              <span class="text-lg opacity-50 title-color">|</span> 
+          <div cz-card-header-right class="inline-flex text-sm font-normal align-end mb-2 mr-4">
+            <span>
+              {{ exp.company }}
+
+              <a tuiLink
+                class="!pl-2 !text-xs"
+                iconStart="@tui.link"
+                [href]="exp.url"
+                target="_blank"
+              ></a>
+
+              <vertical-bar></vertical-bar>
+
               {{ exp.startDate }} – {{ exp.endDate }}
-              <span class="text-lg opacity-50 title-color">|</span> 
+              
+              <vertical-bar></vertical-bar>
+              
               {{ exp.country }}
             </span>
           </div>
@@ -63,7 +74,8 @@
               </li>      
             }
           </ul>
-        </cz-card>  
+        </cz-card>
+
       }
     </div>
 

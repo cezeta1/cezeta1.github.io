@@ -9,19 +9,19 @@
   [tuiDropdownSided]="false"
   [(tuiDropdownOpen)]="open"
 >
-  <span [class]="selectedLang().icon + ' text-lg'"></span>
+  <span class="!text-2xl">{{ selectedOption?.flag }}</span>
 </button>
 
 <ng-template #dropdown let-close>
   <tui-data-list>
     <tui-opt-group>
-      @for (item of items; track item.code) {
+      @for (opt of options; track opt; let i = $index) {
         <button
           tuiOption
           type="button"
-          (click)="onClick()"
+          (click)="onLangChange(opt)"
         >
-          <span [class]="item.icon + ' mr-2'"></span> {{ item.name }}
+          <span class="!pr-4">{{ opt.flag }}</span> {{ opt.name }}
         </button>
       }
     </tui-opt-group>

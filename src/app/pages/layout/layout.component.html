@@ -40,14 +40,18 @@
       </tui-tabs>
     </div>
 
-    <ng-container *ngTemplateOutlet="socials"></ng-container>
+    <div class="!px-8 *:h-full">
+      <ng-container *ngTemplateOutlet="socials"></ng-container>
+    </div>
   </nav>
 
-  <ng-content></ng-content>
-
+  <div class="!px-8 *:h-full">
+    <ng-content></ng-content>
+  </div>
+  
 </main>
 
-<app-footer class="w-full self-end"></app-footer>
+<app-footer></app-footer>
 
 <!-- Templates -->
 

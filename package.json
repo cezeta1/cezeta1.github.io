@@ -29,15 +29,17 @@
     "@taiga-ui/kit": "^4.22.0",
     "@taiga-ui/layout": "^4.22.0",
     "@taiga-ui/styles": "^4.22.0",
-    "flag-icons": "^7.3.2",
+    "country-flag-emoji-polyfill": "^0.1.8",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
+    "uuid": "^11.0.5",
     "zone.js": "~0.15.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^19.0.7",
     "@angular/cli": "^19.0.7",
     "@angular/compiler-cli": "^19.0.0",
+    "@types/lodash": "^4.17.14",
     "@types/jasmine": "~5.1.0",
     "autoprefixer": "^10.4.20",
     "jasmine-core": "~5.4.0",

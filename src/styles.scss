@@ -3,3 +3,12 @@
 @tailwind components;
 @tailwind utilities;
 
+body, body * {
+  font-family: "Twemoji Country Flags", "Helvetica", "Comic Sans", serif;
+}
+
+.app-root {
+  display: block;
+  min-height: 100%;
+  min-width: 100%;
+}
