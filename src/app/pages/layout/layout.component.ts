@@ -51,3 +51,5 @@ export class LayoutComponent {
     { title: 'Contact', icon: '@tui.mail', route: 'contact' },
   ]);
 }
+
+
