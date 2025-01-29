@@ -1,0 +1,54 @@
+<!-- Header -->
+
+<header tuiNavigationHeader>
+  <div tuiHeader class="w-full">
+    <tui-avatar class="mr-2">
+      <img
+        alt="market"
+        size="xl"
+        [src]="avatarSource()"
+        tuiBadge
+      />
+    </tui-avatar>
+
+    <h1 tuiTitle> Cezeta </h1>
+
+    <div tuiAccessories>
+      <dark-mode-switch></dark-mode-switch>
+    </div>
+  </div>
+
+</header>
+
+<!-- Main Content -->
+
+<main tuiNavigationMain>
+  
+  <nav compact tuiSubheader class="mb-4">
+    <div>
+      <tui-tabs 
+        class="!h-[2.5rem]"
+        size="l" 
+        underline="true" 
+        [activeItemIndex]="tabIdx()" 
+      >
+        @for (tab of tabs(); track tab.title; let i = $index) {
+          <a tuiTab 
+            type="button"
+            [iconStart]="tab.icon"
+            [routerLink]="tab.route"
+            routerLinkActive="active"
+          >
+            <!-- (click)="onClick(i)" -->
+            {{tab.title}}
+        </a>
+        }
+      </tui-tabs>
+    </div>
+  </nav>
+
+  <ng-content>
+
+  </ng-content>
+
+</main>
