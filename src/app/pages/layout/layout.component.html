@@ -58,6 +58,11 @@
 <ng-template #socials>
   <div class="inline-flex items-center gap-2 h-full pl-6">
     <icon-button
+      appearance="flat" size="s" icon="@tui.mail"
+      (click)="onSocialsClick('email')"
+    ></icon-button>
+    
+    <icon-button
       appearance="flat" size="s" icon="@tui.linkedin"
       (click)="onSocialsClick('linkedin')"
     ></icon-button>

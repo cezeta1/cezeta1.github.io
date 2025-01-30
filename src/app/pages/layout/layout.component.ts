@@ -2,8 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component, input, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
-import { TuiAvatar, TuiTabs } from '@taiga-ui/kit';
-import { TuiHeader, TuiNavigation } from '@taiga-ui/layout';
 import {
   TuiDataList,
   TuiDropdown,
@@ -11,9 +9,11 @@ import {
   TuiTextfield,
   TuiTitle
 } from '@taiga-ui/core';
+import { TuiAvatar, TuiTabs } from '@taiga-ui/kit';
+import { TuiHeader, TuiNavigation } from '@taiga-ui/layout';
 
-import { DarkModeSwitchComponent } from '../../core/components/ui/dark-mode-switch/dark-mode-switch.component';
 import { FooterComponent } from '../../core/components/footer/footer.component';
+import { DarkModeSwitchComponent } from '../../core/components/ui/dark-mode-switch/dark-mode-switch.component';
 import { IconButtonComponent } from "../../core/components/ui/icon-button/icon-button.component";
 
 import { environment as env } from '../../../environment/environment';
@@ -57,9 +57,12 @@ export class LayoutComponent {
   ]);
 
   protected onSocialsClick(social: string) {
-    const url = social === 'linkedin' 
-      ? env.links.linkedin
-      : env.links.github;
+    let url = "";
+    switch (social) {
+      case 'email': url = `mailto:${env.links.email}`; break;
+      case 'linkedin': url = env.links.linkedin; break;
+      case 'github': url = env.links.github; break;
+    }
     window.open(url, '_blank');
   }
 }
