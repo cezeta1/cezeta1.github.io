@@ -1,14 +1,12 @@
-import { Component } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { Component } from "@angular/core";
+import { TranslatePipe } from "@ngx-translate/core";
 
 @Component({
   selector: 'home',
-  imports: [
-    ReactiveFormsModule
-  ],
+  imports: [ TranslatePipe ],
   template: `
-    <div>
-      <h1>Home</h1>
+    <div class="flex flex-col">
+      <h1>{{ 'home.title' | translate }}</h1>
     </div>
   `
 })

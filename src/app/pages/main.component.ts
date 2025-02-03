@@ -1,19 +1,24 @@
-import { Component } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { LayoutComponent } from './layout/layout.component';
+import { CzLayoutComponent } from '../core/layout/layout.component';
+import { LanguageService } from '../core/services/language/language.service';
 
 @Component({
   selector: 'app-main',
   imports: [
-    ReactiveFormsModule, 
-    LayoutComponent, 
-    RouterOutlet
+    RouterOutlet,
+    CzLayoutComponent,
   ],
   template: `
-    <app-layout>
+    <cz-layout class="h-full">
       <router-outlet></router-outlet>
-    </app-layout>
+    </cz-layout>
   `
 })
-export class MainComponent { }
+export class MainComponent {
+  private _languageService = inject(LanguageService);
+
+  constructor() {
+    this._languageService.initializeAppLanguage();
+  }
+}
