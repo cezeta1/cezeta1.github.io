@@ -1,12 +1,12 @@
 import { DestroyRef, Injector } from "@angular/core";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
-import * as _ from 'lodash';
+import { isEqual } from 'lodash-es';
 import { MonoTypeOperatorFunction, pipe } from "rxjs";
 import { debounceTime, distinctUntilChanged } from "rxjs/operators";
 
 export const cz_debounceUntilChanged = <T>(
   milliseconds: number = 0, 
-  eqFn: <T>(p: T, c: T) => boolean = (p, c)=> _.isEqual(p, c)
+  eqFn: <T>(p: T, c: T) => boolean = (p, c)=> isEqual(p, c)
 ): MonoTypeOperatorFunction<T> => 
   pipe(
     debounceTime(milliseconds),
