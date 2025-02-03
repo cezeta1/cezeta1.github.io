@@ -10,6 +10,7 @@ import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { CzFooterComponent } from './footer/footer.component';
 import { CzDarkModeSwitchComponent } from "../ui/dark-mode-switch/dark-mode-switch.component";
 import { CzLanguageSelectorComponent } from "../ui/language-selector/language-selector.component";
+import { environment } from '../../../environment/environment';
 
 @Component({
   selector: 'cz-layout',
@@ -30,6 +31,8 @@ import { CzLanguageSelectorComponent } from "../ui/language-selector/language-se
 })
 export class CzLayoutComponent { 
 
+  protected headerTitle = environment.pageTitle;
+  
   protected tabIdx = signal(0);
   protected avatarSource = signal('https://avatars.githubusercontent.com/u/73889711');
 
