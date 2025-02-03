@@ -6,5 +6,9 @@
 
   "home": {
     "title": "Home"
+  },
+  
+  "projects": {
+    "title": "Projects"
   }
 }

@@ -6,6 +6,10 @@
 
   "home": {
     "title": "Inicio"
+  },
+
+  "projects": {
+    "title": "Proyectos"
   }
 
 }
