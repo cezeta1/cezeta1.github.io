@@ -4,7 +4,7 @@ import { NzButtonModule, NzButtonSize } from 'ng-zorro-antd/button';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
-  selector: 'dark-mode-switch',
+  selector: 'cz-dark-mode-switch',
   imports: [ NzButtonModule, NzIconModule ],
   template: `
     <button nz-button 

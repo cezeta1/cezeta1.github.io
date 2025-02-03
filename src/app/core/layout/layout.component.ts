@@ -7,18 +7,24 @@ import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { CzDarkModeSwitchComponent } from "../ui/dark-mode-switch/dark-mode-switch.component";
 import { CzFooterComponent } from './footer/footer.component';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
+import { NzPageHeaderModule } from 'ng-zorro-antd/page-header';
+import { CzLanguageSelectorComponent } from "../ui/language-selector/language-selector.component";
 
 @Component({
   selector: 'cz-layout',
   imports: [
-    CommonModule, 
-    NzButtonModule, 
+    CommonModule,
+    
+    NzButtonModule,
     NzLayoutModule,
     NzAvatarModule,
+    NzPageHeaderModule,
+
     CzFooterComponent,
     CzDarkModeSwitchComponent,
-  ],
-  templateUrl: './cz-layout.component.html'
+    CzLanguageSelectorComponent
+],
+  templateUrl: './layout.component.html'
 })
 export class CzLayoutComponent { 
 

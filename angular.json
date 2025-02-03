@@ -38,7 +38,6 @@
             ],
             "styles": [
               "src/theme.less",
-              "src/styles.scss", 
               {
                 "input": "src/styles/default.less",
                 "bundleName": "default",

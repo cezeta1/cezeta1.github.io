@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { CzLayoutComponent } from '../core/layout/cz-layout.component';
+import { CzLayoutComponent } from '../core/layout/layout.component';
+import { LanguageService } from '../core/services/language/language.service';
 
 @Component({
   selector: 'app-main',
@@ -14,4 +15,10 @@ import { CzLayoutComponent } from '../core/layout/cz-layout.component';
     </cz-layout>
   `
 })
-export class MainComponent { }
+export class MainComponent {
+  private _languageService = inject(LanguageService);
+
+  constructor() {
+    this._languageService.initializeAppLanguage();
+  }
+}
