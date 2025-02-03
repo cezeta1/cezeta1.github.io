@@ -18,7 +18,6 @@
 <!-- Main Content -->
 
 <main tuiNavigationMain>
-  
   <nav compact tuiSubheader class="mb-8">
     <div class="flex justify-between w-full">
       <tui-tabs 
@@ -43,13 +42,10 @@
     <div class="!px-8 *:h-full">
       <ng-container *ngTemplateOutlet="socials"></ng-container>
     </div>
-  </nav>
-
-  <div class="!px-8 *:h-full">
-    <ng-content></ng-content>
-  </div>
-  
+  </nav>  
 </main>
+
+<router-outlet></router-outlet>
 
 <app-footer></app-footer>
 

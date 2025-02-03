@@ -45,7 +45,7 @@ export class HomeComponent {
     {
       title: 'FULL STACK DEVELOPER',
       company: 'JBKnowledge',
-      url: 'jbknowledge.com',
+      url: 'https://jbknowledge.com/',
       startDate: 'Nov 2022',
       endDate: ' Dec 2023',
       country: 'Argentina',
@@ -59,7 +59,7 @@ export class HomeComponent {
     {
       title: 'FULL STACK DEVELOPER',
       company: 'Diveria S.R.L.',
-      url: 'diveria.com',
+      url: 'https://diveria.com/',
       startDate: 'Nov 2020',
       endDate: 'Nov 2022',
       country: 'Argentina',
@@ -73,7 +73,7 @@ export class HomeComponent {
     {
       title: 'RESEARCH AND DEVELOPMENT INTERN',
       company: 'sinc(i)',
-      url: 'sinc.unl.edu.ar',
+      url: 'https://sinc.unl.edu.ar/',
       startDate: 'Sep 2019',
       endDate: 'Oct 2021',
       country: 'Argentina',

@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, input, signal } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
 import {
   TuiDataList,
@@ -22,6 +22,7 @@ import { LanguageSelectorComponent } from "../../core/components/ui/language-sel
 @Component({
   selector: 'app-layout',
   imports: [
+    RouterOutlet,
     CommonModule,
     RouterLinkActive,
     RouterLink,

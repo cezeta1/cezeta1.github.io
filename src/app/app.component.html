@@ -1,6 +1,23 @@
-<tui-root 
-  class="app-root"
+<tui-root class="app-root [&_.t-root-content]:"
   [attr.tuiTheme]="isDarkMode() ? 'dark' : null" 
 >
   <router-outlet></router-outlet>
 </tui-root>
+
+<!-- 
+
+  t-root-content
+    min-height: 100vh !important;
+    display: flex !important;
+    flex-direction: column;
+
+  app-main
+    flex-grow: 1;
+    height: 100%;
+
+  app-layout
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+-->

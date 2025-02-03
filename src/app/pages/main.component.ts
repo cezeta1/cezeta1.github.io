@@ -8,16 +8,12 @@ import { LayoutComponent } from './layout/layout.component';
   selector: 'app-main',
   imports: [
     ReactiveFormsModule, 
-    LayoutComponent, 
-    RouterOutlet
+    LayoutComponent
   ],
   template: `
-    <app-layout [headerTitle]="headerTitle" class="flex flex-col h-full w-full">
-      <router-outlet></router-outlet>
-    </app-layout>
+    <app-layout [headerTitle]="headerTitle"></app-layout>
   `
 })
 export class MainComponent {
-
   public headerTitle = environment.pageTitle;
 }
