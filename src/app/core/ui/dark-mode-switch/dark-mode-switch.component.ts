@@ -17,7 +17,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
     </button>
   `,
 })
-export class DarkModeSwitchComponent {
+export class CzDarkModeSwitchComponent {
   private readonly themeService = inject(ThemeService);
   
   protected size = signal<NzButtonSize>('large');

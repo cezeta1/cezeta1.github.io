@@ -2,14 +2,21 @@ import { CommonModule } from '@angular/common';
 import { Component, signal } from '@angular/core';
 
 import { NzButtonModule } from 'ng-zorro-antd/button';
-import { DarkModeSwitchComponent } from "../ui/dark-mode-switch/dark-mode-switch.component";
+import { NzLayoutModule } from 'ng-zorro-antd/layout';
+
+import { CzDarkModeSwitchComponent } from "../ui/dark-mode-switch/dark-mode-switch.component";
+import { CzFooterComponent } from './footer/footer.component';
+import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 
 @Component({
   selector: 'cz-layout',
   imports: [
     CommonModule, 
     NzButtonModule, 
-    DarkModeSwitchComponent
+    NzLayoutModule,
+    NzAvatarModule,
+    CzFooterComponent,
+    CzDarkModeSwitchComponent,
   ],
   templateUrl: './cz-layout.component.html'
 })
@@ -25,5 +32,3 @@ export class CzLayoutComponent {
     { title: 'Contact', icon: '@tui.mail', route: 'contact' },
   ]);
 }
-
-

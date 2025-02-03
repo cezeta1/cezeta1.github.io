@@ -1,3 +1,26 @@
-<ng-content></ng-content>
+<nz-layout class="h-full">
+  
+  <nz-header>
+    <ng-container *ngTemplateOutlet="header"></ng-container>
+  </nz-header>
+  
+  <nz-content class="h-full py-8 px-16">
+    <ng-content></ng-content>
+  </nz-content>
 
-<dark-mode-switch></dark-mode-switch>
+  <nz-footer>
+    <cz-footer></cz-footer>
+  </nz-footer>
+  
+</nz-layout>
+
+<ng-template #header>
+  <div class="flex items-center justify-between">
+    <nz-avatar 
+      nzIcon="user" 
+      [nzSrc]="avatarSource()"
+    ></nz-avatar>
+    
+    <dark-mode-switch></dark-mode-switch>
+  </div>
+</ng-template>

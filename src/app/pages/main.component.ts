@@ -9,7 +9,7 @@ import { CzLayoutComponent } from '../core/layout/cz-layout.component';
     CzLayoutComponent,
   ],
   template: `
-    <cz-layout>
+    <cz-layout class="h-full">
       <router-outlet></router-outlet>
     </cz-layout>
   `
