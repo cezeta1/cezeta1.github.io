@@ -1,27 +1,29 @@
-import { Component, inject } from '@angular/core';
-import { TuiThemeColorService } from '@taiga-ui/cdk/services';
-import { TUI_DARK_MODE, TuiButton } from '@taiga-ui/core';
+import { Component, computed, inject, signal } from '@angular/core';
+import { ThemeService } from '../../services/theme/theme.service';
+import { NzButtonModule, NzButtonSize } from 'ng-zorro-antd/button';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
   selector: 'dark-mode-switch',
-  imports: [ TuiButton ],
+  imports: [ NzButtonModule, NzIconModule ],
   template: `
-    <button tuiIconButton 
-      type="button"
-      size="m"
-      [iconStart]="isDarkMode() ? '@tui.moon': '@tui.sun'"
-      tuiAppearance="secondary"
-      class="!rounded-full"
+    <button nz-button 
+      nzType="text" 
+      nzShape="circle" 
+      [nzSize]="size()" 
       (click)="onModeToggle()"
-    ></button>
+    >
+      <nz-icon [nzType]="isDarkMode() ? 'moon' : 'sun'" />
+    </button>
   `,
 })
 export class DarkModeSwitchComponent {
-
-  protected readonly isDarkMode = inject(TUI_DARK_MODE);
-  protected readonly theme = inject(TuiThemeColorService);
+  private readonly themeService = inject(ThemeService);
+  
+  protected size = signal<NzButtonSize>('large');
+  protected isDarkMode = computed(() => this.themeService.isDarkMode());
 
   onModeToggle() {
-    this.isDarkMode.set(!this.isDarkMode());
+    this.themeService.toggleTheme().then();
   }
 }

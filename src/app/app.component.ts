@@ -1,12 +1,10 @@
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { TUI_DARK_MODE, TuiRoot } from "@taiga-ui/core";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, TuiRoot],
+  imports: [RouterOutlet],
   templateUrl: './app.component.html'
 })
-export class AppComponent { 
-  readonly isDarkMode = inject(TUI_DARK_MODE);
+export class AppComponent {
 }

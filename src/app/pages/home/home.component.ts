@@ -1,11 +1,7 @@
-import { Component } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { Component } from "@angular/core";
 
 @Component({
   selector: 'home',
-  imports: [
-    ReactiveFormsModule
-  ],
   template: `
     <div>
       <h1>Home</h1>

@@ -1,19 +1,17 @@
 import { Component } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
-import { LayoutComponent } from './layout/layout.component';
+import { CzLayoutComponent } from '../core/layout/cz-layout.component';
 
 @Component({
   selector: 'app-main',
   imports: [
-    ReactiveFormsModule, 
-    LayoutComponent, 
-    RouterOutlet
+    RouterOutlet,
+    CzLayoutComponent,
   ],
   template: `
-    <app-layout>
+    <cz-layout>
       <router-outlet></router-outlet>
-    </app-layout>
+    </cz-layout>
   `
 })
 export class MainComponent { }
