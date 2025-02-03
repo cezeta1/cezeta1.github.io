@@ -4,14 +4,12 @@ import { AppLangsConfig, AppLangsEnum, CountrySelect } from "../../services/lang
 import { cz_takeUntilDestroyed } from "../../services/utils";
 import { NzIconModule } from "ng-zorro-antd/icon";
 import { NzDropDownModule } from "ng-zorro-antd/dropdown";
-import { TranslatePipe } from "@ngx-translate/core";
 
 @Component({
   selector: 'cz-language-selector',
   imports: [ 
     NzDropDownModule, 
-    NzIconModule, 
-    TranslatePipe 
+    NzIconModule
   ],
   template: `
     <a nz-dropdown 
