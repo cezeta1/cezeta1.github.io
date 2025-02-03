@@ -4,10 +4,15 @@ import { AppLangsConfig, AppLangsEnum, CountrySelect } from "../../services/lang
 import { cz_takeUntilDestroyed } from "../../services/utils";
 import { NzIconModule } from "ng-zorro-antd/icon";
 import { NzDropDownModule } from "ng-zorro-antd/dropdown";
+import { TranslatePipe } from "@ngx-translate/core";
 
 @Component({
   selector: 'cz-language-selector',
-  imports: [ NzDropDownModule, NzIconModule ],
+  imports: [ 
+    NzDropDownModule, 
+    NzIconModule, 
+    TranslatePipe 
+  ],
   template: `
     <a nz-dropdown 
       [nzDropdownMenu]="menu"
@@ -18,7 +23,7 @@ import { NzDropDownModule } from "ng-zorro-antd/dropdown";
 
     <nz-dropdown-menu #menu="nzDropdownMenu">
       <ul nz-menu nzSelectable>
-        @for (opt of options; track opt; let i = $index) {
+        @for (opt of options; track opt.flag; let i = $index) {
           <li nz-menu-item (click)="onLangChange(opt)">
             <span class="!pr-4">{{ opt.flag }}</span> {{ opt.name }}
           </li>
@@ -28,11 +33,13 @@ import { NzDropDownModule } from "ng-zorro-antd/dropdown";
   `
 })
 export class CzLanguageSelectorComponent {
-   
+  
   private _inj = inject(Injector);
   private _languageService = inject(LanguageService);
 
   public transparent = input<boolean>(false);
+
+  protected translateRoot = 'ui-components.language-selector.options.';
 
   protected open = signal<boolean>(false);
   protected selectedLang?: AppLangsEnum;

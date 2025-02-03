@@ -1,4 +1,5 @@
-import { computed, Injectable, signal } from "@angular/core";
+import { computed, inject, Injectable, signal } from "@angular/core";
+import { LocalStorageService } from "../storage/local-storage.service";
 
 enum ThemeType {
   default = 'default',
@@ -8,7 +9,9 @@ enum ThemeType {
 @Injectable({ providedIn: 'root' })
 export class ThemeService {
   
-  public currentTheme = signal(ThemeType.default);
+  private _localStorage = inject(LocalStorageService);
+
+  public currentTheme = signal(this._localStorage.load<string>('theme') || ThemeType.default);
   public isDarkMode = computed(() => this.currentTheme() === ThemeType.dark);
 
   public loadTheme(firstLoad = true): Promise<Event> {
@@ -33,6 +36,7 @@ export class ThemeService {
 
   public toggleTheme(): Promise<Event> {
     this.currentTheme.set(this.reverseTheme());
+    this._localStorage.save('theme', this.currentTheme());
     return this.loadTheme(false);
   }
 

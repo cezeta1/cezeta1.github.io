@@ -3,11 +3,12 @@ import { Component, signal } from '@angular/core';
 
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
-
-import { CzDarkModeSwitchComponent } from "../ui/dark-mode-switch/dark-mode-switch.component";
-import { CzFooterComponent } from './footer/footer.component';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NzPageHeaderModule } from 'ng-zorro-antd/page-header';
+import { NzDividerModule } from 'ng-zorro-antd/divider';
+
+import { CzFooterComponent } from './footer/footer.component';
+import { CzDarkModeSwitchComponent } from "../ui/dark-mode-switch/dark-mode-switch.component";
 import { CzLanguageSelectorComponent } from "../ui/language-selector/language-selector.component";
 
 @Component({
@@ -19,6 +20,7 @@ import { CzLanguageSelectorComponent } from "../ui/language-selector/language-se
     NzLayoutModule,
     NzAvatarModule,
     NzPageHeaderModule,
+    NzDividerModule,
 
     CzFooterComponent,
     CzDarkModeSwitchComponent,

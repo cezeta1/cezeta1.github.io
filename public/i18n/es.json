@@ -1,3 +1,11 @@
 {
-  "hello": "Hola"
+  "i18n": {
+    "en": "English",
+    "es": "Español"
+  },
+
+  "home": {
+    "title": "Inicio"
+  }
+
 }
