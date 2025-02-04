@@ -25,7 +25,6 @@ import { NzIconModule } from "ng-zorro-antd/icon";
     </div>
 
     <ng-template #socials>
-      
       <div class="inline-flex justify-center items-center gap-2 w-full mb-2">
         <ng-container *ngTemplateOutlet="socialBtn; context: { $implicit: 'email', icon: 'mail' }"></ng-container> 
         <nz-divider nzType="vertical"></nz-divider>
@@ -33,13 +32,13 @@ import { NzIconModule } from "ng-zorro-antd/icon";
         <nz-divider nzType="vertical"></nz-divider>
         <ng-container *ngTemplateOutlet="socialBtn; context: { $implicit: 'github', icon: 'github' }"></ng-container>
       </div>
-  </ng-template>
+    </ng-template>
 
-  <ng-template #socialBtn let-social let-icon="icon">
-    <button nz-button nzType="text" nzShape="circle" nzSize="small" (click)="onSocialsClick(social)">
-      <nz-icon [nzType]="icon" />
-    </button>
-  </ng-template>
+    <ng-template #socialBtn let-social let-icon="icon">
+      <button nz-button nzType="text" nzShape="circle" nzSize="small" (click)="onSocialsClick(social)">
+        <nz-icon [nzType]="icon" />
+      </button>
+    </ng-template>
   `
 })
 export class CzFooterComponent {

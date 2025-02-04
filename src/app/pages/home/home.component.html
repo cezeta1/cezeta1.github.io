@@ -1,3 +1,105 @@
 <div class="py-8 px-16">
-  <h1>{{ 'home.title' | translate }}</h1>
+  
+  <div class="w-full grid grid-cols-12">
+  
+    <div class="col-span-9 flex flex-col gap-4 mr-16">
+      <div class="flex flex-col gap-2 mb-8">
+        <h3 nz-typography class="!text-sm !font-light">Hey, my name is</h3>
+        <h1 nz-typography class="!text-[3rem] !my-0">Julián Czerweny</h1>
+        <p nz-typography class="!text-xs">[ Find me online as <span class="!italic !underline">Cezeta</span> ]</p>
+      </div>
+
+      <div class="text-lg">
+        Passionate Software Engineer with 4 years of <span class="!underline">Full-Stack Web Development</span> experience. 
+        Excited about working with new technologies and keep improving known skills. Team-player that values feedback and fellowship.
+      </div>
+  
+      <div class="text-sm">
+        Born in <span class="text-lg rounded-lg">🇦🇷</span>
+        <br/>
+        Living in <span class="text-lg rounded-lg">🇦🇺</span>
+      </div>
+    
+    </div>
+  
+    <div class="col-span-3">
+      <img 
+        class="w-full h-full rounded-lg object-contain border-[1px] border-gray-200/25 p-[0.25rem]" 
+        src="assets/images/me.png" 
+        alt="portrait"
+      >
+    </div>
+  
+  </div>
+  
+
+  <div class="inline-flex gap-4 w-full justify-center">
+    <!-- Socials -->
+
+    <div class="inline-flex w-[40%] justify-between">
+      <ng-container *ngTemplateOutlet="socialBtn; context: { $implicit: 'email', icon: 'mail' }"></ng-container> 
+      <ng-container *ngTemplateOutlet="socialBtn; context: { $implicit: 'linkedin', icon: 'linkedin' }"></ng-container>  
+      <ng-container *ngTemplateOutlet="socialBtn; context: { $implicit: 'github', icon: 'github' }"></ng-container>
+    </div>
+
+    <ng-template #socialBtn let-social let-icon="icon">
+      <button nz-button nzShape="circle" nzSize="large" nzType="text">
+        <nz-icon [nzType]="icon" nzTheme="fill" class="!text-2xl"/>
+      </button>
+    </ng-template>
+
+  </div>
+
+  <!-- Experience -->
+
+  <nz-divider nzText="Experience" class="!my-8"></nz-divider>
+
+  <div class="flex flex-col gap-4 mx-8">
+
+    @for (exp of experiences; track exp) {
+
+      <experience-card [title]="exp.title" >
+        <div cz-card-header-right class="inline-flex text-sm font-normal align-end mb-2 mr-4">
+          <span>
+            {{ exp.company }}
+
+            <a nz-button
+              nzType="link"
+              [href]="exp.url"
+              target="_blank"
+              class="ml-2"
+            >
+              <nz-icon nzType="link" />
+            </a>
+
+            <nz-divider nzType="vertical"></nz-divider>
+
+            {{ exp.startDate }} – {{ exp.endDate }}
+            
+            <nz-divider nzType="vertical"></nz-divider>
+
+            {{ exp.country }}
+          </span>
+        </div>
+
+        <ul class="list-disc list-outside ml-4">
+          @for (itm of exp.items; track itm) {
+            <li class="!text-md !font-normal">
+              <span [innerHTML]="itm"></span>
+            </li>      
+          }
+
+        </ul>
+      </experience-card>
+    }
+  </div>
+
+  <!-- Contact -->
+
+  <nz-divider nzText="Contact" class="!my-8"></nz-divider>
+
+  <div class="flex justify-center">
+    <contact-form class="!w-[60%]"></contact-form>
+  </div>
+
 </div>
