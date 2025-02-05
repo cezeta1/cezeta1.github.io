@@ -1,33 +1,52 @@
+<p class="hidden !font-bold"></p>
 <div class="py-8 px-16">
  
   <cz-scroll-to-top></cz-scroll-to-top>
 
   <div class="w-full grid grid-cols-12">
   
-    <div class="col-span-9 flex flex-col gap-4 mr-16">
-      <div class="flex flex-col gap-2 mb-8">
-        <h3 nz-typography class="!text-sm !font-light">Hey, my name is</h3>
+    <div 
+      class="
+        col-span-12 lg:col-span-9
+        flex flex-col gap-4 mr-16
+      "
+    >
+      <div 
+        class="
+          flex flex-col gap-2 mb-8 
+          self-center lg:self-start
+          items-center lg:items-start
+        "
+      >
+        <h3 nz-typography class="!self-start !text-sm !font-light">
+          {{ 'home.intro1' | translate }}
+        </h3>
         <h1 nz-typography class="!text-[3rem] !my-0">Julián Czerweny</h1>
-        <p nz-typography class="!text-xs">[ Find me online as <span class="!italic !underline">Cezeta</span> ]</p>
+        <p nz-typography class="!text-xs" [innerHTML]="'home.intro2' | translate"></p>
       </div>
 
-      <div class="text-lg">
-        I'm a passionate <span class="!underline">Software Engineer</span> that has been working in <span class="!italic">Full-Stack Web Development</span> for multiple years.
-        Man of multiple interests, always excited to take on new challenges and continuously grow as a developer (and as a hobbyist 😄). 
-        A collaborative team player, I value constructive feedback, knowledge-sharing, and strong team bonds to create impactful software. 
-      </div>
+      <p nz-typography 
+        class="text-lg text-justify text-pretty" 
+        [innerHTML]="'home.description' | translate"
+      ></p>
   
       <div class="text-sm">
-        Born in <span class="text-lg rounded-lg">🇦🇷 🧉</span>
-        <nz-divider nzType="vertical"></nz-divider>
-        Living in <span class="text-lg rounded-lg">🇦🇺 🦘</span>
+        <span [innerHTML]="'home.note1' | translate"></span>
+        <nz-divider nzType='vertical'></nz-divider> 
+        <span [innerHTML]="'home.note2' | translate"></span>
       </div>
 
     </div>
   
-    <div class="col-span-3">
-      <img 
-        class="w-full h-full rounded-lg object-contain border-[1px] border-gray-200/25 p-[0.25rem]" 
+    <div 
+      class="
+        flex justify-center
+        col-span-12 lg:col-span-3
+        mt-8 lg:mt-0
+      "
+    >
+      <img
+        class="w-full h-full rounded-xl object-contain border-[1px] border-gray-200/25 p-[0.25rem] max-w-[375px]" 
         src="assets/images/me.png" 
         alt="portrait"
       >
@@ -62,14 +81,14 @@
 
       <experience-card [title]="exp.title">
         <div cz-card-header-right class="inline-flex text-sm font-normal align-end">
-          <span>
+          <span class="flex items-center">
             {{ exp.company }}
 
             <a nz-button
               nzType="link"
               [href]="exp.url"
               target="_blank"
-              class="ml-2"
+              class="flex items-center justify-center ml-2"
             >
               <nz-icon nzType="link" />
             </a>

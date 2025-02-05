@@ -33,7 +33,7 @@ import { LanguageService } from '../core/services/language/language.service';
         }
       </nz-tabset>
       
-      <div class="max-w-[2160px] mx-auto">
+      <div class="max-w-[1440px] mx-auto">
         <router-outlet></router-outlet>
       </div>
     </cz-layout>

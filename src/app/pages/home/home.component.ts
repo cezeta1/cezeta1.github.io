@@ -9,6 +9,7 @@ import { NzButtonModule } from "ng-zorro-antd/button";
 import { NzBackTopModule } from 'ng-zorro-antd/back-top';
 import { NzFloatButtonModule } from 'ng-zorro-antd/float-button';
 import { CzScrollToTopComponent } from "../../core/ui/scroll-to-top/scroll-to-top.component";
+import { TranslateModule } from "@ngx-translate/core";
 
 interface WorkExperience {
   title: string;
@@ -24,13 +25,16 @@ interface WorkExperience {
   selector: 'home',
   imports: [
     CommonModule,
-    ExperienceCardComponent,
+    TranslateModule,
+    
     NzTypographyModule,
     NzDividerModule,
     NzIconModule,
     NzButtonModule,
     NzBackTopModule,
     NzFloatButtonModule,
+    
+    ExperienceCardComponent,
     ContactFormComponent,
     CzScrollToTopComponent
   ],
