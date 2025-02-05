@@ -18,6 +18,7 @@ import { LanguageService } from '../core/services/language/language.service';
   ],
   template: `
     <cz-layout class="h-full">
+
       <nz-tabset nzCentered [nzSelectedIndex]="selectedIndex">
         @for (tab of tabs; track tab) {
           <nz-tab>
@@ -31,7 +32,10 @@ import { LanguageService } from '../core/services/language/language.service';
           </nz-tab>
         }
       </nz-tabset>
-      <router-outlet></router-outlet>
+      
+      <div class="max-w-[2160px] mx-auto">
+        <router-outlet></router-outlet>
+      </div>
     </cz-layout>
   `
 })

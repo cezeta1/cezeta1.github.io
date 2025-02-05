@@ -6,6 +6,9 @@ import { NzIconModule } from "ng-zorro-antd/icon";
 import { ContactFormComponent } from "./contact-form.component";
 import { CommonModule } from "@angular/common";
 import { NzButtonModule } from "ng-zorro-antd/button";
+import { NzBackTopModule } from 'ng-zorro-antd/back-top';
+import { NzFloatButtonModule } from 'ng-zorro-antd/float-button';
+import { CzScrollToTopComponent } from "../../core/ui/scroll-to-top/scroll-to-top.component";
 
 interface WorkExperience {
   title: string;
@@ -26,10 +29,16 @@ interface WorkExperience {
     NzDividerModule,
     NzIconModule,
     NzButtonModule,
-    ContactFormComponent
-],
+    NzBackTopModule,
+    NzFloatButtonModule,
+    ContactFormComponent,
+    CzScrollToTopComponent
+  ],
   templateUrl: './home.component.html'
 })
+
+
+
 export class HomeComponent {
 
   protected experiences: WorkExperience[] = [

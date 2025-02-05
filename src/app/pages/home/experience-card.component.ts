@@ -5,13 +5,12 @@ import { NzCardModule } from 'ng-zorro-antd/card';
   selector: 'experience-card',
   imports: [ NzCardModule ],
   template: `
-    <nz-card
+    <nz-card 
+      class="rounded-xl"
       [nzTitle]="title()" 
       [nzExtra]="extraTemplate"
     >
       <ng-content></ng-content>
-
-
     </nz-card>
 
     <ng-template #extraTemplate>

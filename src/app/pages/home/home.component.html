@@ -1,5 +1,7 @@
 <div class="py-8 px-16">
-  
+ 
+  <cz-scroll-to-top></cz-scroll-to-top>
+
   <div class="w-full grid grid-cols-12">
   
     <div class="col-span-9 flex flex-col gap-4 mr-16">
@@ -10,16 +12,17 @@
       </div>
 
       <div class="text-lg">
-        Passionate Software Engineer with 4 years of <span class="!underline">Full-Stack Web Development</span> experience. 
-        Excited about working with new technologies and keep improving known skills. Team-player that values feedback and fellowship.
+        I'm a passionate <span class="!underline">Software Engineer</span> that has been working in <span class="!italic">Full-Stack Web Development</span> for multiple years.
+        Man of multiple interests, always excited to take on new challenges and continuously grow as a developer (and as a hobbyist 😄). 
+        A collaborative team player, I value constructive feedback, knowledge-sharing, and strong team bonds to create impactful software. 
       </div>
   
       <div class="text-sm">
-        Born in <span class="text-lg rounded-lg">🇦🇷</span>
-        <br/>
-        Living in <span class="text-lg rounded-lg">🇦🇺</span>
+        Born in <span class="text-lg rounded-lg">🇦🇷 🧉</span>
+        <nz-divider nzType="vertical"></nz-divider>
+        Living in <span class="text-lg rounded-lg">🇦🇺 🦘</span>
       </div>
-    
+
     </div>
   
     <div class="col-span-3">
@@ -32,9 +35,8 @@
   
   </div>
   
-
+  <!-- Socials -->
   <div class="inline-flex gap-4 w-full justify-center">
-    <!-- Socials -->
 
     <div class="inline-flex w-[40%] justify-between">
       <ng-container *ngTemplateOutlet="socialBtn; context: { $implicit: 'email', icon: 'mail' }"></ng-container> 
@@ -58,8 +60,8 @@
 
     @for (exp of experiences; track exp) {
 
-      <experience-card [title]="exp.title" >
-        <div cz-card-header-right class="inline-flex text-sm font-normal align-end mb-2 mr-4">
+      <experience-card [title]="exp.title">
+        <div cz-card-header-right class="inline-flex text-sm font-normal align-end">
           <span>
             {{ exp.company }}
 

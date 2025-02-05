@@ -16,7 +16,7 @@ import { NzIconModule } from "ng-zorro-antd/icon";
   ],
   template: `
     
-    <nz-divider></nz-divider>
+    <nz-divider class="pt-0 mt-0"></nz-divider>
     
     <div class="flex flex-col w-full py-2 text-center *:w-full">
       <ng-container *ngTemplateOutlet="socials"></ng-container>
