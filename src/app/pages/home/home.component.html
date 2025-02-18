@@ -55,16 +55,16 @@
   </div>
   
   <!-- Socials -->
-  <div class="inline-flex gap-4 w-full justify-center">
+  <div class="inline-flex gap-4 w-full justify-center mt-8">
 
     <div class="inline-flex w-[40%] justify-between">
-      <ng-container *ngTemplateOutlet="socialBtn; context: { $implicit: 'email', icon: 'mail' }"></ng-container> 
+      <ng-container *ngTemplateOutlet="socialBtn; context: { $implicit: 'email', icon: 'mail' }"></ng-container>
       <ng-container *ngTemplateOutlet="socialBtn; context: { $implicit: 'linkedin', icon: 'linkedin' }"></ng-container>  
       <ng-container *ngTemplateOutlet="socialBtn; context: { $implicit: 'github', icon: 'github' }"></ng-container>
     </div>
 
     <ng-template #socialBtn let-social let-icon="icon">
-      <button nz-button nzShape="circle" nzSize="large" nzType="text">
+      <button nz-button nzShape="circle" nzSize="large" nzType="text" (click)="onSocialsClick(social)">
         <nz-icon [nzType]="icon" nzTheme="fill" class="!text-2xl"/>
       </button>
     </ng-template>
@@ -105,9 +105,9 @@
 
         <ul class="list-disc list-outside ml-4">
           @for (itm of exp.items; track itm) {
-            <li class="!text-md !font-normal">
+            <li class="!text-md !font-normal marker:text-sky-400">
               <span [innerHTML]="itm"></span>
-            </li>      
+            </li>
           }
 
         </ul>
@@ -120,7 +120,7 @@
   <nz-divider nzText="Contact" class="!my-8"></nz-divider>
 
   <div class="flex justify-center">
-    <contact-form class="!w-[60%]"></contact-form>
+    <contact-form class="!w-full"></contact-form>
   </div>
 
 </div>

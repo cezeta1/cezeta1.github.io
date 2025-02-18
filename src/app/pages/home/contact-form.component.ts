@@ -7,6 +7,8 @@ import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzAvatarModule } from "ng-zorro-antd/avatar";
 import { NzIconModule } from "ng-zorro-antd/icon";
 import { CommonModule } from "@angular/common";
+import { environment as env } from "../../../environment/environment";
+
 @Component({
   selector: 'contact-form',
   imports: [ 
@@ -25,41 +27,43 @@ import { CommonModule } from "@angular/common";
     </nz-card>
     
     <ng-template #form>
+
       <form nzForm [formGroup]="contactForm" class="flex flex-col gap-4">
         <nz-form-item>
-          <nz-form-label [nzSpan]="2" nzFor="name">Name</nz-form-label>
           <nz-form-control>
-            <input nz-input 
-              type="text"
-              formControlName="name"
-              name="name" 
-              id="name" 
-            />
+            <nz-input-group nzPrefixIcon="user">
+              <input nz-input 
+                type="text" 
+                formControlName="name" 
+                placeholder="Name" 
+              />
+            </nz-input-group>
           </nz-form-control>
         </nz-form-item>
   
         <nz-form-item>
-          <nz-form-label [nzSpan]="2" nzFor="subject">Subject</nz-form-label>
           <nz-form-control>
-            <input nz-input 
-              type="text" 
-              formControlName="subject"
-              name="subject" 
-              id="subject" 
-            />
+            <nz-input-group nzPrefixIcon="user">
+              <input nz-input 
+                type="text" 
+                formControlName="subject" 
+                placeholder="Subject" 
+              />
+            </nz-input-group>
           </nz-form-control>
-  
         </nz-form-item>
   
         <nz-form-item>
-          <nz-form-label [nzSpan]="2" nzFor="body">Body</nz-form-label>
           <nz-form-control>
-            <nz-textarea-count [nzMaxCharacterCount]="100">    
+            
+            <nz-textarea-count [nzMaxCharacterCount]="100"> 
               <textarea nz-input 
                 formControlName="body"
-                rows="4" 
+                placeholder="Body" 
+                rows="4"
               ></textarea>
             </nz-textarea-count>
+            
           </nz-form-control>
         </nz-form-item>
       </form>
@@ -69,6 +73,7 @@ import { CommonModule } from "@angular/common";
           class="self-end"
           nzType="primary"
           (click)="sendEmail()"
+          [disabled]="!contactForm.valid"
         >
           Send
           <nz-icon nzType="send" nzTheme="outline"/>
@@ -88,6 +93,10 @@ export class ContactFormComponent {
   });
 
   protected sendEmail() {
-    console.log(this.contactForm.value);
+    const formValue = this.contactForm.value;
+    const subject = `${formValue.name} - ${formValue.subject}`;
+    const body = `${formValue.body}`;
+    const url = `mailto:${env.links.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.open(url, '_blank');
   }
 }

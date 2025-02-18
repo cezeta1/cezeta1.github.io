@@ -7,7 +7,7 @@ import { NzCardModule } from 'ng-zorro-antd/card';
   template: `
     <nz-card 
       class="rounded-xl"
-      [nzTitle]="title()" 
+      [nzTitle]="title()"
       [nzExtra]="extraTemplate"
     >
       <ng-content></ng-content>
