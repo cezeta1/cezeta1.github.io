@@ -1,0 +1,126 @@
+<p class="hidden !font-bold"></p>
+<div class="py-8 px-16">
+ 
+  <cz-scroll-to-top></cz-scroll-to-top>
+
+  <div class="w-full grid grid-cols-12">
+  
+    <div 
+      class="
+        col-span-12 lg:col-span-9
+        flex flex-col gap-4 mr-16
+      "
+    >
+      <div 
+        class="
+          flex flex-col gap-2 mb-8 
+          self-center lg:self-start
+          items-center lg:items-start
+        "
+      >
+        <h3 nz-typography class="!self-start !text-sm !font-light">
+          {{ 'home.intro1' | translate }}
+        </h3>
+        <h1 nz-typography class="!text-[3rem] !my-0">Julián Czerweny</h1>
+        <p nz-typography class="!text-xs" [innerHTML]="'home.intro2' | translate"></p>
+      </div>
+
+      <p nz-typography 
+        class="text-lg text-justify text-pretty" 
+        [innerHTML]="'home.description' | translate"
+      ></p>
+  
+      <div class="text-sm">
+        <span [innerHTML]="'home.note1' | translate"></span>
+        <nz-divider nzType='vertical'></nz-divider> 
+        <span [innerHTML]="'home.note2' | translate"></span>
+      </div>
+
+    </div>
+  
+    <div 
+      class="
+        flex justify-center
+        col-span-12 lg:col-span-3
+        mt-8 lg:mt-0
+      "
+    >
+      <img
+        class="w-full h-full rounded-xl object-contain border-[1px] border-gray-200/25 p-[0.25rem] max-w-[375px]" 
+        src="assets/images/me.png" 
+        alt="portrait"
+      >
+    </div>
+  
+  </div>
+  
+  <!-- Socials -->
+  <div class="inline-flex gap-4 w-full justify-center mt-8">
+
+    <div class="inline-flex w-[40%] justify-between">
+      <ng-container *ngTemplateOutlet="socialBtn; context: { $implicit: 'email', icon: 'mail' }"></ng-container>
+      <ng-container *ngTemplateOutlet="socialBtn; context: { $implicit: 'linkedin', icon: 'linkedin' }"></ng-container>  
+      <ng-container *ngTemplateOutlet="socialBtn; context: { $implicit: 'github', icon: 'github' }"></ng-container>
+    </div>
+
+    <ng-template #socialBtn let-social let-icon="icon">
+      <button nz-button nzShape="circle" nzSize="large" nzType="text" (click)="onSocialsClick(social)">
+        <nz-icon [nzType]="icon" nzTheme="fill" class="!text-2xl"/>
+      </button>
+    </ng-template>
+
+  </div>
+
+  <!-- Experience -->
+
+  <nz-divider nzText="Experience" class="!my-8"></nz-divider>
+
+  <div class="flex flex-col gap-4 mx-8">
+
+    @for (exp of experiences; track exp) {
+
+      <experience-card [title]="exp.title">
+        <div cz-card-header-right class="inline-flex text-sm font-normal align-end">
+          <span class="flex items-center">
+            {{ exp.company }}
+
+            <a nz-button
+              nzType="link"
+              [href]="exp.url"
+              target="_blank"
+              class="flex items-center justify-center ml-2"
+            >
+              <nz-icon nzType="link" />
+            </a>
+
+            <nz-divider nzType="vertical"></nz-divider>
+
+            {{ exp.startDate }} – {{ exp.endDate }}
+            
+            <nz-divider nzType="vertical"></nz-divider>
+
+            {{ exp.country }}
+          </span>
+        </div>
+
+        <ul class="list-disc list-outside ml-4">
+          @for (itm of exp.items; track itm) {
+            <li class="!text-md !font-normal marker:text-sky-400">
+              <span [innerHTML]="itm"></span>
+            </li>
+          }
+
+        </ul>
+      </experience-card>
+    }
+  </div>
+
+  <!-- Contact -->
+
+  <nz-divider nzText="Contact" class="!my-8"></nz-divider>
+
+  <div class="flex justify-center">
+    <contact-form class="!w-full"></contact-form>
+  </div>
+
+</div>

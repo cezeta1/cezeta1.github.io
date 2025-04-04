@@ -1,0 +1,19 @@
+{
+  "i18n": {
+    "en": "English",
+    "es": "Español"
+  },
+
+  "home": {
+    "intro1": "Hola, soy",
+    "intro2": "[ Encuentrame en línea como <span class=\"!italic !underline\">Cezeta</span> ]",
+    "description": "Soy un apasionado <span class=\"!font-bold\">Ingeniero de Software</span> que ha estado trabajando en el desarrollo web <span class=\"!font-bold\">Full-Stack</span> durante varios años. Hombre de múltiples intereses, siempre emocionado para enfrentar nuevos desafíos y crecer como desarrollador (y como aficionado 😄). Un jugador de equipo colaborativo, valoro los comentarios constructivos, el intercambio de conocimientos y fuertes lazos de equipo para crear software impactante.",
+    "note1": "Nacido en <span class='text-lg rounded-lg'>🇦🇷</span> 🧉",
+    "note2": "Vivo en <span class='text-lg rounded-lg'>🇦🇺</span> 🦘"
+  },
+
+  "projects": {
+    "title": "Proyectos"
+  }
+
+}
