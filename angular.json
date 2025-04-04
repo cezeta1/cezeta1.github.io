@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "gaslands-app-ng": {
+    "cezeta1.github.io": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -79,13 +79,13 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "gaslands-app-ng:build:production"
+              "buildTarget": "cezeta1.github.io:build:production"
             },
             "development": {
-              "buildTarget": "gaslands-app-ng:build:development"
+              "buildTarget": "cezeta1.github.io:build:development"
             },
             "test": {
-              "buildTarget": "nexpay-app-paynowpro:build:test"
+              "buildTarget": "cezeta1.github.io:build:test"
             }
           },
           "defaultConfiguration": "development"
