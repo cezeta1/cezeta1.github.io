@@ -1,10 +1,12 @@
 import { inject, Injectable, Injector } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
+import { cz_takeUntilDestroyed } from "../../utils";
+import { LocalStorageService } from "../browser-storage/local-storage.service";
 import { AppLangsEnum } from "./langs.config";
-import { cz_takeUntilDestroyed } from "../utils";
-import { LocalStorageService } from "../storage/local-storage.service";
 
-@Injectable({ providedIn: 'root' })
+@Injectable({
+  providedIn: 'root'
+})
 export class LanguageService {
 
   private _inj = inject(Injector);
@@ -27,4 +29,4 @@ export class LanguageService {
 
   public switchLanguage = (lang: AppLangsEnum) => this._translate.use(lang);
   public translate = (key: string) => this._translate.instant(key);
-} 
+}
