@@ -21,7 +21,7 @@ import { NzIconModule } from "ng-zorro-antd/icon";
     <div class="flex flex-col w-full py-2 text-center *:w-full">
       <ng-container *ngTemplateOutlet="socials"></ng-container>
       <p class="italic text-sm mb-2">Take all your dreams, make your memories</p>
-      <p class="text-xs opacity-75">Julián Czerweny - © {{ currentYear }} All rights reserved</p>
+      <p class="text-xs opacity-75">Julián Czerweny - © {{ currentYear }} All rights reserved (test)</p> 
     </div>
 
     <ng-template #socials>
