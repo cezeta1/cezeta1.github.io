@@ -1,12 +1,13 @@
 import { Routes } from '@angular/router';
 import { EmptyLayoutComponent } from './core/layouts/empty-layout/empty-layout.component';
+import { MainLayoutComponent } from './core/layouts/main-layout/main-layout.component';
 import { ErrorPageComponent } from './core/pages/error/error-page.component';
 import { PageNotFoundComponent } from './core/pages/page-not-found/page-not-found.component';
-import { MainLayoutComponent } from './core/layouts/main-layout/main-layout.component';
 
 export enum AppRoutesEnum {
   // * Sections * //
-  Example = 'example',
+  Home = 'home',
+  Projects = 'projects',
 
   // * Extra * //
   Error = 'error',
@@ -21,14 +22,20 @@ export enum AppRoutesEnum {
 export const routes: Routes = [
   // --- Home route --- //
   
-  { path: '', redirectTo: AppRoutesEnum.Example, pathMatch: 'full' },
+  { path: '', redirectTo: AppRoutesEnum.Home, pathMatch: 'full' },
   
   // --- Sections --- //
 
   {
-    path: AppRoutesEnum.Example,
+    path: AppRoutesEnum.Home,
     component: MainLayoutComponent,
-    loadChildren: () => import('./sections/example/example.routes').then(m => m.sectionRoutes)
+    loadChildren: () => import('./sections/about-me/about-me.routes').then(m => m.sectionRoutes)
+  },
+
+  {
+    path: AppRoutesEnum.Projects,
+    component: MainLayoutComponent,
+    loadChildren: () => import('./sections/projects/projects.routes').then(m => m.sectionRoutes)
   },
   
   // --- Extra Routes --- //

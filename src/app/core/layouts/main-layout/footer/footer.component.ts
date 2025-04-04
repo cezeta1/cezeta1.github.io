@@ -21,13 +21,11 @@ import { environment as env } from "../../../../../environments/environment";
       <p class="italic text-sm mb-2">Take all your dreams, make your memories</p>
       <p class="text-xs opacity-75">Julián Czerweny - © {{ currentYear }} {{ 'footer.rights' | translate }}</p>
     </div>
-
+    
     <ng-template #socials>
       <div class="inline-flex justify-center items-center gap-2 w-full">
         <ng-container *ngTemplateOutlet="socialBtn; context: { $implicit: 'email', icon: 'pi pi-envelope' }"></ng-container> 
-        <!-- <nz-divider nzType="vertical"></nz-divider> -->
         <ng-container *ngTemplateOutlet="socialBtn; context: { $implicit: 'linkedin', icon: 'pi pi-linkedin' }"></ng-container>
-        <!-- <nz-divider nzType="vertical"></nz-divider> -->
         <ng-container *ngTemplateOutlet="socialBtn; context: { $implicit: 'github', icon: 'pi pi-github' }"></ng-container>
       </div>
     </ng-template>

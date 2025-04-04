@@ -1,18 +1,18 @@
 import { Routes } from '@angular/router';
 import { AppRoutesEnum } from '../../app.routes';
-import { ExampleComponent } from './example.component';
+import { AboutMeComponent } from './about-me.component';
 
 export enum ExampleRoutesEnum {
-  Main = ''
+  Home = ''
 }
 
 export const sectionRoutes: Routes = [
   
-  { path: '', redirectTo: ExampleRoutesEnum.Main, pathMatch: 'full' },
+  { path: '', redirectTo: ExampleRoutesEnum.Home, pathMatch: 'full' },
 
   // --- Content --- //
   
-  { path: ExampleRoutesEnum.Main, component: ExampleComponent },
+  { path: ExampleRoutesEnum.Home, component: AboutMeComponent },
 
   // --- Wildcard --- //
   
