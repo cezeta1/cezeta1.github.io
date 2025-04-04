@@ -49,15 +49,6 @@ import { CardModule } from 'primeng/card';
   `
 })
 export class ProjectCardComponent {
-
-  // let url = "";
-  // switch (social) {
-  //   case 'email': url = `mailto:${env.links.email}`; break;
-  //   case 'linkedin': url = env.links.linkedin; break;
-  //   case 'github': url = env.links.github; break;
-  // }
-  // window.open(url, '_blank');
-
   protected redirectToProject = () => window.open('https://cezeta1.github.io/gaslands-app-ng', '_blank');
   protected redirectToGithub = () => window.open('https://github.com/cezeta1/gaslands-app-ng', '_blank');
 }
