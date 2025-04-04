@@ -1,0 +1,2 @@
+import"./chunk-XFTJLWRH.js";import{Db as a,Ra as m,lb as p,mb as s}from"./chunk-TTLNTEQ2.js";var e=class n{static \u0275fac=function(o){return new(o||n)};static \u0275cmp=m({type:n,selectors:[["about-me"]],decls:2,vars:0,consts:[[1,"text-center","text-xl","font-bold"]],template:function(o,i){o&1&&(p(0,"h1",0),a(1,` About Me
+`),s())},encapsulation:2})};var r=(t=>(t.Home="",t))(r||{}),d=[{path:"",redirectTo:"",pathMatch:"full"},{path:"",component:e},{path:"**",redirectTo:"not-found"}];export{r as ExampleRoutesEnum,d as sectionRoutes};
