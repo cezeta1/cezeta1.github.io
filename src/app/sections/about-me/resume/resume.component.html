@@ -23,7 +23,15 @@
     
     <p-panel 
       class="w-full" 
-      styleClass="!shadow-lg !bg-content-hover-background"
+      styleClass="
+        !shadow-lg 
+        [&>_.p-panel-header]:!bg-content-hover-background
+        [&>_.p-panel-header]:!border-b
+        [&>_.p-panel-header]:!py-4
+
+        [&>_.p-panel-content-container]:[&>_.p-panel-content]:!px-4
+        [&>_.p-panel-content-container]:[&>_.p-panel-content]:!py-4
+      "
     >
 
       <ng-template #header>
@@ -59,9 +67,9 @@
       </ng-template>
 
       <!-- Content -->
-      <ul class="list-disc list-outside ml-4">
+      <ul class="list-disc list-outside ml-4 [&>li+li]:mt-2">
         @for (itm of exp.items; track itm) {
-          <li class="!text-sm !font-normal marker:text-primary my-2">
+          <li class="!text-sm !font-normal marker:text-primary">
             <span [innerHTML]="itm"></span>
           </li>
         }
