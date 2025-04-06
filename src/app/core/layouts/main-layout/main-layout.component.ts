@@ -4,6 +4,7 @@ import { ThemeService } from "../../services/themes/theme.service";
 import { CommonModule } from "@angular/common";
 import { NavBarComponent } from "./nav-bar/nav-bar.component";
 import { FooterComponent } from "./footer/footer.component";
+import { ScrollTop } from "primeng/scrolltop";
 
 @Component({
   selector: 'main-layout',
@@ -11,7 +12,8 @@ import { FooterComponent } from "./footer/footer.component";
     CommonModule,
     RouterOutlet,
     NavBarComponent,
-    FooterComponent
+    FooterComponent,
+    ScrollTop
   ],
   templateUrl: './main-layout.component.html',
   styleUrl: './main-layout.component.scss'
