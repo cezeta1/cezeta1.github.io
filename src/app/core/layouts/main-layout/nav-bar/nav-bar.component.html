@@ -50,7 +50,7 @@
           [routerLink]="'/'+tab.route"
         >
           <i [class]="'pi ' + tab.icon"></i>
-          <span>{{ tab.label }}</span>
+          <span>{{ tab.label | translate }}</span>
         </p-tab>
       }
     </p-tablist>

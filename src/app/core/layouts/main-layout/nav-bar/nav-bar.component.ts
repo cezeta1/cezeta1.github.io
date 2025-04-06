@@ -7,6 +7,7 @@ import { Toolbar } from 'primeng/toolbar';
 import { AppRoutesEnum } from "../../../../app.routes";
 import { DarkModeSwitchComponent } from "../../../components/dark-mode-switch/dark-mode-switch.component";
 import { LangSelectorComponent } from "../../../components/lang-selector/lang-selector.component";
+import { TranslatePipe } from "@ngx-translate/core";
 
 export interface AppRouteTab {
   route: string, 
@@ -19,6 +20,7 @@ export interface AppRouteTab {
   imports: [
     CommonModule,
     RouterModule,
+    TranslatePipe,
     Toolbar,
     Avatar,
     TabsModule,
@@ -29,13 +31,14 @@ export interface AppRouteTab {
 })
 export class NavBarComponent {
   protected router = inject(Router);
-  
+
   protected avatarSrc = signal('https://avatars.githubusercontent.com/u/73889711');
   
   protected showTabs = computed(() => !!this.tabs().length);
   protected tabs = input<AppRouteTab[]>([
-    { route: AppRoutesEnum.Home, label: 'Home', icon: 'pi-home' },
-    { route: AppRoutesEnum.Projects, label: 'Projects',  icon: 'pi-star' },
-    // { route: '/error', label: 'Error',  icon: 'pi-exclamation-triangle' }
+    { route: AppRoutesEnum.Home, label: 'home.title', icon: 'pi-home' },
+    { route: AppRoutesEnum.Projects, label: 'projects.title',  icon: 'pi-star' }
   ]);
+
+
 }

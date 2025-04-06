@@ -1,7 +1,73 @@
+<h1 class="text-center text-xl font-bold mb-8">
+  {{ 'home.resume.title' | translate }}
+</h1>
 
+<div class="flex flex-col max-w-full gap-4 mx-32">
+  @for (exp of experiences; track $index) {
+    <ng-container
+      *ngTemplateOutlet="xpCard; context: { $implicit: exp }"
+    ></ng-container>
+  }
+</div>
 
-<p-panel styleClass="h-[5000px]">
+<!-- Experience card -->
 
+<ng-template #xpCard let-exp>
 
-</p-panel>
+  <div class="inline-flex w-full gap-4">
 
+    <div class="flex flex-col">
+      <p-button styleClass="shadow-lg" icon="pi pi-asterisk" [rounded]="true" />
+      <div class="vertical-line grow w-[3px]"></div>
+    </div>
+    
+    <p-panel 
+      class="w-full" 
+      styleClass="!shadow-lg !bg-content-hover-background"
+    >
+
+      <ng-template #header>
+        <span class="text-lg font-bold">{{ exp.title }}</span>
+      </ng-template>
+
+      <ng-template #icons>
+        <span
+          class="
+            inline-flex w-full 
+            text-sm text-muted-color 
+            whitespace-nowrap
+          "
+        >
+          {{ exp.company }}
+
+          <a
+            [href]="exp.url"
+            target="_blank"
+            class="flex items-center justify-center ml-2"
+          >
+            <i class="pi pi-link text-primary"></i>
+          </a>
+
+          <p-divider layout="vertical" styleClass="!py-1 !mx-2" />
+
+          {{ exp.startDate }} – {{ exp.endDate }}
+          
+          <p-divider layout="vertical" styleClass="!py-1 !mx-2" />
+
+          {{ exp.country }}
+        </span>
+      </ng-template>
+
+      <!-- Content -->
+      <ul class="list-disc list-outside ml-4">
+        @for (itm of exp.items; track itm) {
+          <li class="!text-sm !font-normal marker:text-primary my-2">
+            <span [innerHTML]="itm"></span>
+          </li>
+        }
+      </ul>
+
+    </p-panel>
+  </div>
+
+</ng-template>

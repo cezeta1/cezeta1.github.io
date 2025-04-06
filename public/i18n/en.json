@@ -10,5 +10,23 @@
 		"it": "Italiano",
 		"ja": "日本語",
 		"pt": "Português"
-	}
+	},
+
+  "home": {
+    "title": "Home",
+    "aboutMe": {
+      "intro1": "Hey, my name is",
+      "intro2": "[ Find me online as <span class=\"!italic !underline\">Cezeta</span> ]",
+      "description": "I'm a passionate <span class=\"!font-bold\">Software Engineer</span> that has been working in <span class=\"!font-bold\">Full-Stack Web Development</span> for multiple years. Man of multiple interests, always excited to take on new challenges and continuously grow as a developer (and as a hobbyist 😄). A collaborative team player, I value constructive feedback, knowledge-sharing, and strong team bonds to create impactful software.",
+      "note1": "Born in <span class='text-lg rounded-lg'>🇦🇷</span> 🧉",
+      "note2": "Living in <span class='text-lg rounded-lg'>🇦🇺</span> 🦘"
+    },
+    "resume": {
+      "title": "Experience"
+    }
+  },
+  
+  "projects": {
+    "title": "Projects"
+  }
 }
