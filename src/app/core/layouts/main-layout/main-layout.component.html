@@ -8,18 +8,24 @@
     <!-- Main content ribbon -->
     <div 
       class="
+        relative
         flex flex-col flex-1
         min-h-fit
         p-6 mx-0 sm:mx-8 lg:mx-16
         bg-content-background
         border-x border-x-content-hover-background
         shadow-2xl
+
+        pb-40 sm:pb-6
       "
     >
       <div class="flex-1">
         <router-outlet />
       </div>
-      <footer class="pt-0 pb-20 sm:py-2"></footer>
+      <footer class="pt-0"></footer>
+      <span class="absolute bottom-2 right-3 self-end text-muted-color opacity-20 text-xs">
+        Version: {{ LIB_VERSION }}
+      </span>
     </div>
     <p-scrolltop class="absolute bottom-6 right-6" target="parent" [buttonProps]="{ raised: true, rounded: true }"/>
   </div>
