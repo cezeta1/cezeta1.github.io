@@ -11,6 +11,21 @@
 		"ja": "日本語",
 		"pt": "Português"
 	},
+  
+  "cz-ui-components": {
+    "cz-error-message": {
+			"messages": {
+				"default": "Entrada no válida.",
+				"required": "{{data.label}} es obligatorio.",
+				"min": "{{data.label}} debe ser mayor que {{data.minValue}}.",
+				"max": "{{data.label}} debe ser menor que {{data.maxValue}}.",
+				"minlength": "{{data.label}} debe tener más de {{data.minValue}} caracteres.",
+				"maxlength": "{{data.label}} no puede tener más de {{data.maxValue}} caracteres.",
+				"pattern": "{{data.label}} no coincide con el patrón requerido.",
+				"email": "{{data.label}} debe ser un correo electrónico válido."
+			}
+		}
+  },
 
   "home": {
     "title": "Inicio",
@@ -25,7 +40,11 @@
       "title": "Experiencia"
     },
     "contact": {
-      "title": "Contacto"
+      "title": "Contacto",
+      "email": "Email",
+      "subject": "Asunto",
+      "body": "Mensaje",
+      "submit": "Enviar"
     }
   },
   

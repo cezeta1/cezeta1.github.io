@@ -1,13 +1,13 @@
 import { CommonModule } from "@angular/common";
 import { Component, computed, inject, input, signal } from "@angular/core";
 import { Router, RouterModule } from "@angular/router";
+import { TranslatePipe } from "@ngx-translate/core";
 import { Avatar } from 'primeng/avatar';
 import { TabsModule } from 'primeng/tabs';
 import { Toolbar } from 'primeng/toolbar';
 import { AppRoutesEnum } from "../../../../app.routes";
 import { DarkModeSwitchComponent } from "../../../components/dark-mode-switch/dark-mode-switch.component";
 import { LangSelectorComponent } from "../../../components/lang-selector/lang-selector.component";
-import { TranslatePipe } from "@ngx-translate/core";
 
 export interface AppRouteTab {
   route: string, 
@@ -40,5 +40,5 @@ export class NavBarComponent {
     { route: AppRoutesEnum.Projects, label: 'projects.title',  icon: 'pi-star' }
   ]);
 
-
+  protected goHome = () => this.router.navigate([AppRoutesEnum.Home]);
 }

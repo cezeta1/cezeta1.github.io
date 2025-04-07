@@ -2,4 +2,35 @@
   {{ 'home.contact.title' | translate }}
 </h1>
 
-
+<div 
+  [formGroup]="contactForm"
+  class="flex flex-col w-full max-w-md mx-auto p-6 gap-8" 
+>
+  <!-- Email Field -->
+  <cz-text-input
+    formControlName="email"
+    [floatLabel]="'home.contact.email' | translate"
+  ></cz-text-input>
+  
+  <!-- Subject Field -->
+  <cz-text-input
+    formControlName="subject"
+    [floatLabel]="'home.contact.subject' | translate"
+  ></cz-text-input>
+  
+  <!-- Message Field -->
+  <cz-text-area
+    formControlName="body"
+    [floatLabel]="'home.contact.body' | translate"
+  ></cz-text-area>
+  
+  <!-- Submit Button -->
+  <div class="flex justify-end">
+    <p-button
+      [label]="'home.contact.submit' | translate" 
+      [disabled]="contactForm.invalid"
+      icon="pi pi-send"
+      iconPos="right"
+    ></p-button>
+  </div>
+</div>

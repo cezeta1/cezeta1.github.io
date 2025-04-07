@@ -12,6 +12,21 @@
 		"pt": "Português"
 	},
 
+  "cz-ui-components": {
+    "cz-error-message": {
+			"messages": {
+				"default": "Invalid input.",
+				"required": "{{data.label}} is required.",
+				"min": "{{data.label}} must be higher than {{data.minValue}}.",
+				"max": "{{data.label}} must be lower than {{data.maxValue}}.",
+				"minlength": "{{data.label}} must be longer than {{data.minValue}} characters.",
+				"maxlength": "{{data.label}} can't be more than {{data.maxValue}} characters.",
+				"pattern": "{{data.label}} does not match the required pattern.",
+				"email": "{{data.label}} must be a valid email."
+			}
+		}
+  },
+
   "home": {
     "title": "Home",
     "aboutMe": {
@@ -23,6 +38,13 @@
     },
     "resume": {
       "title": "Experience"
+    },
+    "contact": {
+      "title": "Contact",
+      "email": "Email",
+      "subject": "Subject",
+      "body": "Body",
+      "submit": "Send!"
     }
   },
   

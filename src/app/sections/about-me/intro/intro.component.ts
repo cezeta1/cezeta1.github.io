@@ -12,9 +12,4 @@ import { Image } from "primeng/image";
   ],
   templateUrl: './intro.component.html',
 })
-export class IntroComponent {
-
-
-
-  
-}
+export class IntroComponent { }
