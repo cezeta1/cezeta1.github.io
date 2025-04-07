@@ -3,15 +3,15 @@ import { RouterOutlet } from '@angular/router';
 import { ThemeService } from './core/services/themes/theme.service';
 import { Toast } from 'primeng/toast';
 import { LanguageService } from './core/services/language/language.service';
-import { environment as env } from '../environments/environment';
 import { Chip } from 'primeng/chip';
+import { environment as env } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
   imports: [
     RouterOutlet, 
     Toast, 
-    Chip 
+    Chip
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'

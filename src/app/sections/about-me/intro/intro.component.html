@@ -1,0 +1,38 @@
+<div class="inline-flex w-full">
+  <div class="pr-8">
+    <div 
+      class="
+        flex flex-col gap-2 mb-8 
+        self-center lg:self-start
+        items-center lg:items-start
+      "
+    >
+      <h3 class="!self-start !text-sm !font-light">
+        {{ 'home.aboutMe.intro1' | translate }}
+      </h3>
+
+      <h1 class="!text-[3rem]">
+        Julián Czerweny
+      </h1>
+
+      <p class="!text-xs" [innerHTML]="'home.aboutMe.intro2' | translate"></p>
+    </div>
+
+    <p
+      class="text-lg text-justify text-pretty" 
+      [innerHTML]="'home.aboutMe.description' | translate"
+    ></p>
+
+    <div class="inline-flex text-sm text-muted-color mt-8">
+      <span [innerHTML]="'home.aboutMe.note1' | translate"></span>
+      <p-divider layout="vertical" styleClass="!py-0 !mx-2" />
+      <span [innerHTML]="'home.aboutMe.note2' | translate"></span>
+    </div>
+
+  </div>
+
+  <p-image
+    src="/assets/images/me.png" alt="Image" width="150"
+    imageClass="w-full rounded-xl shadow-lg"
+  />
+</div>

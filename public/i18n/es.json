@@ -10,5 +10,45 @@
 		"it": "Italiano",
 		"ja": "日本語",
 		"pt": "Português"
-	}
+	},
+  
+  "cz-ui-components": {
+    "cz-error-message": {
+			"messages": {
+				"default": "Entrada no válida.",
+				"required": "{{data.label}} es obligatorio.",
+				"min": "{{data.label}} debe ser mayor que {{data.minValue}}.",
+				"max": "{{data.label}} debe ser menor que {{data.maxValue}}.",
+				"minlength": "{{data.label}} debe tener más de {{data.minValue}} caracteres.",
+				"maxlength": "{{data.label}} no puede tener más de {{data.maxValue}} caracteres.",
+				"pattern": "{{data.label}} no coincide con el patrón requerido.",
+				"email": "{{data.label}} debe ser un correo electrónico válido."
+			}
+		}
+  },
+
+  "home": {
+    "title": "Inicio",
+    "aboutMe": {
+      "intro1": "Hola, soy",
+      "intro2": "[ Encuentrame en línea como <span class=\"!italic !underline\">Cezeta</span> ]",
+      "description": "Soy un apasionado <span class=\"!font-bold\">Ingeniero en Informática</span> que ha estado trabajando en el <span class=\"!font-bold\">desarrollo web Full-Stack</span> durante varios años. Hombre de múltiples intereses, siempre emocionado para enfrentar nuevos desafíos y crecer como desarrollador (y como aficionado 😄). Un jugador de equipo colaborativo, valoro los comentarios constructivos, el intercambio de conocimientos y fuertes lazos de equipo para crear software impactante.",
+      "note1": "Nací en <span class='text-lg rounded-lg'>🇦🇷</span> 🧉",
+      "note2": "Vivo en <span class='text-lg rounded-lg'>🇦🇺</span> 🦘"
+    },
+    "resume": {
+      "title": "Experiencia"
+    },
+    "contact": {
+      "title": "Contacto",
+      "email": "Email",
+      "subject": "Asunto",
+      "body": "Mensaje",
+      "submit": "Enviar"
+    }
+  },
+  
+  "projects": {
+    "title": "Proyectos"
+  }
 }

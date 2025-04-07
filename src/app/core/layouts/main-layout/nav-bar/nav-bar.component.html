@@ -6,14 +6,16 @@
   "
 >
   <ng-template #start>
-    <p-avatar 
-      [image]="avatarSrc()"
-      class="mx-2" 
-      size="large" 
-      shape="circle"
-    />
-    
-    <h1 class="text-xl font-bold">Cezeta.</h1>
+    <div class="inline-flex items-center" (click)="goHome()">
+      <p-avatar
+        [image]="avatarSrc()"
+        class="mx-2" 
+        size="large" 
+        shape="circle"
+      />
+      
+      <h1 class="text-xl font-bold">Cezeta.</h1>
+    </div>
   </ng-template>
   
   <ng-template #center>
@@ -50,7 +52,7 @@
           [routerLink]="'/'+tab.route"
         >
           <i [class]="'pi ' + tab.icon"></i>
-          <span>{{ tab.label }}</span>
+          <span>{{ tab.label | translate }}</span>
         </p-tab>
       }
     </p-tablist>
