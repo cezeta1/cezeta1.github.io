@@ -2,19 +2,89 @@
   {{ 'home.resume.title' | translate }}
 </h1>
 
-<div class="flex flex-col max-w-full gap-4 mx-32">
+<!-- Small Template -->
+<div class="flex flex-col items-center w-full gap-4 md:hidden">
   @for (exp of experiences; track $index) {
     <ng-container
-      *ngTemplateOutlet="xpCard; context: { $implicit: exp }"
+      *ngTemplateOutlet="xpCardSm; context: { $implicit: exp }"
     ></ng-container>
   }
 </div>
 
-<!-- Experience card -->
+<!-- Large Template -->
+<div class="hidden md:flex flex-col items-center w-full gap-4 ">
+  @for (exp of experiences; track $index) {
+    <ng-container
+      *ngTemplateOutlet="xpCardLg; context: { $implicit: exp }"
+    ></ng-container>
+  }
+</div>
 
-<ng-template #xpCard let-exp>
 
-  <div class="inline-flex w-full gap-4">
+<!-- Experience card (SMALL) -->
+
+<ng-template #xpCardSm let-exp>
+
+  <p-panel 
+    class="w-full" 
+    styleClass="
+      !shadow-lg 
+      [&>_.p-panel-header]:!bg-content-hover-background
+      [&>_.p-panel-header]:!border-b
+      [&>_.p-panel-header]:!py-4
+      [&>_.p-panel-header]:!flex
+      [&>_.p-panel-header]:!flex-col
+      [&>_.p-panel-header]:[&>_.p-panel-icons]:!w-full
+
+      [&>_.p-panel-content-container]:[&>_.p-panel-content]:!px-4
+      [&>_.p-panel-content-container]:[&>_.p-panel-content]:!py-4
+    "
+  >
+
+    <ng-template #header>
+      <span class="mb-2 text-center text-lg font-bold">{{ exp.title }}</span>
+    </ng-template>
+
+    <ng-template #icons>
+      
+      <span class="flex flex-col [&>*]:self-start text-sm text-muted-color whitespace-nowrap">
+        <span class="inline-flex">
+          {{ exp.company }}
+          <a 
+            class="flex items-center justify-center ml-2"
+            [href]="exp.url" target="_blank"
+          ><i class="pi pi-link text-primary"></i></a>
+        </span>
+        <span class="flex items-center justify-end">
+          {{ exp.startDate }} – {{ exp.endDate }} 
+          <p-divider layout="vertical" styleClass="!py-1 !mx-2" /> 
+          {{ exp.country }}
+        </span>
+      </span>
+    </ng-template>
+
+    <!-- Content -->
+    <ul class="list-disc list-outside ml-4 [&>li+li]:mt-2">
+      @for (itm of exp.items; track itm) {
+        <li class="!text-sm !font-normal marker:text-primary">
+          <span [innerHTML]="itm"></span>
+        </li>
+      }
+    </ul>
+
+  </p-panel>
+</ng-template>
+
+
+<!-- Experience Card (LARGE) -->
+<ng-template #xpCardLg let-exp>
+
+  <div 
+    class="
+      inline-flex w-full gap-4 max-w-[90%] 
+      lg:max-w-[80%]
+    "
+  >
 
     <div class="flex flex-col">
       <p-button styleClass="shadow-lg" icon="pi pi-asterisk" [rounded]="true" />
