@@ -17,11 +17,11 @@ This website is deployed using GitHub Pages. The deployment is automated through
 
 ## 📝 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE) file for details.
 
 ## 📧 Contact
 
-Julian Czerweny - julian.czerweny@gmail.com
+Julian Czerweny - [LinkedIn](https://www.linkedin.com/in/cezeta) &middot; [julian.czerweny@gmail.com](julian.czerweny@gmail.com)
 
 Project Link: [https://github.com/cezeta1/cezeta1.github.io](https://github.com/cezeta1/cezeta1.github.io)
 
