@@ -3,16 +3,18 @@
 </h1>
 
 <!-- Small Template -->
-<div class="flex flex-col items-center w-full gap-4 md:hidden">
+
+<div class="flex flex-col items-center w-full gap-8 md:hidden">
   @for (exp of experiences; track $index) {
-    <ng-container
+    <ng-container 
       *ngTemplateOutlet="xpCardSm; context: { $implicit: exp }"
     ></ng-container>
   }
 </div>
 
 <!-- Large Template -->
-<div class="hidden md:flex flex-col items-center w-full gap-4 ">
+
+<div class="hidden flex-col items-center w-full gap-4 md:flex">
   @for (exp of experiences; track $index) {
     <ng-container
       *ngTemplateOutlet="xpCardLg; context: { $implicit: exp }"
@@ -20,15 +22,13 @@
   }
 </div>
 
-
 <!-- Experience card (SMALL) -->
 
 <ng-template #xpCardSm let-exp>
-
-  <p-panel 
+  <p-panel
     class="w-full" 
     styleClass="
-      !shadow-lg 
+      relative !shadow-lg 
       [&>_.p-panel-header]:!bg-content-hover-background
       [&>_.p-panel-header]:!border-b
       [&>_.p-panel-header]:!py-4
@@ -40,7 +40,6 @@
       [&>_.p-panel-content-container]:[&>_.p-panel-content]:!py-4
     "
   >
-
     <ng-template #header>
       <span class="mb-2 text-center text-lg font-bold">{{ exp.title }}</span>
     </ng-template>
@@ -72,11 +71,12 @@
       }
     </ul>
 
+    <p-button class="absolute -top-4 -left-4" styleClass="shadow-lg" icon="pi pi-asterisk" [rounded]="true" />
   </p-panel>
 </ng-template>
 
-
 <!-- Experience Card (LARGE) -->
+
 <ng-template #xpCardLg let-exp>
 
   <div 
