@@ -42,6 +42,7 @@ export class ResumeComponent {
       endDate: 'Present',
       country: 'Australia',
       items: [
+        'Managing <span class=\"!font-bold\">CI/CD pipelines and deployments</span> of all NexPay apps in all environments, using <span class=\"!font-bold\">Azure DevOps</span>.',
         'Planning and implementing a modern version of an existing web app, keeping the business logic but improving the ability to <span class=\"!font-bold\">test</span>, <span class=\"!font-bold\">maintain</span>, <span class=\"!font-bold\">enhance</span> and <span class=\"!font-bold\">deploy</span> it. Managing the transition between old and new systems.',
         'Developing, fixing and improving legacy APIs for multiple projects, using <span class=\"!font-bold\">.NET Core / C#</span>.',
         'Developing a responsive <span class=\"!font-bold\">Angular19</span> frontend app using <span class=\"!font-bold\">Tailwind</span> and <span class=\"!font-bold\">PrimeNG</span>. Used latest Angular improvements like <span class=\"!font-bold\">Signals</span> to manage stores and improve performance and reduce codebase complexity.'
@@ -69,9 +70,9 @@ export class ResumeComponent {
       techs: [
         'react',
         'angular',
+        'storybook',
         'tailwindcss',
         'primeng',
-        'storybook',
         'dotnet'
       ]
     },
@@ -111,6 +112,4 @@ export class ResumeComponent {
       ]
     }
   ];
-
-
 }

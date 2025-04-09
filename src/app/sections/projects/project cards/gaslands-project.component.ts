@@ -52,17 +52,17 @@ import { MessageModule } from 'primeng/message';
       
       <ng-template #footer>
       
-        <div class="flex mt-1 gap-2 w-full justify-center">
+        <div class="inline-flex mt-1 gap-2 w-full">
           <p-button 
             outlined
-            styleClass="w-full"
+            class="grow"
+            styleClass="w-full grow"
             icon="pi pi-github" 
             label="Github project" 
             severity="secondary"
             (onClick)="redirectToGithub()"
           />
-          <p-button 
-            styleClass="w-full" 
+          <p-button
             icon="pi pi-car" 
             label="Go!"
             (onClick)="redirectToLive()"

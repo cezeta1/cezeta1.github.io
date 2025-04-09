@@ -50,26 +50,19 @@ import { MessageModule } from 'primeng/message';
         Tech demo built for a code challenge demo. Features a foreign exchange (FX) platform where users can create contracts selecting which currency they want to convert from and to.
       </p>
 
-      <p-message styleClass="mt-4" size="small" icon="pi pi-info-circle">
-        Currently refactoring...
-      </p-message>
-
       <ng-template #footer>
-      
-        <div class="flex flex-col mt-1 gap-2 w-full justify-center">
-          <p-button
-            disabled
-            styleClass="w-full"
-            icon="pi pi-github"
-            label="Github project"
-            severity="secondary"
-            (onClick)="redirectToGithub()"
-          />
-        </div>
+        <p-button
+          outlined
+          styleClass="w-full"
+          icon="pi pi-github"
+          label="Github project"
+          severity="secondary"
+          (onClick)="redirectToGithub()"
+        />
       </ng-template>
     </p-card>
   `
 })
 export class FXExchangeProjectCardComponent {
-  protected redirectToGithub = () => window.open('https://github.com/cezeta1/ng-group-controls', '_blank');
+  protected redirectToGithub = () => window.open('https://github.com/cezeta1/fx-exchange-demo', '_blank');
 }

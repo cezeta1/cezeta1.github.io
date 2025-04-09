@@ -39,7 +39,7 @@ import { MessageModule } from 'primeng/message';
       </p>
       
       <p-message styleClass="mt-4" size="small" icon="pi pi-info-circle">
-        Coming soon!
+        v1.0 coming soon!
       </p-message>
       
       <ng-template #footer>
@@ -53,14 +53,24 @@ import { MessageModule } from 'primeng/message';
             severity="secondary"
             (onClick)="redirectToGithub()"
           />
-          <p-button
-            disabled
-            styleClass="w-full"
-            icon="pi pi-box"
-            label="npm package"
-            severity="secondary"
-            (onClick)="redirectToNpm()"
-          />
+
+          <div class="inline-flex w-full *:!w-full gap-2">
+            <p-button
+              disabled
+              styleClass="w-full"
+              icon="pi pi-box"
+              label="npm"
+              severity="secondary"
+              (onClick)="redirectToNpm()"
+            />
+            <p-button
+              disabled
+              icon="pi pi-globe"
+              label="Documentation"
+              severity="secondary"
+              (onClick)="redirectToLive()"
+            />
+          </div>
         </div>
       </ng-template>
     </p-card>
@@ -69,4 +79,5 @@ import { MessageModule } from 'primeng/message';
 export class NgGroupControlsProjectCardComponent {
   protected redirectToGithub = () => window.open('https://github.com/cezeta1/ng-group-controls', '_blank');
   protected redirectToNpm = () => window.open('https://github.com/cezeta1/ng-group-controls', '_blank');
+  protected redirectToLive = () => window.open('https://github.com/cezeta1/ng-group-controls', '_blank');
 }
