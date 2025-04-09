@@ -38,6 +38,10 @@
 
       [&>_.p-panel-content-container]:[&>_.p-panel-content]:!px-4
       [&>_.p-panel-content-container]:[&>_.p-panel-content]:!py-4
+
+      [&>_.p-panel-content-container]:[&>_.p-panel-footer]:!border-t
+      [&>_.p-panel-content-container]:[&>_.p-panel-footer]:!border-toolbar-border-color
+      [&>_.p-panel-content-container]:[&>_.p-panel-footer]:!p-0
     "
   >
     <ng-template #header>
@@ -71,6 +75,21 @@
       }
     </ul>
 
+    @if (exp.techs) {
+      <ng-template #footer>
+        <div class="inline-flex w-full h-full m-4 gap-4">
+          @for (i of exp.techs; track i) {
+            <img
+              height="32" width="32" 
+              [src]="`https://cdn.simpleicons.org/${i}/black/white`"
+              [pTooltip]="i" tooltipPosition="bottom" 
+            />
+          }
+        </div>
+        
+      </ng-template>
+    }
+
     <p-button class="absolute -top-4 -left-4" styleClass="shadow-lg" icon="pi pi-asterisk" [rounded]="true" />
   </p-panel>
 </ng-template>
@@ -101,6 +120,10 @@
 
         [&>_.p-panel-content-container]:[&>_.p-panel-content]:!px-4
         [&>_.p-panel-content-container]:[&>_.p-panel-content]:!py-4
+
+        [&>_.p-panel-content-container]:[&>_.p-panel-footer]:!border-t
+        [&>_.p-panel-content-container]:[&>_.p-panel-footer]:!border-toolbar-border-color
+        [&>_.p-panel-content-container]:[&>_.p-panel-footer]:!p-0
       "
     >
 
@@ -144,6 +167,21 @@
           </li>
         }
       </ul>
+
+      @if (exp.techs) {
+        <ng-template #footer>
+          <div class="inline-flex w-full h-full m-4 gap-4">
+            @for (i of exp.techs; track i) {
+              <img
+                height="32" width="32" 
+                [src]="`https://cdn.simpleicons.org/${i}/black/white`"
+                [pTooltip]="i" tooltipPosition="bottom" 
+              />
+            }
+          </div>
+          
+        </ng-template>
+      }
 
     </p-panel>
   </div>
