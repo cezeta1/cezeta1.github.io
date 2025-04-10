@@ -24,14 +24,15 @@
     [floatLabel]="'home.contact.body' | translate"
   ></cz-text-area>
   
-  <!-- Submit Button -->
-  <div class="flex justify-end">
-    <p-button
-      [label]="'home.contact.submit' | translate" 
-      [disabled]="contactForm.invalid"
-      icon="pi pi-send"
-      iconPos="right"
-      (onClick)="onSubmit()"
-    ></p-button>
-  </div>
 </form>
+
+<!-- Submit Button -->
+<div class="flex justify-end mt-4">
+  <p-button
+    [label]="'home.contact.submit' | translate" 
+    [disabled]="contactForm.invalid"
+    icon="pi pi-send"
+    iconPos="right"
+    (onClick)="onSubmit()"
+  ></p-button>
+</div>
