@@ -5,6 +5,7 @@ import { Toast } from 'primeng/toast';
 import { LanguageService } from './core/services/language/language.service';
 import { Chip } from 'primeng/chip';
 import { environment as env } from '../environments/environment';
+import { cz_injectScript } from './core/utils';
 
 @Component({
   selector: 'app-root',
@@ -25,5 +26,9 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this._languageService.initializeAppLanguage();
     this._themeService.initializeAppTheme();
+
+    // --- reCaptcha --- //
+    const scrUrl = `https://www.google.com/recaptcha/api.js?render=${env.reCaptchaKey}`
+    cz_injectScript(document, scrUrl);
   }
 }

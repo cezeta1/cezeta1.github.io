@@ -27,13 +27,11 @@
   <!-- Submit Button -->
   <div class="flex justify-end">
     <p-button
-
-
       [label]="'home.contact.submit' | translate" 
       [disabled]="contactForm.invalid"
       icon="pi pi-send"
       iconPos="right"
-      (onClick)="onSubmit($event)"
+      (onClick)="onSubmit()"
     ></p-button>
   </div>
 </form>
