@@ -8,10 +8,10 @@ import { cz_takeUntilDestroyed } from "../../utils";
   providedIn: 'root',
 })
 export class EmailSenderService {
-  private env = env;
+
   private _inj = inject(Injector);
   private _http = inject(HttpClient);
-  private _formSpreeUrl = ''; //env.formSpreeUrl;
+  private _formSpreeUrl = env.formSpreeUrl;
 
   public sendEmail(payload: object): Observable<Object> {
     

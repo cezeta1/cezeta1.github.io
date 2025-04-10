@@ -7,6 +7,7 @@ import { CZTextAreaComponent } from "../../../core/components/ui-components/cz-t
 import { CZTextInputComponent } from "../../../core/components/ui-components/cz-text-input/cz-text-input.component";
 import { AlertsService } from "../../../core/services/alerts/alerts.service";
 import { EmailSenderService } from "../../../core/services/email-sender/email-sender.service";
+import { environment as env } from "../../../../environments/environment";
 
 @Component({
   selector: 'contact-form',
@@ -26,9 +27,11 @@ export class ContactFormComponent {
   private _emailSenderService = inject(EmailSenderService);
   private _fb = inject(FormBuilder);
 
+  protected reCaptchaKey = env.reCaptchaKey;
+
   protected contactForm = this._fb.group({
-    email: ['asd@ascascsa.omc', [Validators.required, Validators.email]],
-    subject: ['wdqqwdqdw', [Validators.required]],
+    email: ['', [Validators.required, Validators.email]],
+    subject: ['', [Validators.required]],
     message: ['', [Validators.required]],
   });
 
@@ -63,5 +66,6 @@ export class ContactFormComponent {
           f.markAsUntouched();
         });
     
-    }
+  }
+  
 }
