@@ -4,7 +4,6 @@ import { takeUntilDestroyed, toSignal } from "@angular/core/rxjs-interop";
 import { FormGroup } from "@angular/forms";
 import * as _ from "lodash";
 import { debounceTime, distinctUntilChanged, MonoTypeOperatorFunction, pipe } from "rxjs";
-// import { ConsoleError } from "./services/error-handler/app-error.interface";
 
 // --------------------------------------------- // 
 //           Lodash Method Extensions            // 
@@ -93,7 +92,6 @@ const _patchMergeUpdate = <T>(a: T, b:  Partial<T>) : T => {
     return [...a, ...b] as T;
   }
 
-  // Object.keys(a).forEach(k => { b[k as keyof T] = b[k as keyof T] ?? undefined });
   return _.merge({...a}, {...b});
 }
 
@@ -138,4 +136,22 @@ export const cz_takeUntilDestroyed = <T>(inj : Injector): MonoTypeOperatorFuncti
     // throw new ConsoleError("cz_takeUntilDestroyed couldn't find a valid DestroyRef. Are you using the correct Injector?");
   
   return takeUntilDestroyed(_destroyRef);
+}
+
+// --------------------------------------------- // 
+//                 Script Loader                 // 
+// --------------------------------------------- //
+
+export const cz_injectScript = (document: Document, url: string) => {
+  if (document && url?.trim()) {
+      
+    const script = document.createElement("script");
+    
+    script.setAttribute("type", "text/javascript");
+    script.setAttribute("src", url.trim());
+    script.setAttribute("async", '');
+    script.setAttribute("defer", '');
+
+    document.head?.appendChild(script);
+  }
 }

@@ -2,10 +2,10 @@
   {{ 'home.contact.title' | translate }}
 </h1>
 
-<div 
+<form 
   [formGroup]="contactForm"
-  class="flex flex-col w-full max-w-md mx-auto gap-8" 
->
+  class="flex flex-col w-full max-w-md mx-auto gap-8"
+> 
   <!-- Email Field -->
   <cz-text-input
     formControlName="email"
@@ -20,7 +20,7 @@
   
   <!-- Message Field -->
   <cz-text-area
-    formControlName="body"
+    formControlName="message"
     [floatLabel]="'home.contact.body' | translate"
   ></cz-text-area>
   
@@ -31,6 +31,7 @@
       [disabled]="contactForm.invalid"
       icon="pi pi-send"
       iconPos="right"
+      (onClick)="onSubmit()"
     ></p-button>
   </div>
-</div>
+</form>
