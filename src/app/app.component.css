@@ -1,0 +1,3 @@
+::ng-deep.cz-p-toast {
+  max-width: calc(100vw - 40px);
+}

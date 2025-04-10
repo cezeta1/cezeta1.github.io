@@ -20,13 +20,13 @@ import { cz_injectScript } from './core/utils';
 export class AppComponent implements OnInit {
   private _languageService = inject(LanguageService);
   private _themeService = inject(ThemeService);
-  
+
   protected env = env;
 
   ngOnInit(): void {
     this._languageService.initializeAppLanguage();
     this._themeService.initializeAppTheme();
-
+    
     // --- reCaptcha --- //
     const scrUrl = `https://www.google.com/recaptcha/api.js?render=${env.reCaptchaKey}`
     cz_injectScript(document, scrUrl);
