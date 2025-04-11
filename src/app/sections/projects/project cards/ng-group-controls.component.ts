@@ -1,14 +1,14 @@
 import { Component } from "@angular/core";
-import { ButtonModule } from "primeng/button";
-import { CardModule } from 'primeng/card';
-import { MessageModule } from 'primeng/message';
+import { Button } from "primeng/button";
+import { Card } from 'primeng/card';
+import { Message } from 'primeng/message';
 
 @Component({
   selector: 'ng-group-controls-project-card',
   imports: [
-    CardModule,
-    ButtonModule,
-    MessageModule
+    Card,
+    Button, 
+    Message
   ],
   template:`
     <p-card 

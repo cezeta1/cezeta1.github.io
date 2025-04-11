@@ -4,8 +4,7 @@ import { TranslatePipe } from "@ngx-translate/core";
 import { Button } from "primeng/button";
 import { Divider } from "primeng/divider";
 import { Panel } from 'primeng/panel';
-import { TooltipModule } from 'primeng/tooltip';
-import { FieldsetModule } from 'primeng/fieldset';
+import { Tooltip } from 'primeng/tooltip';
 
 interface Experience {
   title: string;
@@ -24,8 +23,7 @@ interface Experience {
   imports: [
     CommonModule, 
     TranslatePipe,
-    TooltipModule,
-    FieldsetModule,
+    Tooltip,
     Panel, 
     Button,
     Divider
