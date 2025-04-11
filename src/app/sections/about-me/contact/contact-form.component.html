@@ -2,37 +2,39 @@
   {{ 'home.contact.title' | translate }}
 </h1>
 
-<form 
-  [formGroup]="contactForm"
-  class="flex flex-col w-full max-w-md mx-auto gap-8"
-> 
-  <!-- Email Field -->
-  <cz-text-input
-    formControlName="email"
-    [floatLabel]="'home.contact.email' | translate"
-  ></cz-text-input>
+<div class="max-w-md mx-auto">
+  <form
+    [formGroup]="contactForm"
+    class="flex flex-col w-full gap-8"
+  > 
+    <!-- Email Field -->
+    <cz-text-input
+      formControlName="email"
+      [floatLabel]="'home.contact.email' | translate"
+    ></cz-text-input>
+    
+    <!-- Subject Field -->
+    <cz-text-input
+      formControlName="subject"
+      [floatLabel]="'home.contact.subject' | translate"
+    ></cz-text-input>
+    
+    <!-- Message Field -->
+    <cz-text-area
+      formControlName="message"
+      [floatLabel]="'home.contact.body' | translate"
+    ></cz-text-area>
+    
+  </form>
   
-  <!-- Subject Field -->
-  <cz-text-input
-    formControlName="subject"
-    [floatLabel]="'home.contact.subject' | translate"
-  ></cz-text-input>
-  
-  <!-- Message Field -->
-  <cz-text-area
-    formControlName="message"
-    [floatLabel]="'home.contact.body' | translate"
-  ></cz-text-area>
-  
-</form>
-
-<!-- Submit Button -->
-<div class="flex justify-end mt-4">
-  <p-button
-    [label]="'home.contact.submit' | translate" 
-    [disabled]="contactForm.invalid"
-    icon="pi pi-send"
-    iconPos="right"
-    (onClick)="onSubmit()"
-  ></p-button>
+  <!-- Submit Button -->
+  <div class="flex justify-end mt-4">
+    <p-button
+      [label]="'home.contact.submit' | translate" 
+      [disabled]="contactForm.invalid"
+      icon="pi pi-send"
+      iconPos="right"
+      (onClick)="onSubmit()"
+    ></p-button>
+  </div>
 </div>

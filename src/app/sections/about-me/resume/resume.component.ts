@@ -5,6 +5,7 @@ import { Button } from "primeng/button";
 import { Divider } from "primeng/divider";
 import { Panel } from 'primeng/panel';
 import { TooltipModule } from 'primeng/tooltip';
+import { FieldsetModule } from 'primeng/fieldset';
 
 interface Experience {
   title: string;
@@ -24,6 +25,7 @@ interface Experience {
     CommonModule, 
     TranslatePipe,
     TooltipModule,
+    FieldsetModule,
     Panel, 
     Button,
     Divider
@@ -112,4 +114,8 @@ export class ResumeComponent {
       ]
     }
   ];
+
+  protected onTLDR() {
+    window.open('/assets/files/CzerwenyJulian_CV_2025.pdf')
+  }
 }
