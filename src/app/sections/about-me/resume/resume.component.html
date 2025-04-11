@@ -2,6 +2,12 @@
   {{ 'home.resume.title' | translate }}
 </h1>
 
+<div>
+  <ng-container *ngTemplateOutlet="tldr"></ng-container>
+</div>
+
+
+
 <!-- Small Template -->
 
 <div class="flex flex-col items-center w-full gap-8 md:hidden">
@@ -21,6 +27,38 @@
     ></ng-container>
   }
 </div>
+
+<!---- Templates ---->
+
+<!-- TLDR -->
+
+<ng-template #tldr>
+  <div class="relative w-full">
+    <div 
+      class="
+        inline-flex items-center
+        absolute
+        right-8 -top-15
+        w-fit
+        rounded-lg 
+        border border-toolbar-border-color
+        shadow-lg 
+      "
+    >
+      <span class="mx-2 h-fit text-center text-sm text-center text-muted-color">
+        Want it for takeout?
+      </span>
+    
+      <p-button
+        styleClass="text-text-color"
+        severity="danger"
+        icon="pi pi-file-pdf"
+        (onClick)="onTLDR()"
+      ></p-button>
+    </div>
+  </div>
+
+</ng-template>
 
 <!-- Experience card (SMALL) -->
 

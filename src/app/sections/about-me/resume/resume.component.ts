@@ -4,7 +4,7 @@ import { TranslatePipe } from "@ngx-translate/core";
 import { Button } from "primeng/button";
 import { Divider } from "primeng/divider";
 import { Panel } from 'primeng/panel';
-import { TooltipModule } from 'primeng/tooltip';
+import { Tooltip } from 'primeng/tooltip';
 
 interface Experience {
   title: string;
@@ -23,7 +23,7 @@ interface Experience {
   imports: [
     CommonModule, 
     TranslatePipe,
-    TooltipModule,
+    Tooltip,
     Panel, 
     Button,
     Divider
@@ -112,4 +112,8 @@ export class ResumeComponent {
       ]
     }
   ];
+
+  protected onTLDR() {
+    window.open('/assets/files/CzerwenyJulian_CV_2025.pdf')
+  }
 }
