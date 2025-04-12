@@ -33,12 +33,18 @@
 <!-- TLDR -->
 
 <ng-template #tldr>
-  <div class="relative w-full">
+  <div 
+    class="
+      flex w-full justify-end
+      mb-8
+      md:relative md:m-0
+    "
+  >
     <div 
       class="
         inline-flex items-center
-        absolute
-        right-8 -top-15
+        block md:absolute
+        -top-15 right-8
         w-fit
         rounded-lg 
         border border-toolbar-border-color
