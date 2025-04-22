@@ -40,13 +40,12 @@ export class ContactFormComponent {
   private _reCaptchaV3Service = inject(ReCaptchaV3Service);
   private _fb = inject(FormBuilder);
   
+  protected isLoading = signal(false);
   protected contactForm = this._fb.group({
     email: ['', [Validators.required, Validators.email]],
     subject: ['', [Validators.required]],
     message: ['', [Validators.required, Validators.maxLength(250)]],
   });
-
-  protected isLoading = signal(false);
 
   protected onSubmit(): void {
     if (!this.contactForm.valid)
