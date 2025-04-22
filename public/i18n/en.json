@@ -47,8 +47,38 @@
       "submit": "Send!"
     }
   },
-  
+
   "projects": {
-    "title": "Projects"
+    "title": "Projects",
+    "cards": {
+      "gaslands": {
+        "title": "Gaslands Dice Roller",
+        "subtitle": "Boardgame companion",
+        "content": "Gaslands skid dice roller, for all your carnage needs!",
+        "github-btn": "Github project",
+        "go-btn": "Go!"
+      },
+      
+      "ng-group-controls": {
+        "title": "Ng Group Controls",
+        "subtitle": "npm package",
+        "content": "A lightweight library providing an Angular Form Control extension to simplify the creation of composed custom reactive formControls.",
+        "message1": {
+          "start": "The contact form at the bottom of the ",
+          "link": "Home page",
+          "end": " is built using this package!"
+        },
+        "message2": "v1.0 coming soon!",
+        "github-btn": "Github project",
+        "doc-btn": "Documentation"
+      },
+
+      "fx-exchange": {
+        "title": "Fx Exchange Platform",
+        "subtitle": "Tech demo",
+        "content": "Tech demo built for a code challenge demo. Features a foreign exchange (FX) platform where users can create contracts selecting which currency they want to convert from and to.",
+        "github-btn": "Github project"
+      }
+    }
   }
 }

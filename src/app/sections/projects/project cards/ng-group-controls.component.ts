@@ -1,11 +1,15 @@
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
+import { Router } from "@angular/router";
 import { Button } from "primeng/button";
 import { Card } from 'primeng/card';
 import { Message } from 'primeng/message';
+import { AppRoutesEnum } from "../../../app.routes";
+import { TranslatePipe } from "@ngx-translate/core";
 
 @Component({
   selector: 'ng-group-controls-project-card',
   imports: [
+    TranslatePipe,
     Card,
     Button, 
     Message
@@ -27,37 +31,49 @@ import { Message } from 'primeng/message';
       </ng-template>
       
       <ng-template #title> 
-        Ng Group Controls
+        {{ translateRoot+"title" | translate }} 
       </ng-template>
       
       <ng-template #subtitle>
-        <span class="text-muted text-sm">npm package</span>
+        <span class="text-muted text-sm">
+          {{ translateRoot+"subtitle" | translate }}
+        </span>
       </ng-template>
 
       <p>
-        A lightweight library providing an Angular Form Control extension to simplify the creation of composed custom reactive formControls.
+        {{ translateRoot+"content" | translate }}
       </p>
+
+      <p-message severity="secondary" styleClass="mt-4" size="small" icon="pi pi-thumbs-up">
+        <span>
+          {{ translateRoot+"message1.start" | translate }}
+          <a (click)='redirectToHome()' class='underline'>
+            {{ translateRoot+"message1.link" | translate }}
+          </a>
+          {{ translateRoot+"message1.end" | translate }}
+        </span>
+      </p-message>
       
       <p-message styleClass="mt-4" size="small" icon="pi pi-info-circle">
-        v1.0 coming soon!
+        {{ translateRoot+"message2" | translate }}
       </p-message>
       
       <ng-template #footer>
       
         <div class="flex flex-col mt-1 gap-2 w-full justify-center">
           <p-button
-            disabled
+            outlined
             styleClass="w-full"
             icon="pi pi-github"
-            label="Github project"
+            [label]="translateRoot+'github-btn' | translate"
             severity="secondary"
             (onClick)="redirectToGithub()"
           />
 
           <div class="inline-flex w-full *:!w-full gap-2">
             <p-button
-              disabled
-              styleClass="w-full"
+              outlined
+              styleClass="w-full !text-red-400"
               icon="pi pi-box"
               label="npm"
               severity="secondary"
@@ -66,7 +82,7 @@ import { Message } from 'primeng/message';
             <p-button
               disabled
               icon="pi pi-globe"
-              label="Documentation"
+              [label]="translateRoot+'doc-btn' | translate"
               severity="secondary"
               (onClick)="redirectToLive()"
             />
@@ -77,7 +93,12 @@ import { Message } from 'primeng/message';
   `
 })
 export class NgGroupControlsProjectCardComponent {
+  private _router = inject(Router);
+  
+  protected translateRoot = "projects.cards.ng-group-controls.";
+
   protected redirectToGithub = () => window.open('https://github.com/cezeta1/ng-group-controls', '_blank');
-  protected redirectToNpm = () => window.open('https://github.com/cezeta1/ng-group-controls', '_blank');
+  protected redirectToNpm = () => window.open('https://www.npmjs.com/package/ng-group-controls', '_blank');
   protected redirectToLive = () => window.open('https://github.com/cezeta1/ng-group-controls', '_blank');
+  protected redirectToHome = () => this._router.navigate([AppRoutesEnum.Home]);
 }

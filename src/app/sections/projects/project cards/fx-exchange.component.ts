@@ -1,14 +1,11 @@
 import { Component } from "@angular/core";
-import { Button } from "primeng/button";
 import { Card } from 'primeng/card';
-import { Message } from 'primeng/message';
+import { Button } from "primeng/button";
+import { TranslatePipe } from "@ngx-translate/core";
 
 @Component({
   selector: 'fx-exchange-project-card',
-  imports: [
-    Card,
-    Button
-  ],
+  imports: [Card, Button, TranslatePipe],
   template:`
     <p-card 
       styleClass="
@@ -30,7 +27,7 @@ import { Message } from 'primeng/message';
           "
         >
           <img 
-            class="-mt-1 w-full !rounded-t-xl" 
+            class="object-cover w-full h-full !rounded-t-xl" 
             src="/assets/images/fx.jpeg" 
             alt="Card"
           />
@@ -38,15 +35,17 @@ import { Message } from 'primeng/message';
       </ng-template>
       
       <ng-template #title> 
-        Fx Exchange Platform
+        {{ translateRoot+"title" | translate }}
       </ng-template>
       
       <ng-template #subtitle>
-        <span class="text-muted text-sm">Tech demo</span>
+        <span class="text-muted text-sm">
+          {{ translateRoot+"subtitle" | translate }}
+        </span>
       </ng-template>
 
       <p>
-        Tech demo built for a code challenge demo. Features a foreign exchange (FX) platform where users can create contracts selecting which currency they want to convert from and to.
+        {{ translateRoot+"content" | translate }}
       </p>
 
       <ng-template #footer>
@@ -54,7 +53,7 @@ import { Message } from 'primeng/message';
           outlined
           styleClass="w-full"
           icon="pi pi-github"
-          label="Github project"
+          [label]="translateRoot+'github-btn' | translate"
           severity="secondary"
           (onClick)="redirectToGithub()"
         />
@@ -63,5 +62,6 @@ import { Message } from 'primeng/message';
   `
 })
 export class FXExchangeProjectCardComponent {
+  protected translateRoot = "projects.cards.fx-exchange.";
   protected redirectToGithub = () => window.open('https://github.com/cezeta1/fx-exchange-demo', '_blank');
 }

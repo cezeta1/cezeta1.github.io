@@ -5,10 +5,10 @@ export type LangConfig = {
 export enum AppLangsEnum {
   English = 'en',
   Spanish = 'es',
-  French = 'fr',
-  Italian = 'it',
-  Japanese = 'ja',
-  Portuguese = 'pt',
+  // French = 'fr',
+  // Italian = 'it',
+  // Japanese = 'ja',
+  // Portuguese = 'pt',
 };
 
 export var AppLangsConfig: { [key in AppLangsEnum]: LangConfig } = {
@@ -18,16 +18,16 @@ export var AppLangsConfig: { [key in AppLangsEnum]: LangConfig } = {
   [AppLangsEnum.Spanish]: {
     flagEmoji: '🇪🇸'
   },
-  [AppLangsEnum.French]: {
-    flagEmoji: '🇫🇷'
-  },
-  [AppLangsEnum.Italian]: {
-    flagEmoji: '🇮🇹'
-  },
-  [AppLangsEnum.Japanese]: {
-    flagEmoji: '🇯🇵'
-  },
-  [AppLangsEnum.Portuguese]: {
-    flagEmoji: '🇧🇷'
-  },
+  // [AppLangsEnum.French]: {
+  //   flagEmoji: '🇫🇷'
+  // },
+  // [AppLangsEnum.Italian]: {
+  //   flagEmoji: '🇮🇹'
+  // },
+  // [AppLangsEnum.Japanese]: {
+  //   flagEmoji: '🇯🇵'
+  // },
+  // [AppLangsEnum.Portuguese]: {
+  //   flagEmoji: '🇧🇷'
+  // },
 };
