@@ -1,14 +1,11 @@
 import { Component } from "@angular/core";
+import { TranslatePipe } from "@ngx-translate/core";
 import { Button } from "primeng/button";
 import { Card } from 'primeng/card';
-import { Message } from 'primeng/message';
 
 @Component({
   selector: 'gaslands-project-card',
-  imports: [
-    Card, 
-    Button
-  ],
+  imports: [TranslatePipe, Card, Button],
   template:`    
     <p-card 
       styleClass="
@@ -37,16 +34,18 @@ import { Message } from 'primeng/message';
         </div>
       </ng-template>
       
-      <ng-template #title> 
-        Gaslands Dice Roller
+      <ng-template #title>
+        {{ translateRoot+"title" | translate }} 
       </ng-template>
       
       <ng-template #subtitle>
-      <span class="text-muted text-sm">Boardgame companion</span>
+      <span class="text-muted text-sm">
+        {{ translateRoot+"subtitle" | translate }}
+      </span>
       </ng-template>
 
       <p>
-        Gaslands skid dice roller, for all your carnage needs!
+        {{ translateRoot+"content" | translate }}
       </p>
       
       <ng-template #footer>
@@ -56,14 +55,14 @@ import { Message } from 'primeng/message';
             outlined
             class="grow"
             styleClass="w-full grow"
-            icon="pi pi-github" 
-            label="Github project" 
+            icon="pi pi-github"
+            [label]="translateRoot+'github-btn' | translate"
             severity="secondary"
             (onClick)="redirectToGithub()"
           />
           <p-button
             icon="pi pi-car" 
-            label="Go!"
+            [label]="translateRoot+'go-btn' | translate"
             (onClick)="redirectToLive()"
           />
         </div>
@@ -73,6 +72,7 @@ import { Message } from 'primeng/message';
   `
 })
 export class GaslandsProjectCardComponent {
+  protected translateRoot = "projects.cards.gaslands.";
   protected redirectToGithub = () => window.open('https://github.com/cezeta1/gaslands-app-ng', '_blank');
   protected redirectToLive = () => window.open('https://cezeta1.github.io/gaslands-app-ng', '_blank');
 }

@@ -48,7 +48,37 @@
     }
   },
   
-  "projects": {
-    "title": "Proyectos"
+"projects": {
+    "title": "Projectos",
+    "cards": {
+      "gaslands": {
+        "title": "Gaslands Dice Roller",
+        "subtitle": "Complemento para el juego de mesa",
+        "content": "Aplicación de dados para Gaslands, ¡para todas tus necesidades de carnicería!",
+        "github-btn": "Github",
+        "go-btn": "Vamos!"
+      },
+      
+      "ng-group-controls": {
+        "title": "Ng Group Controls",
+        "subtitle": "Paquete npm",
+        "content": "Una librería ligera que proporciona una extensión de Control de Formulario de Angular para simplificar la creación de FormControls reactivos personalizados compuestos.",
+        "message1": {
+          "start": "El formulario de contacto al final de la ",
+          "link": "página de inicio",
+          "end": " está construido usando este paquete."
+        },
+        "message2": "v1.0 próximamente",
+        "github-btn": "Proyecto de Github",
+        "doc-btn": "Documentación"
+      },
+
+      "fx-exchange": {
+        "title": "Fx Exchange Platform",
+        "subtitle": "Demo técnica",
+        "content": "Demostración técnica creada para una demostración de desafío de código. Presenta una plataforma de intercambio de divisas (FX) donde los usuarios pueden crear contratos seleccionando qué moneda quieren convertir y a cuál.",
+        "github-btn": "Proyecto de Github"
+      }
+    }
   }
 }
