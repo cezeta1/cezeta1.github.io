@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, input, viewChild } from '@angular/core';
 import { Badge } from 'primeng/badge';
 import { Tooltip } from 'primeng/tooltip';
@@ -5,7 +6,7 @@ import { interval, Subscription } from 'rxjs';
 
 @Component({
   selector: 'cz-tooltip-badge',
-  imports: [ Badge, Tooltip ],
+  imports: [ CommonModule, Badge, Tooltip ],
   templateUrl: './cz-tooltip-badge.component.html'
 })
 export class CZTooltipBadgeComponent {

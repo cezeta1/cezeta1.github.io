@@ -46,7 +46,7 @@ import { Message } from 'primeng/message';
       
         <div class="flex flex-col mt-1 gap-2 w-full justify-center">
           <p-button
-            disabled
+            outlined
             styleClass="w-full"
             icon="pi pi-github"
             label="Github project"
@@ -56,8 +56,8 @@ import { Message } from 'primeng/message';
 
           <div class="inline-flex w-full *:!w-full gap-2">
             <p-button
-              disabled
-              styleClass="w-full"
+              outlined
+              styleClass="w-full !text-red-400"
               icon="pi pi-box"
               label="npm"
               severity="secondary"
@@ -78,6 +78,6 @@ import { Message } from 'primeng/message';
 })
 export class NgGroupControlsProjectCardComponent {
   protected redirectToGithub = () => window.open('https://github.com/cezeta1/ng-group-controls', '_blank');
-  protected redirectToNpm = () => window.open('https://github.com/cezeta1/ng-group-controls', '_blank');
+  protected redirectToNpm = () => window.open('https://www.npmjs.com/package/ng-group-controls', '_blank');
   protected redirectToLive = () => window.open('https://github.com/cezeta1/ng-group-controls', '_blank');
 }
