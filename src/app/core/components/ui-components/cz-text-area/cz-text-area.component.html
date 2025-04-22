@@ -4,18 +4,24 @@
     [showRequiredDot]="showRequiredDot() && isRequired"
     [labelText]="floatLabel()"
   >
-    <textarea pTextarea 
-      class="w-full min-h-fit"
-      [formControlName]="formCtrlName"
-      rows="5" cols="30" 
-    ></textarea>
+      <textarea pTextarea 
+        class="w-full min-h-fit"
+        [formControlName]="formCtrlName"
+        rows="5" cols="30" 
+      ></textarea>
+
+      @if (maxChars()) {
+        <div class="absolute -bottom-4 right-0 text-end text-xs text-muted-color">
+          {{ ctrl.value?.length ?? 0 }} / {{ maxChars() }} chars
+        </div>
+      }
   </cz-float-label>
 
-  <!-- <cz-tooltip-badge 
+  <cz-tooltip-badge
     class="ml-2 content-center"
     *ngIf="!!tooltip()" 
     [text]="tooltip() ?? ''"
-  ></cz-tooltip-badge> -->
+  ></cz-tooltip-badge>
 </div>
 
 @if (showErrorMessage()) {
