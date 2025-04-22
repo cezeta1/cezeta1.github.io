@@ -1,40 +1,45 @@
+<cz-ui-blocker [target]="pnl" [blocked]="isLoading()"></cz-ui-blocker>
+
 <h1 class="text-center text-xl font-bold mb-8">
   {{ 'home.contact.title' | translate }}
 </h1>
 
-<div class="max-w-md mx-auto">
-  <form
-    [formGroup]="contactForm"
-    class="flex flex-col w-full gap-8"
-  > 
-    <!-- Email Field -->
-    <cz-text-input
-      formControlName="email"
-      [floatLabel]="'home.contact.email' | translate"
-    ></cz-text-input>
-    
-    <!-- Subject Field -->
-    <cz-text-input
-      formControlName="subject"
-      [floatLabel]="'home.contact.subject' | translate"
-    ></cz-text-input>
-    
-    <!-- Message Field -->
-    <cz-text-area
-      formControlName="message"
-      [floatLabel]="'home.contact.body' | translate"
-    ></cz-text-area>
-    
-  </form>
-  
-  <!-- Submit Button -->
-  <div class="flex justify-end mt-4">
-    <p-button
-      [label]="'home.contact.submit' | translate" 
-      [disabled]="contactForm.invalid"
-      icon="pi pi-send"
-      iconPos="right"
-      (onClick)="onSubmit()"
-    ></p-button>
-  </div>
+<div class="max-w-md mx-auto">  
+  <blockable-div #pnl>
+    <form
+      [formGroup]="contactForm"
+      class="flex flex-col w-full gap-8"
+    > 
+      <!-- Email Field -->
+      <cz-text-input
+        formControlName="email"
+        [floatLabel]="'home.contact.email' | translate"
+      ></cz-text-input>
+      
+      <!-- Subject Field -->
+      <cz-text-input
+        formControlName="subject"
+        [floatLabel]="'home.contact.subject' | translate"
+      ></cz-text-input>
+      
+      <!-- Message Field -->
+      <cz-text-area
+        formControlName="message"
+        [floatLabel]="'home.contact.body' | translate"
+        [maxChars]="250"
+      ></cz-text-area>
+      
+    </form>
+
+    <!-- Submit Button -->
+    <div class="flex justify-end mt-6">
+      <p-button
+        [label]="'home.contact.submit' | translate" 
+        [disabled]="contactForm.invalid"
+        icon="pi pi-send"
+        iconPos="right"
+        (onClick)="onSubmit()"
+      ></p-button>
+    </div>
+  </blockable-div>
 </div>

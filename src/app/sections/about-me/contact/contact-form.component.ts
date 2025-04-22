@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { Component, Inject, inject, Injector } from "@angular/core";
+import { Component, Inject, inject, Injector, signal } from "@angular/core";
 import { FormBuilder, ReactiveFormsModule, Validators } from "@angular/forms";
 import { TranslatePipe } from "@ngx-translate/core";
 import { Button } from "primeng/button";
@@ -10,6 +10,8 @@ import { EmailSenderService } from "../../../core/services/email-sender/email-se
 import { environment as env } from "../../../../environments/environment";
 import { RECAPTCHA_V3_SITE_KEY, RecaptchaV3Module, ReCaptchaV3Service } from "ng-recaptcha-2";
 import { cz_takeUntilDestroyed } from "../../../core/utils";
+import { CZUIBlockerComponent } from "../../../core/components/ui-components/cz-ui-blocker/cz-ui-blocker.component";
+import { BlockableDivComponent } from "../../../core/components/ui-components/blockable-div/blockable-div.component";
 
 @Component({
   selector: 'contact-form',
@@ -20,7 +22,9 @@ import { cz_takeUntilDestroyed } from "../../../core/utils";
     TranslatePipe,
     Button,
     CZTextInputComponent,
-    CZTextAreaComponent
+    CZTextAreaComponent,
+    CZUIBlockerComponent,
+    BlockableDivComponent
   ],
   providers: [
     ReCaptchaV3Service,
@@ -36,16 +40,19 @@ export class ContactFormComponent {
   private _reCaptchaV3Service = inject(ReCaptchaV3Service);
   private _fb = inject(FormBuilder);
   
+  protected isLoading = signal(false);
   protected contactForm = this._fb.group({
     email: ['', [Validators.required, Validators.email]],
     subject: ['', [Validators.required]],
-    message: ['', [Validators.required]],
+    message: ['', [Validators.required, Validators.maxLength(250)]],
   });
 
   protected onSubmit(): void {
     if (!this.contactForm.valid)
       return;
     
+    this.isLoading.set(true);
+
     this._reCaptchaV3Service
       .execute('contactFormSendEmail')
       .pipe(cz_takeUntilDestroyed(this._inj))
@@ -60,8 +67,6 @@ export class ContactFormComponent {
         };
 
         this._sendEmail(formSpreePayload);
-        
-        this.contactForm.reset();
       });
   }
   
@@ -74,9 +79,13 @@ export class ContactFormComponent {
             this._alertsService.showSuccess("Email sent! 😀");
           else
             this._alertsService.showError("There has been an error sending email 😥");
+
+          this.isLoading.set(false);
+          this.contactForm.reset();
         },
         error: (_ => {
           this._alertsService.showError("There has been an error sending email 😥");
+          this.isLoading.set(false);
         })
       });
   }

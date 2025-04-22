@@ -1,9 +1,10 @@
 import { Component, input, OnInit } from "@angular/core";
 import { FormsModule, ReactiveFormsModule, ValidatorFn, Validators } from "@angular/forms";
 import { Textarea } from "primeng/textarea";
-import { CZBaseInputWithControl } from "../_cz-base-form-control/cz-base-form-control";
+import { GroupFormControl } from "ng-group-controls";
 import { CZFloatLabelComponent } from "../cz-float-label/cz-float-label.component";
 import { CZFormErrorMessageComponent } from "../cz-form-error-message/cz-form-error-message.component";
+import { CZTooltipBadgeComponent } from "../cz-tooltip-badge/cz-tooltip-badge.component";
 
 @Component({
   selector: 'cz-text-area',
@@ -12,11 +13,12 @@ import { CZFormErrorMessageComponent } from "../cz-form-error-message/cz-form-er
     ReactiveFormsModule,
     Textarea,
     CZFloatLabelComponent,
-    CZFormErrorMessageComponent
+    CZFormErrorMessageComponent,
+    CZTooltipBadgeComponent
   ],
   templateUrl: './cz-text-area.component.html'
 })
-export class CZTextAreaComponent extends CZBaseInputWithControl implements OnInit {
+export class CZTextAreaComponent extends GroupFormControl implements OnInit {
   
   protected formCtrlName: string = 'text';
   protected isRequired: boolean = false;
@@ -24,6 +26,7 @@ export class CZTextAreaComponent extends CZBaseInputWithControl implements OnIni
   // Input / Outputs  
   public showRequiredDot = input<boolean>(true);
   public showErrorMessage = input<boolean>(true);
+  public maxChars = input<number>();
   
   public placeholder = input<string>();
   public floatLabel = input<string>();
@@ -48,7 +51,7 @@ export class CZTextAreaComponent extends CZBaseInputWithControl implements OnIni
     if (!!newValidators)
       this.ctrl.addValidators(newValidators);
 
-    this.isRequired = this.hasValidator(Validators.required);
+    this.isRequired = this.ctrl.hasValidator(Validators.required);
   };
 
   // --- Private Methods --- //
