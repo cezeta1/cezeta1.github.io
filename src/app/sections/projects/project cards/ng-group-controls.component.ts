@@ -1,13 +1,15 @@
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
+import { Router } from "@angular/router";
 import { Button } from "primeng/button";
 import { Card } from 'primeng/card';
 import { Message } from 'primeng/message';
+import { AppRoutesEnum } from "../../../app.routes";
 
 @Component({
   selector: 'ng-group-controls-project-card',
   imports: [
     Card,
-    Button, 
+    Button,
     Message
   ],
   template:`
@@ -37,6 +39,14 @@ import { Message } from 'primeng/message';
       <p>
         A lightweight library providing an Angular Form Control extension to simplify the creation of composed custom reactive formControls.
       </p>
+
+      <p-message severity="secondary" styleClass="mt-4" size="small" icon="pi pi-thumbs-up">
+        <span>
+          The contact form at the bottom of the 
+          <a (click)="redirectToHome()" class="underline">Home page</a> 
+          is built using this package!
+        </span>
+      </p-message>
       
       <p-message styleClass="mt-4" size="small" icon="pi pi-info-circle">
         v1.0 coming soon!
@@ -77,7 +87,10 @@ import { Message } from 'primeng/message';
   `
 })
 export class NgGroupControlsProjectCardComponent {
+  private _router = inject(Router);
+  
   protected redirectToGithub = () => window.open('https://github.com/cezeta1/ng-group-controls', '_blank');
   protected redirectToNpm = () => window.open('https://www.npmjs.com/package/ng-group-controls', '_blank');
   protected redirectToLive = () => window.open('https://github.com/cezeta1/ng-group-controls', '_blank');
+  protected redirectToHome = () => this._router.navigate([AppRoutesEnum.Home]);
 }

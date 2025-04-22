@@ -30,7 +30,7 @@ import { Message } from 'primeng/message';
           "
         >
           <img 
-            class="-mt-1 w-full !rounded-t-xl" 
+            class="object-cover w-full h-full !rounded-t-xl" 
             src="/assets/images/fx.jpeg" 
             alt="Card"
           />

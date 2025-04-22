@@ -6,7 +6,6 @@ import { LanguageService } from "../../services/language/language.service";
 import { cz_takeUntilDestroyed } from "../../utils";
 import { BaseSelect } from "../../domain/select.interfaces";
 import { SplitButtonModule } from 'primeng/splitbutton';
-import { MenuItem } from "primeng/api";
 
 export interface CountrySelect extends BaseSelect<AppLangsEnum> {
   flag: string;
