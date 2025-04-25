@@ -2,7 +2,7 @@ import { CreateSignalOptions, DestroyRef, Injector, Pipe, PipeTransform, runInIn
 import { SIGNAL, SignalGetter, signalUpdateFn } from "@angular/core/primitives/signals";
 import { takeUntilDestroyed, toSignal } from "@angular/core/rxjs-interop";
 import { FormGroup } from "@angular/forms";
-import * as _ from "lodash";
+import * as _ from "lodash-es";
 import { debounceTime, distinctUntilChanged, MonoTypeOperatorFunction, pipe } from "rxjs";
 
 // --------------------------------------------- // 
