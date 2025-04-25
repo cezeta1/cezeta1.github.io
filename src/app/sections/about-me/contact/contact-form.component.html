@@ -32,7 +32,7 @@
     </form>
 
     <!-- Submit Button -->
-    <div class="flex justify-end mt-6">
+    <div class="flex justify-end mt-6 mb-2">
       <p-button
         [label]="'home.contact.submit' | translate" 
         [disabled]="contactForm.invalid"
@@ -41,5 +41,8 @@
         (onClick)="onSubmit()"
       ></p-button>
     </div>
+
+    <grecaptcha-badge />
+    
   </blockable-div>
 </div>
