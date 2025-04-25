@@ -20,6 +20,15 @@
               "zone.js"
             ],
             "tsConfig": "tsconfig.app.json",
+            "sourceMap": {
+              "scripts": false,
+              "styles": false,
+              "hidden": false,
+              "vendor": false
+            },
+            "allowedCommonJsDependencies": [
+              "ng-group-controls"
+            ],
             "assets": [
               {
                 "glob": "**/*",
