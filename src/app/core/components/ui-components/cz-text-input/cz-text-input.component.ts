@@ -5,10 +5,12 @@ import { GroupFormControl } from "ng-group-controls";
 import { CZFloatLabelComponent } from "../cz-float-label/cz-float-label.component";
 import { CZFormErrorMessageComponent } from "../cz-form-error-message/cz-form-error-message.component";
 import { CZTooltipBadgeComponent } from "../cz-tooltip-badge/cz-tooltip-badge.component";
+import { CommonModule } from "@angular/common";
 
 @Component({
   selector: 'cz-text-input',
   imports: [
+    CommonModule,
     FormsModule,
     ReactiveFormsModule,
     InputText,

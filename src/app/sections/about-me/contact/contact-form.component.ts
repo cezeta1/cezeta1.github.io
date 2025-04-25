@@ -12,6 +12,7 @@ import { RECAPTCHA_V3_SITE_KEY, RecaptchaV3Module, ReCaptchaV3Service } from "ng
 import { cz_takeUntilDestroyed } from "../../../core/utils";
 import { CZUIBlockerComponent } from "../../../core/components/ui-components/cz-ui-blocker/cz-ui-blocker.component";
 import { BlockableDivComponent } from "../../../core/components/ui-components/blockable-div/blockable-div.component";
+import { GRecaptchaBadgeComponent } from "../../../core/components/grecaptcha-badge/grecaptcha-badge.component";
 
 @Component({
   selector: 'contact-form',
@@ -24,7 +25,8 @@ import { BlockableDivComponent } from "../../../core/components/ui-components/bl
     CZTextInputComponent,
     CZTextAreaComponent,
     CZUIBlockerComponent,
-    BlockableDivComponent
+    BlockableDivComponent,
+    GRecaptchaBadgeComponent
   ],
   providers: [
     ReCaptchaV3Service,

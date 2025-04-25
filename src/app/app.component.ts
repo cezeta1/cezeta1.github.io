@@ -6,12 +6,13 @@ import { LanguageService } from './core/services/language/language.service';
 import { Chip } from 'primeng/chip';
 import { environment as env } from '../environments/environment';
 import { cz_injectScript } from './core/utils';
+import { GRecaptchaBadgeComponent } from "./core/components/grecaptcha-badge/grecaptcha-badge.component";
 
 @Component({
   selector: 'app-root',
   imports: [
-    RouterOutlet, 
-    Toast, 
+    RouterOutlet,
+    Toast,
     Chip
   ],
   templateUrl: './app.component.html',
