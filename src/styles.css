@@ -45,9 +45,21 @@
   --color-toolbar-border-color: var(--p-toolbar-border-color);
 }
 
+/* Flag font */
+
 body, body * {
   font-family: "Twemoji Country Flags", "ui-sans-serif", "system-ui", "sans-serif", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
+
+/* Grecaptcha */
+
+:root {
+  body .grecaptcha-badge { 
+    visibility: hidden !important; 
+  }
+}
+
+/* Scrollbar */
 
 body {
   --sb-thumb-color: var(--p-primary-color);
