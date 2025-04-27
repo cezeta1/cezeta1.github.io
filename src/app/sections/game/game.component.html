@@ -1,0 +1,37 @@
+<h1 class="text-center text-xl font-bold">
+  Game Exploration
+</h1>
+
+<!-- Grid -->
+
+<div class="flex flex-col items-center gap-8">
+  
+  <div 
+    class="
+      w-fit 
+      mt-8 mx-auto 
+      border-4 border-toolbar-border-color
+      grid grid-rows-10 grid-cols-10
+    "
+  >
+    @for (rows of cells; track $index; let i = $index) {
+      @for (cell of rows; track $index; let j = $index) {
+        <div class="relative">
+          <cell class="absolute top-0 left-0"/>
+          <cell 
+            [(state)]="cells[i][j]" 
+            (onClick)="onCellClick(i,j)"
+            (onFlagged)="onFlagCell(i,j)"
+          />
+        </div>
+      }
+    }
+  </div>
+
+  <p-button 
+    size="small" 
+    label="Reset"
+    (onClick)="onReset()"
+  ></p-button>
+
+</div>

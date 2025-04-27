@@ -80,5 +80,9 @@
         "github-btn": "Github project"
       }
     }
+  },
+
+  "game": {
+    "title": "Game Exploration"
   }
 }

@@ -11,7 +11,7 @@ import { NgGroupControlsProjectCardComponent } from "./project cards/ng-group-co
     NgGroupControlsProjectCardComponent,
     GaslandsProjectCardComponent,
     FXExchangeProjectCardComponent
-],
+  ],
   templateUrl: './projects.component.html',
 })
 export class ProjectsComponent {}
