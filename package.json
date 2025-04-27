@@ -25,6 +25,7 @@
     "@tailwindcss/postcss": "^4.0.17",
     "animejs": "^4.0.2",
     "lodash-es": "^4.17.21",
+    "nanoid": "^5.1.5",
     "ng-group-controls": "^0.0.6",
     "ng-recaptcha-2": "^15.0.3",
     "postcss": "^8.5.3",

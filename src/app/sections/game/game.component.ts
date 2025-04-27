@@ -14,9 +14,9 @@ export class GameComponent implements OnInit {
 
   private _alertsService = inject(AlertsService);
 
-  protected xn = 15;
-  protected yn = 30;
-  protected mines = 80;
+  protected xn = 10;
+  protected yn = 10;
+  protected mines = 5;
   protected isGameOver = signal(false);
   
   private _defaultCell: CellState = {
@@ -35,15 +35,18 @@ export class GameComponent implements OnInit {
   // --- Events --- // 
 
   protected onCellClick (i: number, j: number) {
-
     let cell = this.cells[i][j];
 
     if (!cell || cell.isFlagged)
       return;
     
-    this.cells[i][j].isHidden = false;
+    this.cells[i][j] = {
+      ...this.cells[i][j],
+      isHidden: false
+    }
 
     // Clean up neighbors
+    
     if (cell.val <= 0) {
       this._forEachAround(i, j,
         (c, ui, uj) => {
@@ -53,24 +56,14 @@ export class GameComponent implements OnInit {
     }
 
     // Game over
+
     if (cell.isMine) {
       this._onGameOver();
       return;
     }
     
     // Winner?
-
-    let notMineMissing = false;
-    this._forEachCell((c) => {
-        if (!c.isMine && c.isHidden) {
-          notMineMissing = true;
-          return false;
-        }
-        return;
-      });
-
-    if (!notMineMissing)
-      this._onWinner();
+    this._checkWinner();
   }
 
   protected onFlagCell (i: number, j: number) {
@@ -79,7 +72,9 @@ export class GameComponent implements OnInit {
     if (!cell.isHidden)
       return;
 
-    cell.isFlagged = !cell.isFlagged; 
+    cell.isFlagged = !cell.isFlagged;
+    
+    this._checkWinner();
   }
 
   protected onReset() {
@@ -128,6 +123,21 @@ export class GameComponent implements OnInit {
     });
 
   }
+
+  private _checkWinner() {
+    let mineMissing = false;
+    this._forEachCell((c) => {
+        if (c.isMine && !c.isFlagged) {
+          mineMissing = true;
+          return false;
+        }
+        return;
+      });
+
+    if (!mineMissing)
+      this._onWinner();
+  }
+
 
   private _onWinner() {
 
@@ -178,5 +188,6 @@ export class GameComponent implements OnInit {
           fn(this.cells[ui][uj], ui, uj);
       })
     );
-  } 
+  }
+
 }

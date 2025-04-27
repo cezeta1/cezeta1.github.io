@@ -21,7 +21,6 @@
     @for (rows of cells; track $index; let i = $index) {
       @for (cell of rows; track $index; let j = $index) {
         <div class="relative">
-          <cell class="absolute top-0 left-0"/>
           <cell 
             [(state)]="cells[i][j]" 
             (onClick)="onCellClick(i,j)"
@@ -33,9 +32,41 @@
   </div>
 
   <p-button 
+    id="test-button"
     size="small" 
     label="Reset"
     (onClick)="onReset()"
   ></p-button>
+
+  <div class="py-10">
+
+    <div
+      class="absolute
+        flex items-center justify-center
+        w-10 aspect-square 
+        outline-1 outline-content-border-color
+        text-content-border-color
+        font-bold
+      "
+    >
+      <div
+        id="test"
+        class="
+          absolute w-10 aspect-square 
+          flex items-center justify-center
+          rounded-lg 
+          bg-red-400 
+          z-10
+        "
+      >
+        <i class="pi pi-flag-fill"></i>
+      </div>
+
+      <i class="absolute pi pi-circle-fill"></i>
+      <i class="!text-xl pi pi-star-fill"></i>
+
+    </div>
+  </div>
+
 
 </div>

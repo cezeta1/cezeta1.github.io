@@ -1,5 +1,11 @@
 import { CommonModule } from "@angular/common";
-import { Component, computed, input, model, output, signal } from "@angular/core";
+import { Component, computed, inject, Injector, model, OnInit, output, signal, untracked } from "@angular/core";
+import { toObservable } from "@angular/core/rxjs-interop";
+import { cz_takeUntilDestroyed } from "../../../core/utils";
+import { distinctUntilChanged, map, pairwise } from "rxjs";
+import { compact, isEqual } from "lodash-es";
+import { animate } from "animejs";
+import { nanoid } from 'nanoid'
 
 export interface CellState {
   val: number,
@@ -23,8 +29,11 @@ export interface CellState {
       (click)="onCellClick()"
       (contextmenu)="onRightClick($event)"
     >
-      @if (state()?.isHidden) {
+    
+      <!-- Front Layer -->
+      <!-- @if (state()?.isHidden) { -->
         <div 
+          [id]="'front-layer-'+internalId"
           class="
             absolute w-10 aspect-square 
             flex items-center justify-center
@@ -34,11 +43,12 @@ export interface CellState {
           "
         >
           @if (state()?.isFlagged) {
-            <i class="absolute pi pi-flag-fill"></i>
+            <i class="pi pi-flag-fill"></i>
           }
         </div>
-      }
+      <!-- }  -->
 
+      <!-- Back Layer -->
       @if (state()?.isMine ?? false) {
         <i class="absolute pi pi-circle-fill"></i>
         <i class="!text-xl pi pi-star-fill"></i>
@@ -72,16 +82,49 @@ export interface CellState {
     </div>
   `
 })
-export class CellComponent {
+export class CellComponent implements OnInit {
+  protected internalId = nanoid();
+  
+  private _inj = inject(Injector);
 
   public state = model<CellState>();
   public onClick = output();
   public onFlagged = output();
 
+  ngOnInit(): void {
+    toObservable(this.state, { injector: this._inj })
+      .pipe(
+        distinctUntilChanged((p, c)=> isEqual(p, c)),
+        pairwise(),
+        map(([oldVal, newVal]) => ({newVal, oldVal})),
+        cz_takeUntilDestroyed(this._inj),
+      )
+      .subscribe(({oldVal, newVal}) => {
+        if (oldVal?.isHidden != newVal?.isHidden)
+          this._animateShowCell();
+        
+        if (oldVal?.isFlagged != newVal?.isFlagged)
+          this._animateFlag();
+      })
+  }
+
   protected onCellClick = () => this.onClick.emit();
-  
+
   protected onRightClick = (e: any) =>  {
     e?.preventDefault();
     this.onFlagged.emit();
+  }
+
+  private _animateShowCell() {
+    animate('#front-layer-'+this.internalId, {
+      scale: [
+        { to: 0, ease: 'outExpo', duration: 500 }
+      ],
+      ease: 'inOutCirc'
+    });
+  }
+  
+  private _animateFlag() {
+
   }
 }
