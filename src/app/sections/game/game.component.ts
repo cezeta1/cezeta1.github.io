@@ -1,12 +1,9 @@
 import { CommonModule } from "@angular/common";
 import { Component, inject, OnInit, signal } from "@angular/core";
 import { CellComponent, CellState } from "./cell/cell.component";
-import { animate } from 'animejs';
 import { forEach, map, random, uniq } from "lodash-es";
 import { AlertsService } from "../../core/services/alerts/alerts.service";
 import { Button } from "primeng/button";
-
-import { createTimer, utils } from 'animejs';
 
 @Component({
   selector: 'game',
@@ -17,9 +14,9 @@ export class GameComponent implements OnInit {
 
   private _alertsService = inject(AlertsService);
 
-  protected xn = 10;
-  protected yn = 10;
-  protected mines = 5;
+  protected xn = 15;
+  protected yn = 30;
+  protected mines = 80;
   protected isGameOver = signal(false);
   
   private _defaultCell: CellState = {

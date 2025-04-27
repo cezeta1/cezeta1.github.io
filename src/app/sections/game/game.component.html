@@ -11,7 +11,11 @@
       w-fit 
       mt-8 mx-auto 
       border-4 border-toolbar-border-color
-      grid grid-rows-10 grid-cols-10
+      grid
+    "
+    [style]="
+      `grid-template-rows: repeat(${xn}, minmax(0, 1fr));
+       grid-template-columns: repeat(${yn}, minmax(0, 1fr));`
     "
   >
     @for (rows of cells; track $index; let i = $index) {
