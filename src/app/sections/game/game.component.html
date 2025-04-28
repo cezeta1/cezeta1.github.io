@@ -18,8 +18,8 @@
         grid-template-columns: repeat(${yn}, minmax(0, 1fr));
       `"
     >
-      @for (rows of cells; track $index; let i = $index) {
-        @for (cell of rows; track $index; let j = $index) {
+      @for (_ of [].constructor(xn); track $index; let i = $index) {
+        @for (_ of [].constructor(yn); track $index; let j = $index) {
           <div 
             class="
               relative 
@@ -28,9 +28,8 @@
             "
           >
             <cell
-              [(state)]="cells[i][j]" 
-              (onClick)="onCellClick(i,j)"
-              (onFlagged)="onFlagCell(i,j)"
+              (onClick)="onCellClick(i, j)"
+              (onRightClick)="onFlagCell(i, j)"
             />
           </div>
         }

@@ -8,7 +8,7 @@
     font-bold
   "
   (click)="onCellClick()"
-  (contextmenu)="onRightClick($event)"
+  (contextmenu)="onCellRightClick($event)"
 >
 
   <!-- Front Layer -->
@@ -31,44 +31,42 @@
 
   <!-- Back Layer -->
 
-  @if (state()?.isMine ?? false) {
+  @if (_state().isMine) {
     <i class="absolute pi pi-circle-fill"></i>
     <i class="!text-xl pi pi-star-fill"></i>
   }
-  @else if ((state()?.val ?? 0) > 0) {
+  @else if (_state().val > 0) {
     <div class="w-full h-full">
       <div
         class="w-full h-full flex items-center justify-center"
         [ngClass]="
         {
-          'bg-blue-400/20' : state()?.val == 1,
-          'bg-green-400/20' : state()?.val == 2,
-          'bg-red-400/20' : state()?.val == 3,
-          'bg-purple-400/20' : state()?.val == 4,
-          'bg-amber-800/20' : state()?.val == 5,
-          'bg-sky-300/20' : state()?.val == 6,
-          'bg-indigo-700/20' : state()?.val == 7,
-          'bg-gray-400/20' : state()?.val == 8
+          'bg-blue-400/20' : _state().val == 1,
+          'bg-green-400/20' : _state().val == 2,
+          'bg-red-400/20' : _state().val == 3,
+          'bg-purple-400/20' : _state().val == 4,
+          'bg-amber-800/20' : _state().val == 5,
+          'bg-sky-300/20' : _state().val == 6,
+          'bg-indigo-700/20' : _state().val == 7,
+          'bg-gray-400/20' : _state().val == 8
         }"
       >
         <span 
           [ngClass]="
             {
-              'text-blue-400' : state()?.val == 1,
-              'text-green-400' : state()?.val == 2,
-              'text-red-400' : state()?.val == 3,
-              'text-purple-400' : state()?.val == 4,
-              'text-amber-800' : state()?.val == 5,
-              'text-sky-300' : state()?.val == 6,
-              'text-indigo-700' : state()?.val == 7,
-              'text-gray-400' : state()?.val == 8
+              'text-blue-400' : _state().val == 1,
+              'text-green-400' : _state().val == 2,
+              'text-red-400' : _state().val == 3,
+              'text-purple-400' : _state().val == 4,
+              'text-amber-800' : _state().val == 5,
+              'text-sky-300' : _state().val == 6,
+              'text-indigo-700' : _state().val == 7,
+              'text-gray-400' : _state().val == 8
             }"
         >
-          {{ state()?.val }}
+          {{ _state().val }}
         </span>
       </div>
     </div>
   }
 </div>
-
-<!-- (blue1, green2, red3, purple4, brown/maroon5, cyan6, iforgor7 and gray8) -->

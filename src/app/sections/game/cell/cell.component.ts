@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { Component, inject, Injector, model, OnInit, output } from "@angular/core";
+import { Component, inject, Injector, OnInit, output, signal } from "@angular/core";
 import { toObservable } from "@angular/core/rxjs-interop";
 import { animate } from "animejs";
 import { nanoid } from 'nanoid';
@@ -19,15 +19,18 @@ export interface CellState {
 })
 export class CellComponent implements OnInit {
   protected internalId = nanoid();
-  
   private _inj = inject(Injector);
-
-  public state = model<CellState>();
-  public onClick = output();
-  public onFlagged = output();
+  
+  private _defaultState: CellState = {    
+    val: 0,
+    isMine: false,
+    isHidden: true,
+    isFlagged: false
+  };
+  protected _state = signal<CellState>({ ...this._defaultState });
 
   ngOnInit(): void {
-    toObservable(this.state, { injector: this._inj })
+    toObservable(this._state, { injector: this._inj })
       .pipe(
         cz_pairwiseMap(),
         cz_takeUntilDestroyed(this._inj),
@@ -35,11 +38,65 @@ export class CellComponent implements OnInit {
       .subscribe(({oldVal, newVal}) => this._handleAnimation(oldVal, newVal))
   }
 
-  protected onCellClick = () => this.onClick.emit();
+  // --- Events --- //
 
-  protected onRightClick = (e: any) =>  {
+  protected onCellClick = () => 
+    this.onClick.emit();
+
+  protected onCellRightClick = (e: any) =>  {
     e?.preventDefault();
-    this.onFlagged.emit();
+    this.onRightClick.emit();
+  }
+
+  // --- Interface --- //
+
+  public onClick = output();
+  public onRightClick = output();
+
+  public get state() { 
+    return this._state(); 
+  }
+
+  public stateObservable = () =>
+    toObservable(this._state, { injector: this._inj });
+
+  public setState = (newState: CellState) =>
+    this._state.set({... newState });
+
+  public setVal(newVal?: number) {
+    newVal ??= this._state().val; 
+    this._state.set({
+      ...this._state(),
+      val: newVal
+    });
+  }
+
+  public reset() {
+    this.setState(this._defaultState);
+  }
+
+  public toggleHidden(newVal?: boolean) {
+    newVal ??= !this._state().isHidden;
+    this._state.set({
+      ...this._state(),
+      isHidden: newVal
+    });
+  }
+
+  public toggleFlag(newVal?: boolean) {
+    newVal ??= !this._state().isFlagged;
+    this._state.set({
+      ...this._state(),
+      isFlagged: newVal
+    });
+  }
+  
+  public toggleMine(newVal?: boolean) {
+    newVal ??= !this._state().isMine; 
+    this._state.set({
+      ...this._state(),
+      isMine: newVal
+    });
   }
 
   // --- Animation Hanldler --- //

@@ -1,13 +1,11 @@
 import { CommonModule } from "@angular/common";
-import { AfterViewChecked, Component, inject, Injector, OnInit, signal } from "@angular/core";
-import { toObservable } from "@angular/core/rxjs-interop";
+import { AfterViewChecked, AfterViewInit, Component, computed, inject, Injector, signal, viewChildren } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { createTimeline } from "animejs";
-import { forEach, map, random, uniq } from "lodash-es";
+import { chunk, forEach, map, random, uniq } from "lodash-es";
 import { Button } from "primeng/button";
 import { InputNumberModule } from 'primeng/inputnumber';
 import { AlertsService } from "../../core/services/alerts/alerts.service";
-import { cz_takeUntilDestroyed } from "../../core/utils";
 import { CellComponent, CellState } from "./cell/cell.component";
 
 @Component({
@@ -21,10 +19,14 @@ import { CellComponent, CellState } from "./cell/cell.component";
   ],
   templateUrl: './game.component.html',
 })
-export class GameComponent implements OnInit, AfterViewChecked {
-
+export class GameComponent implements AfterViewChecked, AfterViewInit {
+ 
   private _inj = inject(Injector);
   private _alertsService = inject(AlertsService);
+
+  private __cR = viewChildren(CellComponent);
+  private _cellRefs = computed(() => chunk(this.__cR(), this.yn));
+  private _cellStates = computed(() => map(this._cellRefs(), (r) => map(r, c => c.state)));
 
   protected xn = 15;
   protected yn = 15;
@@ -33,22 +35,9 @@ export class GameComponent implements OnInit, AfterViewChecked {
   protected isBusy = signal(false);
   protected gameFinished = signal(false);
   private _won = signal(false);
-
-  private _defaultCell: CellState = {
-    val: 0,
-    isMine: false,
-    isHidden: true,
-    isFlagged: false
-  };
-
-  protected cells: CellState[][] = [];
-
-  ngOnInit(): void {
-    this._initCells();
-
-    toObservable(this.gameFinished, {injector: this._inj })
-      .pipe(cz_takeUntilDestroyed(this._inj))
-      .subscribe(() => this._animateGameOver());
+  
+  ngAfterViewInit(): void {
+    this._initCells();    
   }
 
   ngAfterViewChecked(): void {
@@ -58,28 +47,25 @@ export class GameComponent implements OnInit, AfterViewChecked {
 
   // --- Events --- // 
 
-  protected onCellClick (i: number, j: number) {
+  protected onCellClick (i: number, j: number, delay: number = 50) {
     if (this.gameFinished())
       return;
 
-    let cell = this.cells[i][j];
+    let cell = this._cellStates()[i][j];
 
     if (!cell || cell.isFlagged)
       return;
     
-    this.cells[i][j] = {
-      ...cell,
-      isHidden: false
-    };
+    this._cellRefs()[i][j]
+      .toggleHidden(false);
     
     // Clean up neighbors
 
     if (cell.val == 0) {
       this._forEachAround(i, j,
-        (c, ui, uj) => { 
-          if (c.isHidden && !c.isMine)          
-            this.onCellClick(ui, uj);
-        });
+        (_, ui, uj) => createTimeline().call(() => this.onCellClick(ui, uj), delay),
+        (c) => c.isHidden && !c.isMine,
+      );
     }
   }
 
@@ -87,15 +73,12 @@ export class GameComponent implements OnInit, AfterViewChecked {
     if (this.gameFinished())
       return;
 
-    let cell = this.cells[i][j];
+    let cell = this._cellStates()[i][j];
 
     if (!cell.isHidden)
       return;
-
-    this.cells[i][j] = {
-      ...cell,
-      isFlagged: !cell.isFlagged
-    }
+    
+    this._cellRefs()[i][j].toggleFlag();
   }
 
   protected onReset() {
@@ -128,14 +111,7 @@ export class GameComponent implements OnInit, AfterViewChecked {
     this.gameFinished.set(false);
     this._won.set(false);
 
-    this.cells = []
-      .constructor(this.xn)
-      .fill(null)
-      .map(() => []
-        .constructor(this.yn)
-        .fill(null)
-        .map(() => ({... this._defaultCell}))
-      );
+    this._forEachCell((_, i, j) => this._cellRefs()[i][j].reset());
 
     // set up Mines
     
@@ -155,17 +131,20 @@ export class GameComponent implements OnInit, AfterViewChecked {
         i = random(this.xn - 1);
         j = random(this.yn - 1);
         
-        if (this.cells[i][j].isMine)
+        if (this._cellStates()[i][j].isMine)
           repeat = true;
 
       } while (repeat);
       
-      this.cells[i][j].isMine = true;
+      this._cellRefs()[i][j].toggleMine(true);
       
       // set proximity numbers
       
       this._forEachAround(i, j, 
-        (_, ui, uj) => this.cells[ui][uj].val += 1);
+        (_, ui, uj) => 
+          this._cellRefs()[ui][uj].setVal(
+            this._cellStates()[ui][uj].val + 1
+          ));
     });
   }
 
@@ -208,15 +187,9 @@ export class GameComponent implements OnInit, AfterViewChecked {
 
     this._forEachCell((c, i, j) => {
       if (c.isMine)
-        this.cells[i][j] = {
-          ...this.cells[i][j],
-          isFlagged: true
-        };
+        this._cellRefs()[i][j].toggleFlag(true);
       else
-        this.cells[i][j] = {
-          ...this.cells[i][j],
-          isHidden: false
-        };
+        this._cellRefs()[i][j].toggleHidden(false);
     });
     
     this._alertsService.showSuccess("Winner :)");
@@ -229,30 +202,26 @@ export class GameComponent implements OnInit, AfterViewChecked {
 
   private _solveCell(c: CellState, i: number, j: number) {
     if (c.isMine)
-      this.cells[i][j] = {
-        ...this.cells[i][j],
-        isFlagged: true
-      };
-    else
-      this.cells[i][j] = {
-        ...this.cells[i][j],
-        isFlagged: false,
-        isHidden: false
-      };
-  }
-
-  private _animateGameOver() {
-
+      this._cellRefs()[i][j].toggleFlag(true);
+    else {
+      this._cellRefs()[i][j].toggleFlag(false);
+      this._cellRefs()[i][j].toggleHidden(false);
+    }
   }
 
   // --- Utils --- //
 
   private _forEachCell = (fn: (c: CellState, i: number, j: number) => void | false) => 
-    forEach(this.cells, (row, i) => {
+    forEach(this._cellStates(), (row, i) => {
       forEach(row, (c, j) => fn(c,i,j))
     });
 
-  private _forEachAround = (i: number, j: number, fn: (c: CellState, i: number, j: number) => void) => {
+  private _forEachAround = (
+    i: number,
+    j: number, 
+    fn: (c: CellState, i: number, j: number) => void,
+    cond?: (c: CellState, i: number, j: number) => boolean,
+  ) => {
     let aroundIs = uniq(map(
       [i-1, i, i+1], 
       (ix) => ix < 0 
@@ -273,8 +242,13 @@ export class GameComponent implements OnInit, AfterViewChecked {
     
     forEach(aroundIs, (ui) => 
       forEach(aroundJs, (uj) => {
+        let c = this._cellStates()[ui][uj];
+
+        if (!!cond && !cond(c, ui, uj))
+          return;
+        
         if (!(ui == i && uj == j))
-          fn(this.cells[ui][uj], ui, uj);
+          fn(c, ui, uj);
       })
     );
   }
