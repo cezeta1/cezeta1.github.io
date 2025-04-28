@@ -43,6 +43,8 @@
   --color-overlay-modal-color: var(--p-overlay-modal-color);
 
   --color-toolbar-border-color: var(--p-toolbar-border-color);
+
+  --color-form-field-background: var(--p-form-field-background);
 }
 
 /* Flag font */

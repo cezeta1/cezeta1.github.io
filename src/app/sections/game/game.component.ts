@@ -5,14 +5,20 @@ import { FormsModule } from "@angular/forms";
 import { createTimeline } from "animejs";
 import { forEach, map, random, uniq } from "lodash-es";
 import { Button } from "primeng/button";
-import { InputText } from "primeng/inputtext";
+import { InputNumberModule } from 'primeng/inputnumber';
 import { AlertsService } from "../../core/services/alerts/alerts.service";
 import { cz_takeUntilDestroyed } from "../../core/utils";
 import { CellComponent, CellState } from "./cell/cell.component";
 
 @Component({
   selector: 'game',
-  imports: [ CommonModule, FormsModule, CellComponent, Button, InputText ],
+  imports: [ 
+    CommonModule, 
+    FormsModule,
+    CellComponent,
+    Button, 
+    InputNumberModule 
+  ],
   templateUrl: './game.component.html',
 })
 export class GameComponent implements OnInit, AfterViewChecked {
@@ -67,14 +73,14 @@ export class GameComponent implements OnInit, AfterViewChecked {
     };
     
     // Clean up neighbors
-    
-    if (cell.val <= 0)
+
+    if (cell.val == 0) {
       this._forEachAround(i, j,
         (c, ui, uj) => { 
-          if (c.val == 0 && c.isHidden) {            
+          if (c.isHidden && !c.isMine)          
             this.onCellClick(ui, uj);
-          }
         });
+    }
   }
 
   protected onFlagCell (i: number, j: number) {
@@ -112,7 +118,7 @@ export class GameComponent implements OnInit, AfterViewChecked {
     tl = tl.call(() => { 
       this.isBusy.set(false);
       this._checkGameState();
-    }, t)
+    }, t);
   }
 
   // --- Private Methods --- //
@@ -132,6 +138,7 @@ export class GameComponent implements OnInit, AfterViewChecked {
       );
 
     // set up Mines
+    
     let m = this.mines > (this.xn * this.yn)
       ? this.xn * this.yn
       : this.mines;
@@ -229,6 +236,7 @@ export class GameComponent implements OnInit, AfterViewChecked {
     else
       this.cells[i][j] = {
         ...this.cells[i][j],
+        isFlagged: false,
         isHidden: false
       };
   }
