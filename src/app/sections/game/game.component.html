@@ -2,71 +2,76 @@
   Game Exploration
 </h1>
 
-<!-- Grid -->
-
 <div class="flex flex-col items-center gap-8">
-  
-  <div 
-    class="
-      w-fit 
-      mt-8 mx-auto 
-      border-4 border-toolbar-border-color
-      grid
-    "
-    [style]="
-      `grid-template-rows: repeat(${xn}, minmax(0, 1fr));
-       grid-template-columns: repeat(${yn}, minmax(0, 1fr));`
-    "
-  >
-    @for (rows of cells; track $index; let i = $index) {
-      @for (cell of rows; track $index; let j = $index) {
-        <div class="relative">
-          <cell 
-            [(state)]="cells[i][j]" 
-            (onClick)="onCellClick(i,j)"
-            (onFlagged)="onFlagCell(i,j)"
-          />
-        </div>
-      }
-    }
-  </div>
-
-  <p-button 
-    id="test-button"
-    size="small" 
-    label="Reset"
-    (onClick)="onReset()"
-  ></p-button>
-
-  <div class="py-10">
-
+  <div class="flex w-fit mt-8 mx-auto">
+    
     <div
-      class="absolute
-        flex items-center justify-center
-        w-10 aspect-square 
-        outline-1 outline-content-border-color
-        text-content-border-color
-        font-bold
+      id="game-grid"
+
+      class="
+        grid
+        border-4 border-toolbar-border-color
+      "
+      [style]="`
+        grid-template-rows: repeat(${xn}, minmax(0, 1fr));
+        grid-template-columns: repeat(${yn}, minmax(0, 1fr));
+      `"
+    >
+      @for (rows of cells; track $index; let i = $index) {
+        @for (cell of rows; track $index; let j = $index) {
+          <div class="relative">
+            <cell 
+              [(state)]="cells[i][j]" 
+              (onClick)="onCellClick(i,j)"
+              (onFlagged)="onFlagCell(i,j)"
+            />
+          </div>
+        }
+      }
+    </div>
+    <div 
+      class="
+        flex flex-col gap-4
+        h-fit
+        p-4 pl-8
+        rounded-r-lg
+        bg-content-hover-background
+        border-4 border-l-0 border-toolbar-border-color
       "
     >
-      <div
-        id="test"
-        class="
-          absolute w-10 aspect-square 
-          flex items-center justify-center
-          rounded-lg 
-          bg-red-400 
-          z-10
-        "
-      >
-        <i class="pi pi-flag-fill"></i>
+      <div class="flex gap-2">
+        <div class="flex flex-col gap-2">
+          <label for="xn" class="text-xs">X</label>
+          <input pInputText id="xn" [(ngModel)]="xn" />
+        </div>
+  
+        <div class="flex flex-col gap-2">
+          <label for="yn" class="text-xs">Y</label>
+          <input pInputText id="yn" [(ngModel)]="yn" />
+        </div>
       </div>
 
-      <i class="absolute pi pi-circle-fill"></i>
-      <i class="!text-xl pi pi-star-fill"></i>
+      <div class="flex flex-col gap-2">
+        <label for="mines" class="text-xs">Mines</label>
+        <input pInputText id="mines" [(ngModel)]="mines" />
+      </div>
+
+      <div class="flex gap-2">
+        <p-button
+          size="small" 
+          label="Reset"
+          (onClick)="onReset()"
+          [disabled]="isBusy()"
+        ></p-button>
+  
+        <p-button
+          size="small" 
+          label="Solve"
+          (onClick)="autoSolve()"
+          [disabled]="gameFinished() || isBusy()"
+        ></p-button>
+      </div>
 
     </div>
   </div>
-
-
 </div>

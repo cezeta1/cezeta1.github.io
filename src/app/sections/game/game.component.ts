@@ -1,24 +1,33 @@
 import { CommonModule } from "@angular/common";
-import { Component, inject, OnInit, signal } from "@angular/core";
-import { CellComponent, CellState } from "./cell/cell.component";
+import { AfterViewChecked, Component, inject, Injector, OnInit, signal } from "@angular/core";
+import { toObservable } from "@angular/core/rxjs-interop";
+import { FormsModule } from "@angular/forms";
+import { createTimeline } from "animejs";
 import { forEach, map, random, uniq } from "lodash-es";
-import { AlertsService } from "../../core/services/alerts/alerts.service";
 import { Button } from "primeng/button";
+import { InputText } from "primeng/inputtext";
+import { AlertsService } from "../../core/services/alerts/alerts.service";
+import { cz_takeUntilDestroyed } from "../../core/utils";
+import { CellComponent, CellState } from "./cell/cell.component";
 
 @Component({
   selector: 'game',
-  imports: [CommonModule, CellComponent, Button],
+  imports: [ CommonModule, FormsModule, CellComponent, Button, InputText ],
   templateUrl: './game.component.html',
 })
-export class GameComponent implements OnInit {
+export class GameComponent implements OnInit, AfterViewChecked {
 
+  private _inj = inject(Injector);
   private _alertsService = inject(AlertsService);
 
-  protected xn = 10;
-  protected yn = 10;
+  protected xn = 15;
+  protected yn = 15;
   protected mines = 5;
-  protected isGameOver = signal(false);
   
+  protected isBusy = signal(false);
+  protected gameFinished = signal(false);
+  private _won = signal(false);
+
   private _defaultCell: CellState = {
     val: 0,
     isMine: false,
@@ -30,61 +39,88 @@ export class GameComponent implements OnInit {
 
   ngOnInit(): void {
     this._initCells();
+
+    toObservable(this.gameFinished, {injector: this._inj })
+      .pipe(cz_takeUntilDestroyed(this._inj))
+      .subscribe(() => this._animateGameOver());
+  }
+
+  ngAfterViewChecked(): void {
+    if (!this.isBusy())
+      this._checkGameState();
   }
 
   // --- Events --- // 
 
   protected onCellClick (i: number, j: number) {
+    if (this.gameFinished())
+      return;
+
     let cell = this.cells[i][j];
 
     if (!cell || cell.isFlagged)
       return;
     
     this.cells[i][j] = {
-      ...this.cells[i][j],
+      ...cell,
       isHidden: false
-    }
-
+    };
+    
     // Clean up neighbors
     
-    if (cell.val <= 0) {
+    if (cell.val <= 0)
       this._forEachAround(i, j,
-        (c, ui, uj) => {
-          if (c.val == 0 && c.isHidden)
+        (c, ui, uj) => { 
+          if (c.val == 0 && c.isHidden) {            
             this.onCellClick(ui, uj);
+          }
         });
-    }
-
-    // Game over
-
-    if (cell.isMine) {
-      this._onGameOver();
-      return;
-    }
-    
-    // Winner?
-    this._checkWinner();
   }
 
   protected onFlagCell (i: number, j: number) {
+    if (this.gameFinished())
+      return;
+
     let cell = this.cells[i][j];
 
     if (!cell.isHidden)
       return;
 
-    cell.isFlagged = !cell.isFlagged;
-    
-    this._checkWinner();
+    this.cells[i][j] = {
+      ...cell,
+      isFlagged: !cell.isFlagged
+    }
   }
 
   protected onReset() {
-    this.isGameOver.set(false);
     this._initCells();
+  }
+
+  protected autoSolve() {
+
+    this.isBusy.set(true);
+
+    let tl = createTimeline();
+
+    let t = 0;
+    this._forEachCell((c, i, j) => {
+      tl = tl.call(() => this._solveCell(c, i, j), t);
+      t += 5;
+    });
+
+    t += 300;
+    tl = tl.call(() => { 
+      this.isBusy.set(false);
+      this._checkGameState();
+    }, t)
   }
 
   // --- Private Methods --- //
 
   private _initCells() {
+
+    this.gameFinished.set(false);
+    this._won.set(false);
 
     this.cells = []
       .constructor(this.xn)
@@ -96,8 +132,11 @@ export class GameComponent implements OnInit {
       );
 
     // set up Mines
-    
-    forEach([].constructor(this.mines), (_) => {
+    let m = this.mines > (this.xn * this.yn)
+      ? this.xn * this.yn
+      : this.mines;
+
+    forEach([].constructor(m), (_) => {
 
       let i = 0;
       let j = 0;
@@ -121,39 +160,81 @@ export class GameComponent implements OnInit {
       this._forEachAround(i, j, 
         (_, ui, uj) => this.cells[ui][uj].val += 1);
     });
-
   }
 
-  private _checkWinner() {
+  private _checkGameState() {
+
+    if (this.gameFinished())
+      return;
+
+    let isGameOver = false;
     let mineMissing = false;
+
     this._forEachCell((c) => {
-        if (c.isMine && !c.isFlagged) {
-          mineMissing = true;
-          return false;
+        if (c.isMine) {
+
+          // Game Over
+          if (!c.isHidden) {
+            isGameOver = true;
+            return false;
+          }
+
+          // Game continues
+          if (c.isMine && !c.isFlagged) {
+            mineMissing = true;
+            return false;
+          }
         }
         return;
       });
 
+    if (isGameOver)
+      this._onGameOver();
+
     if (!mineMissing)
-      this._onWinner();
+      this._onWin();
   }
 
+  private _onWin() {
+    this.gameFinished.set(true);
+    this._won.set(true);
 
-  private _onWinner() {
-
-    this.isGameOver.set(false);
-    
-    this._forEachCell((c) => {
+    this._forEachCell((c, i, j) => {
       if (c.isMine)
-        c.isFlagged = true;
+        this.cells[i][j] = {
+          ...this.cells[i][j],
+          isFlagged: true
+        };
+      else
+        this.cells[i][j] = {
+          ...this.cells[i][j],
+          isHidden: false
+        };
     });
-
+    
     this._alertsService.showSuccess("Winner :)");
   }
 
   private _onGameOver() {
-    this.isGameOver.set(true);
+    this.gameFinished.set(true);
     this._alertsService.showError("Game Over :(");
+  }
+
+  private _solveCell(c: CellState, i: number, j: number) {
+    if (c.isMine)
+      this.cells[i][j] = {
+        ...this.cells[i][j],
+        isFlagged: true
+      };
+    else
+      this.cells[i][j] = {
+        ...this.cells[i][j],
+        isHidden: false
+      };
+  }
+
+  private _animateGameOver() {
+
   }
 
   // --- Utils --- //

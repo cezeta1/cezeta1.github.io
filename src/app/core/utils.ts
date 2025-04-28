@@ -3,7 +3,7 @@ import { SIGNAL, SignalGetter, signalUpdateFn } from "@angular/core/primitives/s
 import { takeUntilDestroyed, toSignal } from "@angular/core/rxjs-interop";
 import { FormGroup } from "@angular/forms";
 import * as _ from "lodash-es";
-import { debounceTime, distinctUntilChanged, MonoTypeOperatorFunction, pipe } from "rxjs";
+import { debounceTime, distinctUntilChanged, map, MonoTypeOperatorFunction, Observable, pairwise, pipe, UnaryFunction } from "rxjs";
 
 // --------------------------------------------- // 
 //           Lodash Method Extensions            // 
@@ -126,6 +126,12 @@ export const cz_debounceUntilChanged = <T>(
   pipe(
     debounceTime(milliseconds),
     distinctUntilChanged(eqFn)
+  );
+
+export const cz_pairwiseMap = <T>(): UnaryFunction<Observable<T>, Observable<{ newVal: T; oldVal: T; }>> => 
+  pipe(
+    pairwise(),
+    map(([oldVal, newVal]) => ({newVal, oldVal}))
   );
 
 export const cz_takeUntilDestroyed = <T>(inj : Injector): MonoTypeOperatorFunction<T> => {
