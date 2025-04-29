@@ -1,8 +1,8 @@
 import { CommonModule } from "@angular/common";
 import { AfterViewChecked, AfterViewInit, Component, computed, inject, Injector, signal, viewChildren } from "@angular/core";
 import { FormsModule } from "@angular/forms";
-import { createTimeline } from "animejs";
-import { chunk, forEach, map, random, uniq } from "lodash-es";
+import { animate, createTimeline, stagger, utils } from "animejs";
+import { chunk, forEach, isEqual, map, random, uniq } from "lodash-es";
 import { Button } from "primeng/button";
 import { InputNumberModule } from 'primeng/inputnumber';
 import { AlertsService } from "../../core/services/alerts/alerts.service";
@@ -27,10 +27,11 @@ export class GameComponent implements AfterViewChecked, AfterViewInit {
   private __cR = viewChildren(CellComponent);
   private _cellRefs = computed(() => chunk(this.__cR(), this.yn));
   private _cellStates = computed(() => map(this._cellRefs(), (r) => map(r, c => c.state)));
+  private _cellLenth = computed(() => this.xn * this.yn);
 
   protected xn = 15;
   protected yn = 15;
-  protected mines = 5;
+  protected mines = 15;
   
   protected isBusy = signal(false);
   protected gameFinished = signal(false);
@@ -47,7 +48,7 @@ export class GameComponent implements AfterViewChecked, AfterViewInit {
 
   // --- Events --- // 
 
-  protected onCellClick (i: number, j: number, delay: number = 50) {
+  protected onCellClick (i: number, j: number) {
     if (this.gameFinished())
       return;
 
@@ -55,19 +56,53 @@ export class GameComponent implements AfterViewChecked, AfterViewInit {
 
     if (!cell || cell.isFlagged)
       return;
-    
+
+    let staggerFn = stagger(50, {
+      grid: [this.yn, this.xn],
+      from: i*this.xn + j
+    });
+
     this._cellRefs()[i][j]
       .toggleHidden(false);
-    
-    // Clean up neighbors
 
     if (cell.val == 0) {
-      this._forEachAround(i, j,
-        (_, ui, uj) => createTimeline().call(() => this.onCellClick(ui, uj), delay),
-        (c) => c.isHidden && !c.isMine,
+      
+      this._forEachCell(
+        (_, ui, uj) => {
+          let target = this._cellRefs()[ui][uj];
+          let index = ui*this.xn + uj;
+          let delay = staggerFn(target, index, this._cellLenth());
+
+          animate(target, {
+            _____anim: [{ from: 0, to: 1 }],
+            delay: delay,
+            onBeforeUpdate: _ => target.toggleHidden(false)
+          });
+        },
+        c => c.isHidden && !c.isMine
       );
     }
   }
+
+  // private _exploreNeighbors(i: number, j: number): { x:number, y:number }[] {
+  //   let ret: { x:number, y:number }[] = [{ x: i, y: j }];
+
+  //   let o = this._cellStates()[i][j];
+
+  //   if (o.val == 0) {
+  //     this._forEachAround(i, j, 
+  //       (_, ui, uj) => {
+          
+
+  //         ret = [
+  //           ...ret,
+  //           ...this._exploreNeighbors(ui, uj)
+  //         ];
+  //       });
+  //   }
+
+  //   return ret;
+  // }
 
   protected onFlagCell (i: number, j: number) {
     if (this.gameFinished())
@@ -211,9 +246,17 @@ export class GameComponent implements AfterViewChecked, AfterViewInit {
 
   // --- Utils --- //
 
-  private _forEachCell = (fn: (c: CellState, i: number, j: number) => void | false) => 
+  private _forEachCell = (
+    fn: (c: CellState, i: number, j: number) => void | false,
+    cond?: (c: CellState, i: number, j: number) => boolean
+  ) => 
     forEach(this._cellStates(), (row, i) => {
-      forEach(row, (c, j) => fn(c,i,j))
+      forEach(row, (c, j) =>  {
+        if (!!cond && !cond(c,i,j))
+          return;
+
+        fn(c,i,j);
+      })
     });
 
   private _forEachAround = (
