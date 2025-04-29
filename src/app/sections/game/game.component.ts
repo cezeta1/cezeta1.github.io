@@ -2,7 +2,7 @@ import { CommonModule } from "@angular/common";
 import { AfterViewChecked, AfterViewInit, Component, computed, inject, Injector, signal, viewChildren } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { createTimeline, stagger} from "animejs";
-import { chunk, delay, forEach, map, random, set, uniq } from "lodash-es";
+import { chunk, delay, forEach, isEqual, map, random, set, uniq } from "lodash-es";
 import { Button } from "primeng/button";
 import { InputNumberModule } from 'primeng/inputnumber';
 import { AlertsService } from "../../core/services/alerts/alerts.service";
@@ -21,7 +21,6 @@ import { CellComponent, CellState } from "./cell/cell.component";
 })
 export class GameComponent implements AfterViewChecked, AfterViewInit {
  
-  private _inj = inject(Injector);
   private _alertsService = inject(AlertsService);
 
   private __cR = viewChildren(CellComponent);
@@ -31,7 +30,7 @@ export class GameComponent implements AfterViewChecked, AfterViewInit {
 
   protected xn = 15;
   protected yn = 15;
-  protected mines = 15;
+  protected mines = 20;
   
   protected isBusy = signal(false);
   protected gameFinished = signal(false);
@@ -56,30 +55,52 @@ export class GameComponent implements AfterViewChecked, AfterViewInit {
 
     if (!cell || cell.isFlagged)
       return;
-    
-    let staggerFn = stagger(50, {
+
+    this._onLeftClick(i, j);
+  }
+
+  private _onLeftClick(i: number, j: number) {
+    let c = this._cellRefs()[i][j];
+    c.toggleHidden(false);
+
+    if (c.state.val == 0 && !c.state.isMine && !c.state.isFlagged)
+      this._expandNeighbors(i, j);
+  }
+
+  private _expandNeighbors(i: number, j: number, staggerFn?: Function) {
+    staggerFn ??= stagger(50, {
       grid: [this.yn, this.xn],
       from: i*this.xn + j
     });
+    
+    let visitedCells: { x: number, y: number }[] = [
+      { x: i, y: j }
+    ];
+    
+    // Expand Neighbors
 
-    this._cellRefs()[i][j]
-      .toggleHidden(false);
+    const _loop = (ui: number, uj: number) => {
+      let coords = { x: ui, y: uj };
+        
+      if (visitedCells.some(c => isEqual(c, coords)))
+        return;
 
-    if (cell.val == 0) {
+      visitedCells.push(coords);
+
+      let target = this._cellRefs()[ui][uj];
+
+      let idx = this._getFlatIndex(ui, uj)
+      let delay = staggerFn(target, idx, this._cellLenth()) as number;
       
-      this._forEachCell(
-        (_, ui, uj) => {
-          let target = this._cellRefs()[ui][uj];
-          
-          let index = ui*this.xn + uj;
+      setTimeout(() => target.toggleHidden(false), delay);
+      
+      if (target.state.val != 0)
+        return;
 
-          let delay = staggerFn(target, index, this._cellLenth()) as number;
+      this._forEachAround(ui, uj, (_, xi, xj) => _loop(xi, xj));
+    };
 
-          setTimeout(() => target.toggleHidden(false), delay);
-        },
-        c => c.isHidden && !c.isMine
-      );
-    }
+    this._forEachAround(i, j, (_, ui, uj) => _loop(ui, uj));
   }
 
   protected onFlagCell (i: number, j: number) {
