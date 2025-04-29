@@ -1,7 +1,7 @@
 import { CommonModule } from "@angular/common";
 import { Component, inject, Injector, OnInit, output, signal } from "@angular/core";
 import { toObservable } from "@angular/core/rxjs-interop";
-import { animate } from "animejs";
+import { animate, AnimationParams } from "animejs";
 import { nanoid } from 'nanoid';
 import { cz_pairwiseMap, cz_takeUntilDestroyed } from "../../../core/utils";
 
@@ -28,14 +28,20 @@ export class CellComponent implements OnInit {
     isFlagged: false
   };
   protected _state = signal<CellState>({ ...this._defaultState });
+  protected _busy = signal<boolean>(false);
 
   ngOnInit(): void {
     toObservable(this._state, { injector: this._inj })
       .pipe(
-        cz_pairwiseMap(),
+        cz_pairwiseMap({ ...this._defaultState }),
         cz_takeUntilDestroyed(this._inj),
       )
-      .subscribe(({oldVal, newVal}) => this._handleAnimation(oldVal, newVal))
+      .subscribe(({oldVal, newVal}) => {
+        if (this._busy())
+          return;
+
+        this._handleAnimation(oldVal, newVal);
+      })
   }
 
   // --- Events --- //
@@ -119,7 +125,7 @@ export class CellComponent implements OnInit {
       ease: 'inOutCirc'
     };
 
-    animate('#front-layer-'+this.internalId, anim);
+    this._animate('#front-layer-'+this.internalId, anim);
   }
   
   private _animateFlag(isIn: boolean = true) {
@@ -132,6 +138,17 @@ export class CellComponent implements OnInit {
       ease: 'inOutCirc'
     }
 
-    animate('#flag-'+this.internalId, anim);
+    this._animate('#flag-'+this.internalId, anim);
+  }
+
+  private _animate(id:string, conf: AnimationParams) {
+    this._busy.set(true);
+    animate(id, { 
+      ...conf,
+      onComplete: self => {
+        this._busy.set(false);
+        conf.onComplete?.(self);
+      } 
+    });
   }
 }

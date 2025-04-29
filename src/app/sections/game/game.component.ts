@@ -1,12 +1,13 @@
 import { CommonModule } from "@angular/common";
-import { AfterViewChecked, AfterViewInit, Component, computed, inject, Injector, signal, viewChildren } from "@angular/core";
+import { AfterViewChecked, AfterViewInit, Component, computed, inject, signal, viewChildren } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { createTimeline, stagger} from "animejs";
-import { chunk, delay, forEach, isEqual, map, random, set, uniq } from "lodash-es";
+import { chunk, forEach, isEqual, map, random, uniq } from "lodash-es";
 import { Button } from "primeng/button";
-import { InputNumberModule } from 'primeng/inputnumber';
+import { InputNumber } from 'primeng/inputnumber';
 import { AlertsService } from "../../core/services/alerts/alerts.service";
 import { CellComponent, CellState } from "./cell/cell.component";
+import { from, delay, fromEvent } from "rxjs";
 
 @Component({
   selector: 'game',
@@ -15,7 +16,7 @@ import { CellComponent, CellState } from "./cell/cell.component";
     FormsModule,
     CellComponent,
     Button, 
-    InputNumberModule 
+    InputNumber
   ],
   templateUrl: './game.component.html',
 })
@@ -30,10 +31,11 @@ export class GameComponent implements AfterViewChecked, AfterViewInit {
 
   protected xn = 15;
   protected yn = 15;
-  protected mines = 20;
+  protected mines = 15;
   
   protected isBusy = signal(false);
   protected gameFinished = signal(false);
+  
   private _won = signal(false);
   
   ngAfterViewInit(): void {
@@ -68,6 +70,7 @@ export class GameComponent implements AfterViewChecked, AfterViewInit {
   }
 
   private _expandNeighbors(i: number, j: number, staggerFn?: Function) {
+
     staggerFn ??= stagger(50, {
       grid: [this.yn, this.xn],
       from: i*this.xn + j
@@ -91,7 +94,7 @@ export class GameComponent implements AfterViewChecked, AfterViewInit {
 
       let idx = this._getFlatIndex(ui, uj)
       let delay = staggerFn(target, idx, this._cellLenth()) as number;
-      
+    
       setTimeout(() => target.toggleHidden(false), delay);
       
       if (target.state.val != 0)
