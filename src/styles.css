@@ -1,8 +1,9 @@
+
 /* CSS Layer Configuration for Tailwind and PrimeNG */
 @layer tailwind-base, primeng;
 
 /* PrimeNG Layer (no need to modify as the imports handle this) */
-@import "primeicons/primeicons.css"; 
+@import "primeicons/primeicons.css";
 
 /* Base Layer for Tailwind */
 @layer tailwind-base {
@@ -51,6 +52,10 @@
 
 body, body * {
   font-family: "Twemoji Country Flags", "ui-sans-serif", "system-ui", "sans-serif", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+.lcd {
+  font-family: 'Digital-7 Mono', monospace;
 }
 
 /* Grecaptcha */

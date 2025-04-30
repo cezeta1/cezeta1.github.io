@@ -2,7 +2,7 @@ import { CommonModule } from "@angular/common";
 import { AfterViewChecked, AfterViewInit, Component, computed, input, output, signal, viewChildren } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { createTimeline, createTimer, stagger, Timer } from "animejs";
-import { chunk, forEach, isEqual, map, random, uniq } from "lodash-es";
+import { chunk, forEach, map, random, uniq } from "lodash-es";
 import { CellComponent, CellState } from "../cell/cell.component";
 
 export interface SweeperState {
@@ -97,29 +97,34 @@ export class SweeperGridComponent implements AfterViewChecked, AfterViewInit {
     c.toggleHidden(false);
 
     if (c.state.val == 0 && !c.state.isMine)
-      this._expandNeighbors(i, j);
+      this._floodFill(i, j);
   }
 
-  private _expandNeighbors(i: number, j: number, staggerFn?: Function) {
+  private _floodFill(i: number, j: number, staggerFn?: Function) {
 
     staggerFn ??= stagger(50, {
       grid: [this.yn(), this.xn()],
       from: this._getFlatIndex(i, j)
     });
     
-    let visitedCells: { x: number, y: number }[] = [
-      { x: i, y: j }
-    ];
+    let visitedCells: boolean[][] = 
+      [].constructor(this.xn())
+        .fill(null)
+        .map((_: null) => 
+          [].constructor(this.yn())
+            .fill(false)
+        );
+    
+    visitedCells[i][j] = true;
     
     // Expand Neighbors
 
     const _loop = (ui: number, uj: number) => {
-      let coords = { x: ui, y: uj };
-        
-      if (visitedCells.some(c => isEqual(c, coords)))
+
+      if (visitedCells[ui][uj])
         return;
 
-      visitedCells.push(coords);
+      visitedCells[ui][uj] = true;
 
       let target = this._cellRefs()[ui][uj];
 
@@ -207,7 +212,10 @@ export class SweeperGridComponent implements AfterViewChecked, AfterViewInit {
     });
   }
 
-  private _onReset = () => this._initGame();
+  private _onReset = () => {
+    if (!this.isBusy())
+      this._initGame();
+  }
 
   private _autoSolve() {
     this.isBusy.set(true);
@@ -220,7 +228,7 @@ export class SweeperGridComponent implements AfterViewChecked, AfterViewInit {
       t += 5;
     });
 
-    tl = tl.call(() => this.isBusy.set(false), t + 300);
+    tl = tl.call(() => this.isBusy.set(false), t + 300);    
   }
 
   private _solveCell(c: CellState, i: number, j: number) {
@@ -282,12 +290,7 @@ export class SweeperGridComponent implements AfterViewChecked, AfterViewInit {
     this.gameFinished.set(true);
     this._won.set(true);
     
-    this._forEachCell((c, i, j) => {
-      if (c.isMine)
-        this._cellRefs()[i][j].toggleFlag(true);
-      else
-        this._cellRefs()[i][j].toggleHidden(false);
-    });
+    this._autoSolve();
 
     this._timer?.cancel();
     this._state.set({

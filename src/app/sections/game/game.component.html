@@ -4,10 +4,10 @@
 
 <cz-ui-blocker
   [target]="sweeperGrid"
-  [blocked]="gameState()?.result != 'inProgress'"
+  [blocked]="gameState?.result != 'inProgress'"
   [showLoading]="false"
 >
-  @if (isVictory()) {
+  @if (gameState?.result == 'win') {
     <p-message size="small">
       🎉 You win! 🎉 
     </p-message>
@@ -19,38 +19,48 @@
   }
 </cz-ui-blocker>
 
-
-<div class="my-4">
-  Time: {{ gameState()?.timer | durationFormat: 'ms': 'hhmmss' }}
-</div>
-
-<div class="my-4">
-  Left Clicks: {{ gameState()?.leftClicks }}
-</div>
-
-<div class="my-4">
-  Right Clicks: {{ gameState()?.rightClicks }}
-</div>
-
-<div class="my-4">
-  Result: {{ gameState()?.result }}
-</div>
+<p-card 
+  styleClass="
+    max-w-fit w-fit mx-auto mt-8
+    border-4 bg-content-background border-toolbar-border-color
+  "
+>
+  <!-- Top scores -->  
   
-  <p-button
-    size="small" 
-    label="Solve"
-    (onClick)="onAutoSolve()"
-  ></p-button>  
-  
-  <p-button
-    class="ml-4"
-    size="small" 
-    label="Reset"
-    (onClick)="onReset()"
-  ></p-button>
+  <div class="max-w-full mb-4 mx-2">
+    <digital-display
+      label="Time"
+      [value]="gameState?.timer | durationFormat: 'ms': 'hhmmss'"
+    ></digital-display>
 
-<div class="flex justify-center mt-8">
-  <blockable-div #sweeperGrid class="block w-fit h-fit p-2">
+    <digital-display
+      label="Left clicks"
+      [value]="gameState?.leftClicks"
+    ></digital-display>
+
+    <digital-display
+      label="Right clicks"
+      [value]="gameState?.rightClicks"
+    ></digital-display>
+
+    <div class="flex w-full justify-center">
+      @switch (gameState?.result) {
+        @case ('win') {
+          <p-tag severity="success" value="Winner" />
+        }
+        @case ('lose') {
+          <p-tag severity="danger" value="Game Over" />
+        }
+        @default {
+          <p-tag value="In Progress" />
+        }
+      }
+    </div>
+  </div>
+
+  <!--  Game grid -->
+
+  <blockable-div #sweeperGrid class="block mx-auto w-fit h-fit p-2">
     <sweeper-grid
       [xn]="xn"
       [yn]="yn"
@@ -59,46 +69,22 @@
       (onWin)="onWin()"
     ></sweeper-grid>
   </blockable-div>
-</div>
 
-<!-- 
-<div class="flex flex-col items-center gap-8">
-  <div 
-    class="
-      flex flex-col gap-4
-      h-fit
-      p-4 pl-8
-      rounded-r-lg
-      bg-content-hover-background
-      border-4 border-l-0 border-toolbar-border-color
-    "
-  > -->
-    <!-- <div class="flex gap-2">
-      <div class="flex flex-col gap-2">
-        <label for="xn" class="text-xs">X</label>
-        <p-inputnumber id="xn" [(ngModel)]="xn" />
-      </div>
+  <!-- Bottom tools -->
 
-      <div class="flex flex-col gap-2">
-        <label for="yn" class="text-xs">Y</label>
-        <p-inputnumber id="yn" [(ngModel)]="yn" />
-      </div>
-    </div>
+  <div class="inline-flex justify-center w-full gap-4 mt-4">
+    <p-button
+      size="small" 
+      label="Solve"
+      (onClick)="onAutoSolve()"
+      ></p-button>  
+      <!-- [disabled]="gameState()?.result != 'inProgress'" -->
 
-    <div class="flex flex-col gap-2">
-      <label for="mines" class="text-xs">Mines</label>
-      <p-inputnumber id="mines" [(ngModel)]="mines" />
-    </div> -->
-
-    <div class="flex gap-2">
-      <!-- 
-        <p-button
-          size="small" 
-          label="Reset"
-          (onClick)="onReset()"
-          [disabled]="isBusy()"
-        ></p-button>
-      -->
-    </div>
-  <!-- </div>
-</div> -->
+    <p-button
+      class="ml-4"
+      size="small" 
+      label="Reset"
+      (onClick)="onReset()"
+    ></p-button>
+  </div>
+</p-card>
