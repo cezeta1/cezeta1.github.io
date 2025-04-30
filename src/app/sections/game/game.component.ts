@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { Component, inject, viewChild } from "@angular/core";
+import { Component, viewChild } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { Button } from "primeng/button";
 import { Card } from "primeng/card";
@@ -8,7 +8,6 @@ import { TagModule } from 'primeng/tag';
 import { BlockableDivComponent } from "../../core/components/ui-components/blockable-div/blockable-div.component";
 import { CZUIBlockerComponent } from "../../core/components/ui-components/cz-ui-blocker/cz-ui-blocker.component";
 import { DurationFormatPipe } from "../../core/duration-format.pipe";
-import { AlertsService } from "../../core/services/alerts/alerts.service";
 import { CDigitalDisplayComponent } from "./digital-display/digital-display.component";
 import { SweeperGridComponent } from "./grid/sweeper-grid.component";
 
@@ -32,23 +31,22 @@ import { SweeperGridComponent } from "./grid/sweeper-grid.component";
 export class GameComponent {
  
   protected Math = Math;
-  private _alertsService = inject(AlertsService);
 
   private _gridRef = viewChild(SweeperGridComponent);
-  protected get gameState(){ return this._gridRef()?.state; };
+  protected gameState() { return this._gridRef()?.state(); };
 
   protected xn = 12;
   protected yn = 12;
-  protected mines = 8;
+  protected mines = 5;
   
   // --- Events --- //
 
   protected onWin() {
-    // this._alertsService.showSuccess("You won!");
+  
   }
 
   protected onGameOver() {
-    // this._alertsService.showError("Game Over");
+
   }
 
   protected onAutoSolve() {
@@ -58,7 +56,4 @@ export class GameComponent {
   protected onReset() {
     this._gridRef()?.reset();
   }
-
-  // --- Private Methods --- //
-
 }

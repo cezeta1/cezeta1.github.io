@@ -4,20 +4,9 @@
 
 <cz-ui-blocker
   [target]="sweeperGrid"
-  [blocked]="gameState?.result != 'inProgress'"
+  [blocked]="gameState()?.result != 'inProgress'"
   [showLoading]="false"
->
-  @if (gameState?.result == 'win') {
-    <p-message size="small">
-      🎉 You win! 🎉 
-    </p-message>
-  }
-  @else {
-    <p-message size="small" severity="error">
-      Game Over ☹️
-    </p-message>
-  }
-</cz-ui-blocker>
+></cz-ui-blocker>
 
 <p-card 
   styleClass="
@@ -30,29 +19,38 @@
   <div class="max-w-full mb-4 mx-2">
     <digital-display
       label="Time"
-      [value]="gameState?.timer | durationFormat: 'ms': 'hhmmss'"
+      [value]="gameState()?.timer | durationFormat: 'ms': 'hhmmss'"
     ></digital-display>
 
     <digital-display
       label="Left clicks"
-      [value]="gameState?.leftClicks"
+      [value]="gameState()?.leftClicks"
     ></digital-display>
 
     <digital-display
       label="Right clicks"
-      [value]="gameState?.rightClicks"
+      [value]="gameState()?.rightClicks"
     ></digital-display>
+    
+    <div>
+      3BV: {{ gameState()?.threeBV?.value }}
+    </div>
+
+    <div>
+      3BV/sec: {{ gameState()?.threeBV?.score }}
+    </div>
 
     <div class="flex w-full justify-center">
-      @switch (gameState?.result) {
+      @switch (gameState()?.result) {
         @case ('win') {
-          <p-tag severity="success" value="Winner" />
+          <p-message size="small">
+            🎉 You win! 🎉 
+          </p-message>
         }
         @case ('lose') {
-          <p-tag severity="danger" value="Game Over" />
-        }
-        @default {
-          <p-tag value="In Progress" />
+          <p-message size="small" severity="error">
+            Game Over ☹️
+          </p-message>
         }
       }
     </div>
@@ -77,8 +75,8 @@
       size="small" 
       label="Solve"
       (onClick)="onAutoSolve()"
-      ></p-button>  
-      <!-- [disabled]="gameState()?.result != 'inProgress'" -->
+      [disabled]="gameState()?.result != 'inProgress'"
+    ></p-button>  
 
     <p-button
       class="ml-4"

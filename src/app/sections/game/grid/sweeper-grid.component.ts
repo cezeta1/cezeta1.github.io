@@ -12,6 +12,11 @@ export interface SweeperState {
   leftClicks: number,
   rightClicks: number,
   result: 'win' | 'lose' | 'inProgress'
+  
+  threeBV: {
+    value: number,
+    score: number
+  }
 }
 
 @Component({
@@ -31,7 +36,11 @@ export class SweeperGridComponent implements AfterViewChecked, AfterViewInit {
       score: 0,
       leftClicks: 0,
       rightClicks: 0,
-      result: 'inProgress'
+      result: 'inProgress',
+      threeBV: {
+        value: 0,
+        score: 0
+      }
     };
   }
 
@@ -44,7 +53,7 @@ export class SweeperGridComponent implements AfterViewChecked, AfterViewInit {
   public onWin = output();
   public onGameOver = output();
   
-  public get state() { return this._state(); };
+  public state() { return this._state(); };
   public reset = () => this._onReset();
   public autoSolve = () => this._autoSolve();
   
@@ -95,51 +104,26 @@ export class SweeperGridComponent implements AfterViewChecked, AfterViewInit {
   private _onLeftClick(i: number, j: number) {
     let c = this._cellRefs()[i][j];
     c.toggleHidden(false);
-
-    if (c.state.val == 0 && !c.state.isMine)
-      this._floodFill(i, j);
-  }
-
-  private _floodFill(i: number, j: number, staggerFn?: Function) {
-
-    staggerFn ??= stagger(50, {
+    
+    if (c.state.val != 0 || c.state.isMine)
+      return;
+    
+    let staggerFn = stagger(50, {
       grid: [this.yn(), this.xn()],
       from: this._getFlatIndex(i, j)
     });
-    
-    let visitedCells: boolean[][] = 
-      [].constructor(this.xn())
-        .fill(null)
-        .map((_: null) => 
-          [].constructor(this.yn())
-            .fill(false)
-        );
-    
-    visitedCells[i][j] = true;
-    
-    // Expand Neighbors
 
-    const _loop = (ui: number, uj: number) => {
+    this._floodFill(i, j,
+      (ui,uj) => {
+        let target = this._cellRefs()[ui][uj];
 
-      if (visitedCells[ui][uj])
-        return;
-
-      visitedCells[ui][uj] = true;
-
-      let target = this._cellRefs()[ui][uj];
-
-      let idx = this._getFlatIndex(ui, uj)
-      let delay = staggerFn(target, idx, this._cellLength()) as number;
-    
-      setTimeout(() => target.toggleHidden(false), delay);
+        let idx = this._getFlatIndex(ui, uj)
+        let delay = staggerFn(target, idx, this._cellLength()) as number;
       
-      if (target.state.val != 0)
-        return;
-
-      this._forEachAround(ui, uj, (_, xi, xj) => _loop(xi, xj));
-    };
-
-    this._forEachAround(i, j, (_, ui, uj) => _loop(ui, uj));
+        setTimeout(() => target.toggleHidden(false), delay);
+      },
+      (ui, uj) => this._cellRefs()[ui][uj].state.val != 0
+    );
   }
 
   protected onFlagCell (i: number, j: number) {
@@ -165,13 +149,10 @@ export class SweeperGridComponent implements AfterViewChecked, AfterViewInit {
 
     this.gameFinished.set(false);
     this._won.set(false);
-    this._state.set(this._defaultState);
 
     this._timer?.cancel();
     this._timer = createTimer({
-      onUpdate: self => {
-        this.state.timer = self.currentTime;
-      }
+      onUpdate: self => this.state().timer = self.currentTime
     });
 
     this._forEachCell((_, i, j) => this._cellRefs()[i][j].reset());
@@ -209,6 +190,15 @@ export class SweeperGridComponent implements AfterViewChecked, AfterViewInit {
           this._cellRefs()[ui][uj].setVal(
             this._cellStates()[ui][uj].val + 1
           ));
+    });
+
+
+    this._state.set({ 
+      ...this._defaultState,
+      threeBV: {
+        value: this._get3BV(),
+        score: 0
+      }
     });
   }
 
@@ -292,12 +282,19 @@ export class SweeperGridComponent implements AfterViewChecked, AfterViewInit {
     
     this._autoSolve();
 
-    this._timer?.cancel();
+    this._timer?.pause();
+
     this._state.set({
       ...this._state(),
-      result: 'win'
+      result: 'win',
+      threeBV: {
+        value: this._state().threeBV.value,
+        score: this._state().threeBV.value / (this._timer?.currentTime / 1000)
+      }
     });
     
+    this._timer?.cancel();
+
     this.onWin.emit();
   }
 
@@ -316,6 +313,95 @@ export class SweeperGridComponent implements AfterViewChecked, AfterViewInit {
   // --- Utils --- //
 
   private _getFlatIndex = (i: number, j: number) => i * this.xn() + j;
+
+  private _get3BV(): number {
+    
+    let threeBV = 0;
+
+    let visitedCells: boolean[][] = 
+      [].constructor(this.xn())
+        .fill(null)
+        .map((_: null) => 
+          [].constructor(this.yn())
+            .fill(false)
+        );
+
+    const _loop = (ui: number, uj: number) => {
+
+      if (visitedCells[ui][uj])
+        return;
+
+      visitedCells[ui][uj] = true;
+
+      if (this._cellStates()[ui][uj].val != 0)
+        return;
+
+      this._forEachAround(ui, uj, (_, xi, xj) => _loop(xi, xj));
+    };
+
+    forEach(visitedCells, (row, i) => {
+      forEach(row, (c, j) => {
+        if (c) // already visited
+          return;
+        
+        let cell = this._cellStates()[i][j];
+        if (cell.val != 0 || cell.isMine)
+          return;
+
+        visitedCells[i][j] = true;
+        threeBV += 1;
+
+        this._forEachAround(i, j, (_, ui, uj) => _loop(ui, uj));
+      });
+    });
+    
+    forEach(visitedCells, (row, i) => {
+      forEach(row, (c, j) => {
+        let cell = this._cellStates()[i][j];
+        if (!c && !cell.isMine)
+          threeBV += 1;
+      });
+    });
+
+    return threeBV;
+  }
+
+  private _floodFill(
+    i: number,
+    j: number, 
+    actionFn: (ui: number, uj: number) => void,
+    breakFn: (ui: number, uj: number) => boolean
+  ): boolean[][] {
+    let visitedCells: boolean[][] = 
+      [].constructor(this.xn())
+        .fill(null)
+        .map((_: null) => 
+          [].constructor(this.yn())
+            .fill(false)
+        );
+    
+    visitedCells[i][j] = true;
+    
+    // Expand Neighbors
+
+    const _loop = (ui: number, uj: number) => {
+
+      if (visitedCells[ui][uj])
+        return;
+
+      visitedCells[ui][uj] = true;
+
+      actionFn(ui, uj);
+            
+      if (breakFn(ui, uj))
+        return;
+
+      this._forEachAround(ui, uj, (_, xi, xj) => _loop(xi, xj));
+    };
+
+    this._forEachAround(i, j, (_, ui, uj) => _loop(ui, uj));
+    return visitedCells;
+  }
 
   private _forEachCell = (
     fn: (c: CellState, i: number, j: number) => void | false,
