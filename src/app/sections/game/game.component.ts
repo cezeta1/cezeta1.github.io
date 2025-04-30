@@ -1,13 +1,12 @@
 import { CommonModule } from "@angular/common";
 import { AfterViewChecked, AfterViewInit, Component, computed, inject, signal, viewChildren } from "@angular/core";
 import { FormsModule } from "@angular/forms";
-import { createTimeline, stagger} from "animejs";
+import { createTimeline, stagger } from "animejs";
 import { chunk, forEach, isEqual, map, random, uniq } from "lodash-es";
 import { Button } from "primeng/button";
 import { InputNumber } from 'primeng/inputnumber';
 import { AlertsService } from "../../core/services/alerts/alerts.service";
 import { CellComponent, CellState } from "./cell/cell.component";
-import { from, delay, fromEvent } from "rxjs";
 
 @Component({
   selector: 'game',
@@ -43,7 +42,7 @@ export class GameComponent implements AfterViewChecked, AfterViewInit {
   }
 
   ngAfterViewChecked(): void {
-    if (!this.isBusy())
+    if (!this.isBusy()) 
       this._checkGameState();
   }
 
@@ -55,7 +54,7 @@ export class GameComponent implements AfterViewChecked, AfterViewInit {
 
     let cell = this._cellStates()[i][j];
 
-    if (!cell || cell.isFlagged)
+    if (!cell)
       return;
 
     this._onLeftClick(i, j);
@@ -65,7 +64,7 @@ export class GameComponent implements AfterViewChecked, AfterViewInit {
     let c = this._cellRefs()[i][j];
     c.toggleHidden(false);
 
-    if (c.state.val == 0 && !c.state.isMine && !c.state.isFlagged)
+    if (c.state.val == 0 && !c.state.isMine)
       this._expandNeighbors(i, j);
   }
 

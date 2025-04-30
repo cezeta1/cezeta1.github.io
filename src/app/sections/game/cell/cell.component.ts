@@ -18,17 +18,20 @@ export interface CellState {
   templateUrl: './cell.component.html'
 })
 export class CellComponent implements OnInit {
-  protected internalId = nanoid();
   private _inj = inject(Injector);
+  protected internalId = nanoid();
   
-  private _defaultState: CellState = {    
-    val: 0,
-    isMine: false,
-    isHidden: true,
-    isFlagged: false
-  };
+  private get _defaultState(): CellState {
+    return {    
+      val: 0,
+      isMine: false,
+      isHidden: true,
+      isFlagged: false
+    };
+  }
+
   protected _state = signal<CellState>({ ...this._defaultState });
-  protected _busy = signal<boolean>(false);
+  protected _isBusy = signal<boolean>(false);
 
   ngOnInit(): void {
     toObservable(this._state, { injector: this._inj })
@@ -37,11 +40,13 @@ export class CellComponent implements OnInit {
         cz_takeUntilDestroyed(this._inj),
       )
       .subscribe(({oldVal, newVal}) => {
-        if (this._busy())
+        if (this._isBusy())
           return;
 
         this._handleAnimation(oldVal, newVal);
-      })
+      });
+
+    this._handleAnimation(this._defaultState, this.state);
   }
 
   // --- Events --- //
@@ -59,9 +64,7 @@ export class CellComponent implements OnInit {
   public onClick = output();
   public onRightClick = output();
 
-  public get state() { 
-    return this._state(); 
-  }
+  public get state() { return this._state(); }
 
   public stateObservable = () =>
     toObservable(this._state, { injector: this._inj });
@@ -70,19 +73,26 @@ export class CellComponent implements OnInit {
     this._state.set({... newState });
 
   public setVal(newVal?: number) {
-    newVal ??= this._state().val; 
+    newVal ??= this.state.val;
+
+    if (this.state.isMine)
+      newVal = 0;
+
     this._state.set({
       ...this._state(),
       val: newVal
     });
   }
 
-  public reset() {
-    this.setState(this._defaultState);
-  }
+  public reset = () => 
+    this.setState({ ...this._defaultState });
 
   public toggleHidden(newVal?: boolean) {
-    newVal ??= !this._state().isHidden;
+    newVal ??= !this.state.isHidden;
+    
+    if (!newVal && this.state.isFlagged)
+      return;
+    
     this._state.set({
       ...this._state(),
       isHidden: newVal
@@ -90,7 +100,11 @@ export class CellComponent implements OnInit {
   }
 
   public toggleFlag(newVal?: boolean) {
-    newVal ??= !this._state().isFlagged;
+    newVal ??= !this.state.isFlagged;
+
+    if (!this.state.isHidden)
+      return;
+
     this._state.set({
       ...this._state(),
       isFlagged: newVal
@@ -142,11 +156,11 @@ export class CellComponent implements OnInit {
   }
 
   private _animate(id:string, conf: AnimationParams) {
-    this._busy.set(true);
+    this._isBusy.set(true);
     animate(id, { 
       ...conf,
       onComplete: self => {
-        this._busy.set(false);
+        this._isBusy.set(false);
         conf.onComplete?.(self);
       } 
     });

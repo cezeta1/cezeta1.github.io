@@ -19,14 +19,21 @@
       absolute w-full aspect-square
       flex items-center justify-center
       bg-content-hover-background
-      z-10
+      z-10 overflow-hidden
     "
   >
-    <i 
-      [id]="'flag-'+internalId" 
-      style="transform: scale(0);" 
-      class="pi pi-flag-fill"
-    ></i>
+    <div 
+      [id]="'flag-'+internalId"
+      style="transform: scale(0);"
+      class="
+        flex items-center justify-center 
+        w-full h-full
+       bg-yellow-500/50
+       rounded-b-sm
+      "
+    >
+      <i class="text-xl text-amber-400 pi pi-flag-fill"></i>
+    </div>
   </div>
 
   <!-- Back Layer -->
