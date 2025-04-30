@@ -18,7 +18,9 @@ export interface CellState {
   templateUrl: './cell.component.html'
 })
 export class CellComponent implements OnInit {
+  
   private _inj = inject(Injector);
+
   protected internalId = nanoid();
   
   private get _defaultState(): CellState {

@@ -1,0 +1,36 @@
+<div class="flex flex-col items-center gap-8">
+  <div class="flex w-fit mx-auto">
+    
+    <div
+      id="game-grid"
+
+      class="
+        grid
+        border-4 border-toolbar-border-color
+        rounded-l-sm rounded-br-sm
+      "
+      [style]="`
+        grid-template-rows: repeat(${xn()}, minmax(0, 1fr));
+        grid-template-columns: repeat(${yn()}, minmax(0, 1fr));
+      `"
+    >
+      @for (_ of [].constructor(xn()); track $index; let i = $index) {
+        @for (_ of [].constructor(yn()); track $index; let j = $index) {
+          <div 
+            class="
+              relative 
+              outline-1 outline-content-border-color
+              z-10
+            "
+          >
+            <cell
+              [id]="`${i}-${j}`"
+              (onClick)="onCellClick(i, j)"
+              (onRightClick)="onFlagCell(i, j)"
+            />
+          </div>
+        }
+      }
+    </div>
+  </div>
+</div>

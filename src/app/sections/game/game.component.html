@@ -2,83 +2,103 @@
   Game Exploration
 </h1>
 
-<div class="flex flex-col items-center gap-8">
-  <div class="flex w-fit mt-8 mx-auto">
-    
-    <div
-      id="game-grid"
+<cz-ui-blocker
+  [target]="sweeperGrid"
+  [blocked]="gameState()?.result != 'inProgress'"
+  [showLoading]="false"
+>
+  @if (isVictory()) {
+    <p-message size="small">
+      🎉 You win! 🎉 
+    </p-message>
+  }
+  @else {
+    <p-message size="small" severity="error">
+      Game Over ☹️
+    </p-message>
+  }
+</cz-ui-blocker>
 
-      class="
-        grid
-        border-4 border-toolbar-border-color
-        rounded-l-sm rounded-br-sm
-      "
-      [style]="`
-        grid-template-rows: repeat(${xn}, minmax(0, 1fr));
-        grid-template-columns: repeat(${yn}, minmax(0, 1fr));
-      `"
-    >
-      @for (_ of [].constructor(xn); track $index; let i = $index) {
-        @for (_ of [].constructor(yn); track $index; let j = $index) {
-          <div 
-            class="
-              relative 
-              outline-1 outline-content-border-color
-              z-10
-            "
-          >
-            <cell
-              [id]="`${i}-${j}`"
-              (onClick)="onCellClick(i, j)"
-              (onRightClick)="onFlagCell(i, j)"
-            />
-          </div>
-        }
-      }
-    </div>
-    <div 
-      class="
-        flex flex-col gap-4
-        h-fit
-        p-4 pl-8
-        rounded-r-lg
-        bg-content-hover-background
-        border-4 border-l-0 border-toolbar-border-color
-      "
-    >
-      <div class="flex gap-2">
-        <div class="flex flex-col gap-2">
-          <label for="xn" class="text-xs">X</label>
-          <p-inputnumber id="xn" [(ngModel)]="xn" />
-        </div>
+
+<div class="my-4">
+  Time: {{ gameState()?.timer | durationFormat: 'ms': 'hhmmss' }}
+</div>
+
+<div class="my-4">
+  Left Clicks: {{ gameState()?.leftClicks }}
+</div>
+
+<div class="my-4">
+  Right Clicks: {{ gameState()?.rightClicks }}
+</div>
+
+<div class="my-4">
+  Result: {{ gameState()?.result }}
+</div>
   
-        <div class="flex flex-col gap-2">
-          <label for="yn" class="text-xs">Y</label>
-          <p-inputnumber id="yn" [(ngModel)]="yn" />
-        </div>
+  <p-button
+    size="small" 
+    label="Solve"
+    (onClick)="onAutoSolve()"
+  ></p-button>  
+  
+  <p-button
+    class="ml-4"
+    size="small" 
+    label="Reset"
+    (onClick)="onReset()"
+  ></p-button>
+
+<div class="flex justify-center mt-8">
+  <blockable-div #sweeperGrid class="block w-fit h-fit p-2">
+    <sweeper-grid
+      [xn]="xn"
+      [yn]="yn"
+      [mines]="mines"
+      (onGameOver)="onGameOver()"
+      (onWin)="onWin()"
+    ></sweeper-grid>
+  </blockable-div>
+</div>
+
+<!-- 
+<div class="flex flex-col items-center gap-8">
+  <div 
+    class="
+      flex flex-col gap-4
+      h-fit
+      p-4 pl-8
+      rounded-r-lg
+      bg-content-hover-background
+      border-4 border-l-0 border-toolbar-border-color
+    "
+  > -->
+    <!-- <div class="flex gap-2">
+      <div class="flex flex-col gap-2">
+        <label for="xn" class="text-xs">X</label>
+        <p-inputnumber id="xn" [(ngModel)]="xn" />
       </div>
 
       <div class="flex flex-col gap-2">
-        <label for="mines" class="text-xs">Mines</label>
-        <p-inputnumber id="mines" [(ngModel)]="mines" />
+        <label for="yn" class="text-xs">Y</label>
+        <p-inputnumber id="yn" [(ngModel)]="yn" />
       </div>
+    </div>
 
-      <div class="flex gap-2">
+    <div class="flex flex-col gap-2">
+      <label for="mines" class="text-xs">Mines</label>
+      <p-inputnumber id="mines" [(ngModel)]="mines" />
+    </div> -->
+
+    <div class="flex gap-2">
+      <!-- 
         <p-button
           size="small" 
           label="Reset"
           (onClick)="onReset()"
           [disabled]="isBusy()"
         ></p-button>
-  
-        <p-button
-          size="small" 
-          label="Solve"
-          (onClick)="autoSolve()"
-          [disabled]="gameFinished() || isBusy()"
-        ></p-button>
-      </div>
-
+      -->
     </div>
-  </div>
-</div>
+  <!-- </div>
+</div> -->

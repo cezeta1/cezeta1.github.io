@@ -39,9 +39,9 @@ import { Card } from 'primeng/card';
       </ng-template>
       
       <ng-template #subtitle>
-      <span class="text-muted text-sm">
-        {{ translateRoot+"subtitle" | translate }}
-      </span>
+        <span class="text-muted text-sm">
+          {{ translateRoot+"subtitle" | translate }}
+        </span>
       </ng-template>
 
       <p>
