@@ -1,60 +1,43 @@
 import { CommonModule } from "@angular/common";
-import { Component, inject, Injector, OnInit, output, signal } from "@angular/core";
-import { toObservable } from "@angular/core/rxjs-interop";
+import { Component, computed, inject, Injector, OnInit, output, signal } from "@angular/core";
+import { getState, watchState } from "@ngrx/signals";
 import { animate, AnimationParams } from "animejs";
 import { nanoid } from 'nanoid';
 import { cz_pairwiseMap, cz_takeUntilDestroyed } from "../../../core/utils";
-
-export interface CellState {
-  val: number,
-  isMine: boolean,
-  isHidden: boolean,
-  isFlagged: boolean
-}
+import { CellState, CellStore, initialState } from "./cell.store";
 
 @Component({
   selector: 'cell',
   imports: [ CommonModule ],
+  providers: [ CellStore ],
   templateUrl: './cell.component.html'
 })
 export class CellComponent implements OnInit {
-  
-  private _inj = inject(Injector);
-
+  readonly #inj = inject(Injector);
   protected internalId = nanoid();
-  
-  private get _defaultState(): CellState {
-    return {    
-      val: 0,
-      isMine: false,
-      isHidden: true,
-      isFlagged: false
-    };
-  }
 
-  protected _state = signal<CellState>({ ...this._defaultState });
+  protected cellStore = inject(CellStore);
+  
   protected _isBusy = signal<boolean>(false);
 
   ngOnInit(): void {
-    toObservable(this._state, { injector: this._inj })
+    this.cellStore
+      .state$
       .pipe(
-        cz_pairwiseMap({ ...this._defaultState }),
-        cz_takeUntilDestroyed(this._inj),
+        cz_pairwiseMap({ ...initialState }),
+        cz_takeUntilDestroyed(this.#inj),
       )
-      .subscribe(({oldVal, newVal}) => {
+      .subscribe(({ oldVal, newVal }) => {
         if (this._isBusy())
           return;
 
         this._handleAnimation(oldVal, newVal);
       });
-
-    this._handleAnimation(this._defaultState, this.state);
   }
 
   // --- Events --- //
 
-  protected onCellClick = () => 
-    this.onClick.emit();
+  protected onCellClick = () => this.onClick.emit();
 
   protected onCellRightClick = (e: any) =>  {
     e?.preventDefault();
@@ -66,60 +49,16 @@ export class CellComponent implements OnInit {
   public onClick = output();
   public onRightClick = output();
 
-  public get state() { return this._state(); }
+  public state = computed(() => getState(this.cellStore));
+  public onStateChange = (fn: (state: CellState) => void) => watchState(this.cellStore, fn);
 
-  public stateObservable = () =>
-    toObservable(this._state, { injector: this._inj });
-
-  public setState = (newState: CellState) =>
-    this._state.set({... newState });
-
-  public setVal(newVal?: number) {
-    newVal ??= this.state.val;
-
-    if (this.state.isMine)
-      newVal = 0;
-
-    this._state.set({
-      ...this._state(),
-      val: newVal
-    });
-  }
-
-  public reset = () => 
-    this.setState({ ...this._defaultState });
-
-  public toggleHidden(newVal?: boolean) {
-    newVal ??= !this.state.isHidden;
-    
-    if (!newVal && this.state.isFlagged)
-      return;
-    
-    this._state.set({
-      ...this._state(),
-      isHidden: newVal
-    });
-  }
-
-  public toggleFlag(newVal?: boolean) {
-    newVal ??= !this.state.isFlagged;
-
-    if (!this.state.isHidden)
-      return;
-
-    this._state.set({
-      ...this._state(),
-      isFlagged: newVal
-    });
-  }
-  
-  public toggleMine(newVal?: boolean) {
-    newVal ??= !this._state().isMine; 
-    this._state.set({
-      ...this._state(),
-      isMine: newVal
-    });
-  }
+  public reset = this.cellStore.reset;
+  public setVal = this.cellStore.setVal;
+  public incrementVal = this.cellStore.incrementVal;
+  public toggleHidden = this.cellStore.toggleHidden;
+  public toggleFlag = this.cellStore.toggleFlag;
+  public toggleMine = this.cellStore.toggleMine;
+  public solveSelf = this.cellStore.solveSelf;
 
   // --- Animation Hanldler --- //
 
@@ -157,7 +96,7 @@ export class CellComponent implements OnInit {
     this._animate('#flag-'+this.internalId, anim);
   }
 
-  private _animate(id:string, conf: AnimationParams) {
+  private _animate(id: string, conf: AnimationParams) {
     this._isBusy.set(true);
     animate(id, { 
       ...conf,

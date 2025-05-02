@@ -10,79 +10,88 @@
 
 <p-card 
   styleClass="
-    max-w-fit w-fit mx-auto mt-8
+    mx-auto mt-8
     border-4 bg-content-background border-toolbar-border-color
   "
 >
-  <!-- Top scores -->  
-  
-  <div class="max-w-full mb-4 mx-2">
-    <digital-display
-      label="Time"
-      [value]="gameState()?.timer | durationFormat: 'ms': 'hhmmss'"
-    ></digital-display>
-
-    <digital-display
-      label="Left clicks"
-      [value]="gameState()?.leftClicks"
-    ></digital-display>
-
-    <digital-display
-      label="Right clicks"
-      [value]="gameState()?.rightClicks"
-    ></digital-display>
+  <div 
+    class="
+      flex flex-col md:flex-row 
+      w-full h-full justify-between
+    "
+  >
+    <!-- Top scores -->  
     
-    <div>
-      3BV: {{ gameState()?.threeBV?.value }}
-    </div>
+    <div class="flex flex-col h-full w-full m-4">
 
-    <div>
-      3BV/sec: {{ gameState()?.threeBV?.score }}
-    </div>
+      <digital-display
+        label="Time"
+        [value]="gameState()?.time | durationFormat: 'ms': 'hhmmss'"
+      ></digital-display>
+  
+      <digital-display
+        label="Left clicks"
+        [value]="gameState()?.leftClicks"
+      ></digital-display>
+  
+      <digital-display
+        label="Right clicks"
+        [value]="gameState()?.rightClicks"
+      ></digital-display>
+      
+      <digital-display
+        label="3BV/s"
+        [value]="(gameState()?.threeBV?.score | number: '1.1-5') ?? ''"
+      ></digital-display>
 
-    <div class="flex w-full justify-center">
-      @switch (gameState()?.result) {
-        @case ('win') {
-          <p-message size="small">
-            🎉 You win! 🎉 
-          </p-message>
+      <span class="text-sm text-muted-color">
+        (3BV = {{ gameState()?.threeBV?.value }})
+      </span>
+  
+      <div class="flex w-full justify-center">
+        @switch (gameState()?.result) {
+          @case ('win') {
+            <p-message size="small">
+              🎉 You win! 🎉 
+            </p-message>
+          }
+          @case ('lose') {
+            <p-message size="small" severity="error">
+              Game Over ☹️
+            </p-message>
+          }
         }
-        @case ('lose') {
-          <p-message size="small" severity="error">
-            Game Over ☹️
-          </p-message>
-        }
-      }
+      </div>
+
+      <!-- Bottom tools -->
+
+      <div class="self-end inline-flex justify-center w-full gap-4 mt-4">
+        <p-button
+          size="small" 
+          label="Solve"
+          (onClick)="onAutoSolve()"
+          [disabled]="gameState()?.result != 'inProgress'"
+        ></p-button>  
+
+        <p-button
+          class="ml-4"
+          size="small" 
+          label="Reset"
+          (onClick)="onReset()"
+        ></p-button>
+      </div>
+
     </div>
-  </div>
+    
+    <!--  Game grid -->
+  
+    <blockable-div #sweeperGrid class="block w-fit h-fit min-w-fit min-h-fit p-2">
+      <sweeper-grid
+        [xn]="xn"
+        [yn]="yn"
+        [mines]="mines"
+      ></sweeper-grid>
+    </blockable-div>
 
-  <!--  Game grid -->
-
-  <blockable-div #sweeperGrid class="block mx-auto w-fit h-fit p-2">
-    <sweeper-grid
-      [xn]="xn"
-      [yn]="yn"
-      [mines]="mines"
-      (onGameOver)="onGameOver()"
-      (onWin)="onWin()"
-    ></sweeper-grid>
-  </blockable-div>
-
-  <!-- Bottom tools -->
-
-  <div class="inline-flex justify-center w-full gap-4 mt-4">
-    <p-button
-      size="small" 
-      label="Solve"
-      (onClick)="onAutoSolve()"
-      [disabled]="gameState()?.result != 'inProgress'"
-    ></p-button>  
-
-    <p-button
-      class="ml-4"
-      size="small" 
-      label="Reset"
-      (onClick)="onReset()"
-    ></p-button>
   </div>
 </p-card>

@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { Component, viewChild } from "@angular/core";
+import { ChangeDetectorRef, Component, computed, HostListener, inject, viewChild } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { Button } from "primeng/button";
 import { Card } from "primeng/card";
@@ -25,29 +25,31 @@ import { SweeperGridComponent } from "./grid/sweeper-grid.component";
     CZUIBlockerComponent,
     BlockableDivComponent,
     CDigitalDisplayComponent
-],
+  ],
   templateUrl: './game.component.html',
 })
 export class GameComponent {
  
   protected Math = Math;
 
+  protected changeDetectorRef = inject(ChangeDetectorRef);
+  
+  @HostListener('document:visibilitychange', ['$event'])
+  onVisibilityChange(_t: any): void {
+    if (!document.hidden) {
+      this.changeDetectorRef.reattach();
+      this.changeDetectorRef.detectChanges();
+    }
+  }
+
   private _gridRef = viewChild(SweeperGridComponent);
-  protected gameState() { return this._gridRef()?.state(); };
+  protected gameState = computed(() => this._gridRef()?.state());
 
   protected xn = 12;
   protected yn = 12;
-  protected mines = 5;
+  protected mines = 20;
   
   // --- Events --- //
-
-  protected onWin() {
-  
-  }
-
-  protected onGameOver() {
-
-  }
 
   protected onAutoSolve() {
     this._gridRef()?.autoSolve();

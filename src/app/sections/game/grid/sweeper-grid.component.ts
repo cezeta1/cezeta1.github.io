@@ -1,23 +1,12 @@
 import { CommonModule } from "@angular/common";
-import { AfterViewChecked, AfterViewInit, Component, computed, input, output, signal, viewChildren } from "@angular/core";
+import { AfterViewChecked, AfterViewInit, Component, computed, inject, input, output, signal, viewChildren } from "@angular/core";
 import { FormsModule } from "@angular/forms";
-import { createTimeline, createTimer, stagger, Timer } from "animejs";
+import { getState } from "@ngrx/signals";
+import { createTimeline, stagger } from "animejs";
 import { chunk, forEach, map, random, uniq } from "lodash-es";
-import { CellComponent, CellState } from "../cell/cell.component";
-
-export interface SweeperState {
-  timer: number,
-  score: number
-
-  leftClicks: number,
-  rightClicks: number,
-  result: 'win' | 'lose' | 'inProgress'
-  
-  threeBV: {
-    value: number,
-    score: number
-  }
-}
+import { CellComponent } from "../cell/cell.component";
+import { CellState } from "../cell/cell.store";
+import { SweeperStore } from "./sweeper.store";
 
 @Component({
   selector: 'sweeper-grid',
@@ -26,23 +15,12 @@ export interface SweeperState {
     FormsModule,
     CellComponent
   ],
+  providers: [ SweeperStore ],
   templateUrl: './sweeper-grid.component.html',
 })
 export class SweeperGridComponent implements AfterViewChecked, AfterViewInit {
 
-  private get _defaultState(): SweeperState {
-    return {    
-      timer: 0,
-      score: 0,
-      leftClicks: 0,
-      rightClicks: 0,
-      result: 'inProgress',
-      threeBV: {
-        value: 0,
-        score: 0
-      }
-    };
-  }
+  protected sweeperStore = inject(SweeperStore);
 
   // --- Interface --- //
 
@@ -53,7 +31,7 @@ export class SweeperGridComponent implements AfterViewChecked, AfterViewInit {
   public onWin = output();
   public onGameOver = output();
   
-  public state() { return this._state(); };
+  public state = computed(() => getState(this.sweeperStore));
   public reset = () => this._onReset();
   public autoSolve = () => this._autoSolve();
   
@@ -61,11 +39,8 @@ export class SweeperGridComponent implements AfterViewChecked, AfterViewInit {
   
   private __cR = viewChildren(CellComponent);
   private _cellRefs = computed(() => chunk(this.__cR(), this.yn()));
-  private _cellStates = computed(() => map(this._cellRefs(), (r) => map(r, c => c.state)));
+  private _cellStates = computed(() => map(this._cellRefs(), (r) => map(r, c => c.state())));
   private _cellLength = computed(() => this.xn() * this.yn());
-  private _timer!: Timer;
-  
-  private _state = signal<SweeperState>(this._defaultState);
 
   protected isBusy = signal(false);
   protected gameFinished = signal(false);
@@ -93,9 +68,8 @@ export class SweeperGridComponent implements AfterViewChecked, AfterViewInit {
     if (!cell || !cell.isHidden)
       return;
 
-    this._state.set({
-      ...this._state(),
-      leftClicks: this._state().leftClicks + 1
+    this.sweeperStore.setState({
+      leftClicks: this.state().leftClicks + 1
     });
 
     this._onLeftClick(i, j);
@@ -105,7 +79,7 @@ export class SweeperGridComponent implements AfterViewChecked, AfterViewInit {
     let c = this._cellRefs()[i][j];
     c.toggleHidden(false);
     
-    if (c.state.val != 0 || c.state.isMine)
+    if (c.state().val != 0 || c.state().isMine)
       return;
     
     let staggerFn = stagger(50, {
@@ -122,7 +96,7 @@ export class SweeperGridComponent implements AfterViewChecked, AfterViewInit {
       
         setTimeout(() => target.toggleHidden(false), delay);
       },
-      (ui, uj) => this._cellRefs()[ui][uj].state.val != 0
+      (ui, uj) => this._cellRefs()[ui][uj].state().val != 0
     );
   }
 
@@ -135,9 +109,8 @@ export class SweeperGridComponent implements AfterViewChecked, AfterViewInit {
     if (!cell.isHidden)
       return;
     
-    this._state.set({
-      ...this._state(),
-      rightClicks: this._state().rightClicks + 1
+    this.sweeperStore.setState({
+      rightClicks: this.state().rightClicks + 1
     });
 
     this._cellRefs()[i][j].toggleFlag();
@@ -147,13 +120,10 @@ export class SweeperGridComponent implements AfterViewChecked, AfterViewInit {
 
   private _initGame() {
 
+    this.sweeperStore.restartTimer();
+
     this.gameFinished.set(false);
     this._won.set(false);
-
-    this._timer?.cancel();
-    this._timer = createTimer({
-      onUpdate: self => this.state().timer = self.currentTime
-    });
 
     this._forEachCell((_, i, j) => this._cellRefs()[i][j].reset());
 
@@ -192,9 +162,8 @@ export class SweeperGridComponent implements AfterViewChecked, AfterViewInit {
           ));
     });
 
-
-    this._state.set({ 
-      ...this._defaultState,
+    this.sweeperStore.reset();
+    this.sweeperStore.setState({
       threeBV: {
         value: this._get3BV(),
         score: 0
@@ -214,20 +183,11 @@ export class SweeperGridComponent implements AfterViewChecked, AfterViewInit {
 
     let t = 0;
     this._forEachCell((c, i, j) => {
-      tl = tl.call(() => this._solveCell(c, i, j), t);
+      tl = tl.call(() => this._cellRefs()[i][j].solveSelf(), t);
       t += 5;
     });
 
     tl = tl.call(() => this.isBusy.set(false), t + 300);    
-  }
-
-  private _solveCell(c: CellState, i: number, j: number) {
-    if (c.isMine)
-      this._cellRefs()[i][j].toggleFlag(true);
-    else {
-      this._cellRefs()[i][j].toggleFlag(false);
-      this._cellRefs()[i][j].toggleHidden(false);
-    }
   }
 
   private _checkGameState() {
@@ -277,23 +237,23 @@ export class SweeperGridComponent implements AfterViewChecked, AfterViewInit {
   }
 
   private _onWin() {
+
     this.gameFinished.set(true);
     this._won.set(true);
     
     this._autoSolve();
 
-    this._timer?.pause();
+    this.sweeperStore.pauseTimer();
 
-    this._state.set({
-      ...this._state(),
+    this.sweeperStore.setState({
       result: 'win',
       threeBV: {
-        value: this._state().threeBV.value,
-        score: this._state().threeBV.value / (this._timer?.currentTime / 1000)
+        value: this.sweeperStore.threeBV.value(),
+        score: this.sweeperStore.threeBV.value() / (this.sweeperStore.time() / 1000)
       }
     });
     
-    this._timer?.cancel();
+    this.sweeperStore.cancelTimer();
 
     this.onWin.emit();
   }
@@ -301,9 +261,9 @@ export class SweeperGridComponent implements AfterViewChecked, AfterViewInit {
   private _onGameOver() {
     this.gameFinished.set(true);
     
-    this._timer?.cancel();
-    this._state.set({
-      ...this._state(),
+    this.sweeperStore.pauseTimer();
+
+    this.sweeperStore.setState({
       result: 'lose'
     });
 
