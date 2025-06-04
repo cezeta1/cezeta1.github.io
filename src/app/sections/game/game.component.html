@@ -11,13 +11,15 @@
 <p-card 
   styleClass="
     mx-auto mt-8
-    border-4 bg-content-background border-toolbar-border-color
+    border-4 bg-content-background border-toolbar-border-color 
+    lg:max-w-screen-lg
   "
 >
   <div 
     class="
-      flex flex-col md:flex-row 
-      w-full h-full justify-between
+      flex flex-col justify-between items-center  
+      w-full h-full 
+      lg:flex-row lg:items-start
     "
   >
     <!-- Top scores -->  
@@ -41,7 +43,7 @@
       
       <digital-display
         label="3BV/s"
-        [value]="(gameState()?.threeBV?.score | number: '1.1-5') ?? ''"
+        [value]="(gameState()?.threeBV?.score | number: '1.1-3') ?? ''"
       ></digital-display>
 
       <span class="text-sm text-muted-color">
@@ -85,7 +87,7 @@
     
     <!--  Game grid -->
   
-    <blockable-div #sweeperGrid class="block w-fit h-fit min-w-fit min-h-fit p-2">
+    <blockable-div #sweeperGrid class="block w-fit h-fit min-w-fit min-h-fit mx-auto p-2">
       <sweeper-grid
         [xn]="xn"
         [yn]="yn"

@@ -6,7 +6,6 @@ import {
 } from '@ngrx/signals';
 import { withStateChange } from '../../../core/store-features/withStateChange.feature';
 
-
 export interface CellState {
   val: number,
   isMine: boolean,
