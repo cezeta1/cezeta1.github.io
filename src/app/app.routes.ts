@@ -8,6 +8,7 @@ export enum AppRoutesEnum {
   // * Sections * //
   Home = 'home',
   Projects = 'projects',
+  Game = 'game',
 
   // * Extra * //
   Error = 'error',
@@ -36,6 +37,13 @@ export const routes: Routes = [
     path: AppRoutesEnum.Projects,
     component: MainLayoutComponent,
     loadChildren: () => import('./sections/projects/projects.routes').then(m => m.sectionRoutes)
+  },
+  
+
+  {
+    path: AppRoutesEnum.Game,
+    component: MainLayoutComponent,
+    loadChildren: () => import('./sections/game/game.routes').then(m => m.sectionRoutes)
   },
   
   // --- Extra Routes --- //

@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { ThemeService } from './core/services/themes/theme.service';
 import { Toast } from 'primeng/toast';
 import { LanguageService } from './core/services/language/language.service';

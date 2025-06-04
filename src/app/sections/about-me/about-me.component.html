@@ -1,6 +1,17 @@
-<div class="flex flex-col gap-8 justify-center mb-8">
+<div class="relative flex flex-col gap-8 justify-center mb-8">
   <intro></intro>
   <resume></resume>
   <contact-form></contact-form>
   <!-- <under-construction></under-construction> -->
+
+  
+  <div id="surprise-btn" class="absolute -bottom-8 -right-2">
+    <p-button
+      icon="pi pi-question"
+      [rounded]="true" 
+      [text]="true" 
+      severity="help" 
+      (onClick)="onGameRedirect()" 
+    />
+  </div>
 </div>
