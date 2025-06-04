@@ -48,7 +48,7 @@
     }
   },
   
-"projects": {
+  "projects": {
     "title": "Projectos",
     "cards": {
       "gaslands": {
@@ -79,6 +79,20 @@
         "content": "Demostración técnica creada para una demostración de desafío de código. Presenta una plataforma de intercambio de divisas (FX) donde los usuarios pueden crear contratos seleccionando qué moneda quieren convertir y a cuál.",
         "github-btn": "Proyecto de Github"
       }
+    }
+  },
+
+  "game": {
+    "title": "Buscaminas",
+    "back-home": "Volver al inicio",
+    "reset": "Reiniciar",
+    "auto-solve": "Resolver",
+    "time": "Tiempo",
+    "left-clicks": "Clicks izquierdos",
+    "right-clicks": "Clicks derechos",
+    "result": {
+      "win": "¡Ganaste!",
+      "lose": "¡Perdiste!"
     }
   }
 }

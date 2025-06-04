@@ -1,0 +1,110 @@
+<cz-ui-blocker
+  [target]="sweeperGrid"
+  [blocked]="gameState()?.result != 'inProgress'"
+  [showLoading]="false"
+></cz-ui-blocker>
+
+<p-card 
+  styleClass="
+    mx-auto mt-4
+    border-4 bg-content-background border-toolbar-border-color 
+    lg:max-w-screen-lg
+  "
+>
+  <ng-template #header>
+    <h1 class="mt-4 mb-0 text-center text-xl font-bold">
+      {{ 'game.title' | translate }}
+    </h1>
+  </ng-template>
+
+  <div 
+    class="
+      flex flex-col justify-between items-center  
+      w-full h-full 
+      lg:flex-row lg:items-start
+    "
+  >
+    <!-- Top scores -->  
+    
+    <div class="flex flex-col h-full w-full m-4">
+
+      <digital-display
+        [label]="'game.time' | translate"
+        [value]="gameState()?.time | durationFormat: 'ms': 'hhmmss'"
+      ></digital-display>
+  
+      <digital-display
+        [label]="'game.left-clicks' | translate"
+        [value]="gameState()?.leftClicks"
+      ></digital-display>
+  
+      <digital-display
+        [label]="'game.right-clicks' | translate"
+        [value]="gameState()?.rightClicks"
+      ></digital-display>
+      
+      <digital-display
+        label="3BV/s"
+        [value]="(gameState()?.threeBV?.score | number: '1.1-3') ?? ''"
+      ></digital-display>
+
+      <span class="text-sm text-muted-color">
+        (3BV = {{ gameState()?.threeBV?.value }})
+      </span>
+  
+      <div class="flex w-full justify-center">
+        @switch (gameState()?.result) {
+          @case ('win') {
+            <p-message size="small">
+              {{ 'game.result.win' | translate }} 🎉
+            </p-message>
+          }
+          @case ('lose') {
+            <p-message size="small" severity="error">
+              {{ 'game.result.lose' | translate }} ☹️
+            </p-message>
+          }
+        }
+      </div>
+
+      <!-- Bottom tools -->
+
+      <div class="self-end inline-flex justify-center w-full gap-4 mt-4">
+        <p-button
+          size="small" 
+          [label]="'game.auto-solve' | translate"
+          (onClick)="onAutoSolve()"
+          [disabled]="gameState()?.result != 'inProgress'"
+        ></p-button>  
+
+        <p-button
+          class="ml-4"
+          size="small" 
+          [label]="'game.reset' | translate"
+          (onClick)="onReset()"
+        ></p-button>
+      </div>
+
+    </div>
+    
+    <!--  Game grid -->
+  
+    <blockable-div #sweeperGrid class="block w-fit h-fit min-w-fit min-h-fit mx-auto p-2">
+      <sweeper-grid
+        [xn]="xn"
+        [yn]="yn"
+        [mines]="mines"
+      ></sweeper-grid>
+    </blockable-div>
+
+  </div>
+</p-card>
+
+<div class="flex justify-center mt-4">
+  <p-button
+    size="small"
+    severity="secondary"
+    [label]="'game.back-home' | translate"
+    (onClick)="onBackHome()"
+  ></p-button>
+</div>

@@ -18,6 +18,7 @@ import { ProgressSpinner } from 'primeng/progressspinner';
         <p-progressSpinner ariaLabel="loading" />
       }
       <div>{{ text() }}</div>
+      <ng-content></ng-content>
     </p-blockUI>
   `
 })
