@@ -83,6 +83,16 @@
   },
 
   "game": {
-    "title": "Game Exploration"
+    "title": "Minesweeper",
+    "back-home": "Back home",
+    "reset": "Reset",
+    "auto-solve": "Solve",
+    "time": "Time",
+    "left-clicks": "Left clicks",
+    "right-clicks": "Right clicks",
+    "result": {
+      "win": "You win!",
+      "lose": "You lose!"
+    }
   }
 }

@@ -10,6 +10,9 @@ import { CZUIBlockerComponent } from "../../core/components/ui-components/cz-ui-
 import { DurationFormatPipe } from "../../core/duration-format.pipe";
 import { CDigitalDisplayComponent } from "./digital-display/digital-display.component";
 import { SweeperGridComponent } from "./grid/sweeper-grid.component";
+import { Router } from "@angular/router";
+import { TranslatePipe } from "@ngx-translate/core";
+import { CZTooltipBadgeComponent } from "../../core/components/ui-components/cz-tooltip-badge/cz-tooltip-badge.component";
 
 @Component({
   selector: 'game',
@@ -17,6 +20,7 @@ import { SweeperGridComponent } from "./grid/sweeper-grid.component";
     CommonModule,
     FormsModule,
     DurationFormatPipe,
+    TranslatePipe,
     Message,
     Button,
     Card,
@@ -29,7 +33,9 @@ import { SweeperGridComponent } from "./grid/sweeper-grid.component";
   templateUrl: './game.component.html',
 })
 export class GameComponent {
- 
+
+  readonly _router = inject(Router);
+
   protected Math = Math;
 
   protected changeDetectorRef = inject(ChangeDetectorRef);
@@ -57,5 +63,9 @@ export class GameComponent {
 
   protected onReset() {
     this._gridRef()?.reset();
+  }
+
+  protected onBackHome() {
+    this._router.navigate(['/']);
   }
 }
