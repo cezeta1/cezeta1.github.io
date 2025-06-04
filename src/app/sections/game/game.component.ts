@@ -12,7 +12,6 @@ import { CDigitalDisplayComponent } from "./digital-display/digital-display.comp
 import { SweeperGridComponent } from "./grid/sweeper-grid.component";
 import { Router } from "@angular/router";
 import { TranslatePipe } from "@ngx-translate/core";
-import { CZTooltipBadgeComponent } from "../../core/components/ui-components/cz-tooltip-badge/cz-tooltip-badge.component";
 
 @Component({
   selector: 'game',

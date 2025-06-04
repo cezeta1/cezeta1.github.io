@@ -37,8 +37,7 @@ export class NavBarComponent {
   protected showTabs = computed(() => !!this.tabs().length);
   protected tabs = input<AppRouteTab[]>([
     { route: AppRoutesEnum.Home, label: 'home.title', icon: 'pi-home' },
-    { route: AppRoutesEnum.Projects, label: 'projects.title',  icon: 'pi-star' },
-    { route: AppRoutesEnum.Game, label: 'game.title',  icon: 'pi-bullseye' }
+    { route: AppRoutesEnum.Projects, label: 'projects.title',  icon: 'pi-star' }
   ]);
 
   protected goHome = () => this.router.navigate([AppRoutesEnum.Home]);
