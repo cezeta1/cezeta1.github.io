@@ -35,17 +35,17 @@ export class ResumeComponent {
 
   protected experiences: Experience[] = [
     {
-      title: 'FULL-STACK WEB DEVELOPER',
+      title: 'FULL-STACK SOFTWARE ENGINEER',
       company: 'NexPay Pty Ltd',
       url: 'https://nexpay.com.au',
       startDate: 'Dec 2023',
       endDate: 'Present',
       country: 'Australia',
       items: [
-        'Managing <span class=\"!font-bold\">CI/CD pipelines and deployments</span> of all NexPay apps in all environments, using <span class=\"!font-bold\">Azure DevOps</span>.',
-        'Planning and implementing a modern version of an existing web app, keeping the business logic but improving the ability to <span class=\"!font-bold\">test</span>, <span class=\"!font-bold\">maintain</span>, <span class=\"!font-bold\">enhance</span> and <span class=\"!font-bold\">deploy</span> it. Managing the transition between old and new systems.',
-        'Developing, fixing and improving legacy APIs for multiple projects, using <span class=\"!font-bold\">.NET Core / C#</span>.',
-        'Developing a responsive <span class=\"!font-bold\">Angular19</span> frontend app using <span class=\"!font-bold\">Tailwind</span> and <span class=\"!font-bold\">PrimeNG</span>. Used latest Angular improvements like <span class=\"!font-bold\">Signals</span> to manage stores and improve performance and reduce codebase complexity.'
+        'Maintained and improved an international payments solution, managing the full stack (<span class=\"!font-bold\">.NET</span> backend, public REST APIs, <span class=\"!font-bold\">MSSQL databases</span>, <span class=\"!font-bold\">Angular/Razor</span> frontends) and its <span class=\"!font-bold\">Azure CI/CD pipelines</span>.',
+        'Planned and implemented a modern version of a legacy web application, improving its testability, maintainability, and deployment structure while managing the CI/CD pipeline with <span class=\"!font-bold\">Azure DevOps</span>.',
+        'Developed a templated email notification service using a <span class=\"!font-bold\">.NET consumer</span> for an <span class=\"!font-bold\">Azure Service Bus queue</span>.',
+        'Built a responsive frontend application with <span class=\"!font-bold\">Angular19</span>, <span class=\"!font-bold\">Tailwind</span>, and <span class=\"!font-bold\">PrimeNG</span>, using <span class=\"!font-bold\">Signals</span> for state management to improve performance and simplify the codebase.',
       ],
       techs: [
         'angular',
