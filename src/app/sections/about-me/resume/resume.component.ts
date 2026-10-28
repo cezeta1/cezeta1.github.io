@@ -35,22 +35,27 @@ export class ResumeComponent {
 
   protected experiences: Experience[] = [
     {
-      title: 'FULL-STACK SOFTWARE ENGINEER',
+      title: 'SOFTWARE ENGINEER — PLATFORM & INFRASTRUCTURE LEAD',
       company: 'NexPay Pty Ltd',
       url: 'https://nexpay.com.au',
       startDate: 'Dec 2023',
       endDate: 'Present',
       country: 'Australia',
       items: [
-        'Maintained and improved an international payments solution, managing the full stack (<span class=\"!font-bold\">.NET</span> backend, public REST APIs, <span class=\"!font-bold\">MSSQL databases</span>, <span class=\"!font-bold\">Angular/Razor</span> frontends) and its <span class=\"!font-bold\">Azure CI/CD pipelines</span>.',
-        'Planned and implemented a modern version of a legacy web application, improving its testability, maintainability, and deployment structure while managing the CI/CD pipeline with <span class=\"!font-bold\">Azure DevOps</span>.',
-        'Developed a templated email notification service using a <span class=\"!font-bold\">.NET consumer</span> for an <span class=\"!font-bold\">Azure Service Bus queue</span>.',
-        'Built a responsive frontend application with <span class=\"!font-bold\">Angular19</span>, <span class=\"!font-bold\">Tailwind</span>, and <span class=\"!font-bold\">PrimeNG</span>, using <span class=\"!font-bold\">Signals</span> for state management to improve performance and simplify the codebase.',
+        'As NexPay\'s sole engineer, co-built a new cross-border payments platform with a partner company\'s CTO: <span class=\"!font-bold\">TypeScript / Node</span> API on <span class=\"!font-bold\">GCP Cloud Run</span> and a <span class=\"!font-bold\">React</span> app on <span class=\"!font-bold\">Cloudflare Workers</span>, serving ~3.5M API requests a month at 99.95% success.',
+        'Led the migration off a legacy <span class=\"!font-bold\">.NET / MSSQL</span> estate: moved transactional emails, card checkout, payment status links and QR codes onto the new platform and decommissioned the legacy client portal, while staying the sole maintainer of the legacy services.',
+        'Owned the cloud infrastructure end to end across <span class=\"!font-bold\">Azure</span>, <span class=\"!font-bold\">GCP</span> and <span class=\"!font-bold\">Cloudflare</span>: right-sized hosting plans, consolidated subscriptions and moved workloads to the edge, cutting running costs by ~60% (~AU$35k a year) and CI build times from ~15 min to ~5 min.',
+        'Improved pricing accuracy on FX payments, recovering margin on a previously unpriced payment type.',
+        'Ran security and access hardening for a regulated payments business: production incident response, identity and access clean-up, closing exposed admin endpoints, TOTP 2FA and a rebuilt password-reset flow.',
+        'Shipped ~20 customer-facing features (redesigned payment flow, refunds, recipient management, payer tax-ID validation) and brought post-migration support from 41 to ~8 reports a week, with a median resolution time under 1 day.',
+        'Wrote ~100 architecture decision records and built internal ops tooling, including <span class=\"!font-bold\">AI-assisted</span> feedback triage (MCP) and automated product reporting.'
       ],
       techs: [
-        'angular',
-        'tailwindcss',
-        'primeng',
+        'typescript',
+        'nodedotjs',
+        'react',
+        'googlecloud',
+        'cloudflareworkers',
         'dotnet'
       ]
     },
@@ -59,20 +64,19 @@ export class ResumeComponent {
       company: 'JBKnowledge',
       url: 'https://jbknowledge.com/',
       startDate: 'Nov 2022',
-      endDate: ' Dec 2023',
+      endDate: 'Dec 2023',
       country: 'Argentina',
       items: [
-        'Multi-purpose project configuration and integration between libraries and setups. <span class=\"!font-bold\">Angular15</span>, <span class=\"!font-bold\">Storybook</span>, <span class=\"!font-bold\">Tailwind</span>, <span class=\"!font-bold\">React Microfrontends</span> within Angular, <span class=\"!font-bold\">MSW</span> mock requests, <span class=\"!font-bold\">MSAL</span> auth interceptors, <span class=\"!font-bold\">PowerFX</span> editor, among others.',
-        'Building modular, generic and scalable <span class=\"!font-bold\">Angular15</span> libraries and components to optimize development speed.',
-        'Developing, fixing and improving APIs for multiple projects, using <span class=\"!font-bold\">.NET Core / C#</span>. Code-First database approaches using <span class=\"!font-bold\">Entity Framework</span>. Event-based database management using <span class=\"!font-bold\">Azure Cosmos DB</span>.',
-        'Working using agile workflows (<span class=\"!font-bold\">User Stories / Scrum</span>). Hands-on involvement in all parts of a project, implementing Frontend, Backend and DB from the ground up, documenting development good practices.'
+        'Built reusable <span class=\"!font-bold\">Angular</span> component libraries and a <span class=\"!font-bold\">Storybook</span> design system, including <span class=\"!font-bold\">React</span> micro-frontends embedded in Angular apps.',
+        'Set up project foundations: <span class=\"!font-bold\">MSAL</span> authentication, <span class=\"!font-bold\">MSW</span> request mocking, <span class=\"!font-bold\">Tailwind</span> and a PowerFX formula editor integration.',
+        'Built and maintained <span class=\"!font-bold\">.NET Core / C#</span> APIs with <span class=\"!font-bold\">Entity Framework</span> (code-first) and event-based persistence on <span class=\"!font-bold\">Azure Cosmos DB</span>.',
+        'Worked across frontend, backend and database in Scrum teams, and wrote the team\'s development best-practice guides.'
       ],
       techs: [
-        'react',
         'angular',
+        'react',
         'storybook',
         'tailwindcss',
-        'primeng',
         'dotnet'
       ]
     },
@@ -84,16 +88,15 @@ export class ResumeComponent {
       endDate: 'Nov 2022',
       country: 'Argentina',
       items: [
-        'Building modular frontend libraries and components to optimize development speed and improve page loading times (<span class=\"!font-bold\">Angular13</span>). Developing, fixing and improving APIs for multiple projects (<span class=\"!font-bold\">.NET Core</span>).',
-        'Migrating and refactoring legacy <span class=\"!font-bold\">Sharepoint / Knockout.js</span> code to <span class=\"!font-bold\">Angular13</span>, improving code implementation and readability.',
-        'Developing automated web-scraping, data processing, csv/xlsx report exporting scripts using <span class=\"!font-bold\">Python</span>.',
-        'Working using agile workflows (<span class=\"!font-bold\">User Stories / Scrum</span>), with both in-house developer teams and clients.'
+        'Migrated legacy <span class=\"!font-bold\">SharePoint / Knockout.js</span> applications to <span class=\"!font-bold\">Angular</span>, making them easier to read and maintain.',
+        'Built shared Angular component libraries that sped up delivery and improved page load times.',
+        'Built and maintained <span class=\"!font-bold\">.NET Core</span> APIs across multiple client projects.',
+        'Automated web scraping, data processing and CSV/XLSX reporting with <span class=\"!font-bold\">Python</span>.'
       ],
       techs: [
         'angular',
-        'primeng',
-        'python',
         'dotnet',
+        'python'
       ]
     },
     {
@@ -104,10 +107,10 @@ export class ResumeComponent {
       endDate: 'Oct 2021',
       country: 'Argentina',
       items: [
-        'Developing a <span class=\"!font-bold\">Python</span> tool for estimating voice from EEG records in the context of imagined speech.'
+        'Built a <span class=\"!font-bold\">Python / scikit-learn</span> tool to decode imagined speech from EEG recordings.'
       ],
-      techs: [ 
-        'python', 
+      techs: [
+        'python',
         'scikitlearn'
       ]
     }
