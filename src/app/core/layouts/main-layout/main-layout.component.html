@@ -4,19 +4,17 @@
 >
   <nav-bar></nav-bar>
 
-  <div class="flex flex-1 w-full max-w-screen overflow-y-auto">
+  <div class="flex flex-1 w-full max-w-screen px-2 sm:px-8 overflow-y-auto">
     <!-- Main content ribbon -->
-    <div 
+    <div
       class="
         relative
-        flex flex-col flex-1
-        w-full min-h-fit
-        p-6 mx-0 sm:mx-8 lg:mx-12
+        flex flex-col
+        w-full max-w-5xl min-h-fit
+        mx-auto
+        p-4 pb-10 sm:p-8 sm:pb-10
         bg-content-background
-        border-x border-x-content-hover-background
-        shadow-2xl
-
-        pb-40 sm:pb-6
+        border-x border-content-border-color
       "
     >
       <div class="flex-1">
@@ -27,7 +25,11 @@
         Version: {{ LIB_VERSION }}
       </span>
     </div>
-    <p-scrolltop class="absolute bottom-6 right-6" target="parent" [buttonProps]="{ raised: true, rounded: true }"/>
+    <p-scrolltop
+      class="absolute bottom-6 right-6"
+      target="parent"
+      [buttonProps]="{ severity: 'secondary', outlined: true, rounded: true }"
+    />
   </div>
 </div>
 

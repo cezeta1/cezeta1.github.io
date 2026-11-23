@@ -3,7 +3,6 @@ import { Component, computed, inject, input, signal } from "@angular/core";
 import { Router, RouterModule } from "@angular/router";
 import { TranslatePipe } from "@ngx-translate/core";
 import { Avatar } from 'primeng/avatar';
-import { TabsModule } from 'primeng/tabs';
 import { Toolbar } from 'primeng/toolbar';
 import { AppRoutesEnum } from "../../../../app.routes";
 import { DarkModeSwitchComponent } from "../../../components/dark-mode-switch/dark-mode-switch.component";
@@ -23,7 +22,6 @@ export interface AppRouteTab {
     TranslatePipe,
     Toolbar,
     Avatar,
-    TabsModule,
     DarkModeSwitchComponent,
     LangSelectorComponent
   ],

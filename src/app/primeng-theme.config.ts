@@ -18,6 +18,13 @@ const AuraBlue = definePreset(Aura, {
       950: '{indigo.950}'
     },
     colorScheme: {
+      // Pure white body text on near-black is harsh; soften it one step
+      dark: {
+        text: {
+          color: '{surface.200}',
+          hoverColor: '{surface.0}'
+        }
+      }
       // dark: {
       //   surface: {
       //     0: '#ffffff',

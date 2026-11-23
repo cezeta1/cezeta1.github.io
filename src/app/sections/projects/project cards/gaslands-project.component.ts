@@ -11,6 +11,7 @@ import { Card } from 'primeng/card';
       styleClass="
         h-full max-w-[300px] 
         overflow-hidden 
+        !shadow-none
         border border-toolbar-border-color
         [&>_.p-card-body]:h-full
         [&>_.p-card-body]:flex

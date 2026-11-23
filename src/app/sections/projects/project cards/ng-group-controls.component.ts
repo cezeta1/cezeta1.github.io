@@ -19,6 +19,7 @@ import { TranslatePipe } from "@ngx-translate/core";
       styleClass="
         h-full max-w-[300px]
         overflow-hidden 
+        !shadow-none
         border border-toolbar-border-color
         [&>_.p-card-body]:h-full
         [&>_.p-card-body]:flex
@@ -54,7 +55,7 @@ import { TranslatePipe } from "@ngx-translate/core";
         </span>
       </p-message>
       
-      <p-message styleClass="mt-4" size="small" icon="pi pi-info-circle">
+      <p-message severity="secondary" styleClass="mt-4" size="small" icon="pi pi-info-circle">
         {{ translateRoot+"message2" | translate }}
       </p-message>
       
@@ -73,7 +74,7 @@ import { TranslatePipe } from "@ngx-translate/core";
           <div class="inline-flex w-full *:!w-full gap-2">
             <p-button
               outlined
-              styleClass="w-full !text-red-400"
+              styleClass="w-full"
               icon="pi pi-box"
               label="npm"
               severity="secondary"

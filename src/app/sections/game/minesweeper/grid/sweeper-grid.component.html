@@ -1,37 +1,34 @@
-<div class="flex flex-col items-center gap-8">
-  <div class="flex w-fit mx-auto">
-    
-    <div
-      id="game-grid"
+<!--
+  Columns are capped at 2.5rem but may shrink, and every cell fills its track,
+  so the cell and its cover always share one box on narrow screens.
+-->
+<div
+  id="game-grid"
 
-      class="
-        grid
-        border-4 border-toolbar-border-color
-        rounded-sm
-      "
-      [style]="`
-        grid-template-rows: repeat(${xn()}, minmax(0, 1fr));
-        grid-template-columns: repeat(${yn()}, minmax(0, 1fr));
-      `"
-    >
-      @for (_ of [].constructor(xn()); track $index; let i = $index) {
-        @for (_ of [].constructor(yn()); track $index; let j = $index) {
-          <div 
-            class="
-              relative 
-              outline-1 outline-content-border-color
-              z-10
-            "
-          >
-            <cell
-              class="min-w-fit"
-              [id]="`${i}-${j}`"
-              (onClick)="onCellClick(i, j)"
-              (onRightClick)="onFlagCell(i, j)"
-            />
-          </div>
-        }
-      }
-    </div>
-  </div>
+  class="
+    grid
+    w-fit max-w-full mx-auto
+    border border-toolbar-border-color
+    rounded-sm
+  "
+  [style]="`grid-template-columns: repeat(${yn()}, minmax(0, 2.5rem));`"
+>
+  @for (_ of [].constructor(xn()); track $index; let i = $index) {
+    @for (_ of [].constructor(yn()); track $index; let j = $index) {
+      <div
+        class="
+          relative
+          outline-1 outline-content-border-color
+          z-10
+        "
+      >
+        <cell
+          class="block"
+          [id]="`${i}-${j}`"
+          (onClick)="onCellClick(i, j)"
+          (onRightClick)="onFlagCell(i, j)"
+        />
+      </div>
+    }
+  }
 </div>
