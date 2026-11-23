@@ -48,10 +48,18 @@
   --color-form-field-background: var(--p-form-field-background);
 }
 
+/* Tailwind `dark:` follows the app theme class, not the OS preference */
+
+@custom-variant dark (&:where(.dark-theme, .dark-theme *));
+
 /* Flag font */
 
 body, body * {
-  font-family: "Twemoji Country Flags", "ui-sans-serif", "system-ui", "sans-serif", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-family: "Twemoji Country Flags", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+body {
+  color: var(--p-text-color);
 }
 
 .lcd {
@@ -69,8 +77,8 @@ body, body * {
 /* Scrollbar */
 
 body {
-  --sb-thumb-color: var(--p-primary-color);
-  --sb-track-color: var(--p-primary-contrast-color);
+  --sb-thumb-color: var(--p-content-border-color);
+  --sb-track-color: var(--p-content-background);
   --sb-size: 10px;
 }
 
@@ -99,15 +107,18 @@ body {
 /* Background pattern */
 
 body {
-  --pattern-lines: var(--p-content-border-color);
+  --pattern-lines: color-mix(in srgb, var(--p-content-border-color), transparent 50%);
   --pattern-bg: var(--p-content-background);
 }
 
 .background-pattern {
   width: 100%;
   height: 100%;
-  background: repeating-linear-gradient(135deg, var(--pattern-lines) 0, var(--pattern-lines) 7%, transparent 0, transparent 50%);
-  background-size: 1em 1em;
-  background-color: var(--pattern-bg);
-  opacity: 0.5
+  background:
+    repeating-linear-gradient(
+      135deg,
+      var(--pattern-lines) 0 1px,
+      transparent 1px 12px
+    ),
+    var(--pattern-bg);
 }

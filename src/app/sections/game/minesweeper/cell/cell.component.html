@@ -1,11 +1,12 @@
 <div
   class="
+    relative
     flex items-center justify-center
-    w-10 min-w-fit aspect-square
+    w-full aspect-square
     bg-form-field-background
-    outline-1 outline-content-border-color
-    text-content-border-color
+    text-text-color
     font-bold
+    select-none
   "
   (click)="onCellClick()"
   (contextmenu)="onCellRightClick($event)"
@@ -16,23 +17,22 @@
   <div
     [id]="'front-layer-'+internalId"
     class="
-      absolute w-full aspect-square
+      absolute inset-0
       flex items-center justify-center
       bg-content-hover-background
       z-10 overflow-hidden
     "
   >
-    <div 
+    <div
       [id]="'flag-'+internalId"
       style="transform: scale(0);"
       class="
-        flex items-center justify-center 
+        flex items-center justify-center
         w-full h-full
-       bg-yellow-500/50
-       rounded-b-sm
+        bg-amber-500/20
       "
     >
-      <i class="text-xl text-amber-400 pi pi-flag-fill"></i>
+      <i class="text-amber-600 dark:text-amber-400 pi pi-flag-fill"></i>
     </div>
   </div>
 
@@ -40,40 +40,23 @@
 
   @if (cellStore.isMine()) {
     <i class="absolute pi pi-circle-fill"></i>
-    <i class="!text-xl pi pi-star-fill"></i> 
+    <i class="!text-xl pi pi-star-fill"></i>
   }
   @else if (cellStore.val() > 0) {
-    <div class="w-full h-full">
-      <div
-        class="w-full h-full flex items-center justify-center"
-        [ngClass]="
+    <span
+      [ngClass]="
         {
-          'bg-blue-400/20' : cellStore.val() == 1,
-          'bg-green-400/20' : cellStore.val() == 2,
-          'bg-red-400/20' : cellStore.val() == 3,
-          'bg-purple-400/20' : cellStore.val() == 4,
-          'bg-amber-800/20' : cellStore.val() == 5,
-          'bg-sky-300/20' : cellStore.val() == 6,
-          'bg-indigo-700/20' : cellStore.val() == 7,
-          'bg-gray-400/20' : cellStore.val() == 8
+          'text-blue-600 dark:text-blue-400' : cellStore.val() == 1,
+          'text-green-600 dark:text-green-400' : cellStore.val() == 2,
+          'text-red-600 dark:text-red-400' : cellStore.val() == 3,
+          'text-purple-600 dark:text-purple-400' : cellStore.val() == 4,
+          'text-amber-600 dark:text-amber-400' : cellStore.val() == 5,
+          'text-teal-600 dark:text-teal-400' : cellStore.val() == 6,
+          'text-pink-600 dark:text-pink-400' : cellStore.val() == 7,
+          'text-zinc-500 dark:text-zinc-400' : cellStore.val() == 8
         }"
-      >
-        <span 
-          [ngClass]="
-            {
-              'text-blue-400' : cellStore.val() == 1,
-              'text-green-400' : cellStore.val() == 2,
-              'text-red-400' : cellStore.val() == 3,
-              'text-purple-400' : cellStore.val() == 4,
-              'text-amber-800' : cellStore.val() == 5,
-              'text-sky-300' : cellStore.val() == 6,
-              'text-indigo-700' : cellStore.val() == 7,
-              'text-gray-400' : cellStore.val() == 8
-            }"
-        >
-          {{ cellStore.val() }}
-        </span>
-      </div>
-    </div>
+    >
+      {{ cellStore.val() }}
+    </span>
   }
 </div>

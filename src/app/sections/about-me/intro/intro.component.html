@@ -1,25 +1,30 @@
-<div class="inline-flex w-full">
-  <div class="pr-0 md:pr-8">
-    <div 
+<div
+  class="
+    flex flex-col-reverse items-center gap-6
+    w-full
+    md:flex-row md:items-start md:justify-between md:gap-10
+  "
+>
+  <div class="max-w-prose">
+    <div
       class="
-        flex flex-col gap-2 mb-8 
-        self-center lg:self-start
-        items-center lg:items-start
+        flex flex-col gap-2 mb-8
+        items-center md:items-start
       "
     >
-      <h3 class="!text-sm !font-light">
+      <p class="text-sm text-muted-color">
         {{ 'home.aboutMe.intro1' | translate }}
-      </h3>
+      </p>
 
-      <h1 class="!text-[3rem] text-primary">
+      <h1 class="!text-4xl sm:!text-5xl !font-semibold tracking-tight text-primary">
         Julián Czerweny
       </h1>
 
-      <p class="!text-xs" [innerHTML]="'home.aboutMe.intro2' | translate"></p>
+      <p class="text-sm text-muted-color" [innerHTML]="'home.aboutMe.intro2' | translate"></p>
     </div>
 
     <p
-      class="text-lg text-justify text-pretty" 
+      class="text-lg leading-relaxed text-pretty"
       [innerHTML]="'home.aboutMe.description' | translate"
     ></p>
 
@@ -31,8 +36,14 @@
 
   </div>
 
-  <p-image
-    src="/assets/images/me.png" alt="Image" width="150"
-    imageClass="hidden md:block w-full rounded-xl shadow-lg"
+  <img
+    src="/assets/images/me.png"
+    alt="Julián Czerweny"
+    class="
+      shrink-0 size-28 md:size-52
+      object-cover
+      rounded-full md:rounded-xl
+      border border-content-border-color
+    "
   />
 </div>

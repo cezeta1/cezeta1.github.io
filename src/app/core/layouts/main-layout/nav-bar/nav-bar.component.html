@@ -1,24 +1,45 @@
 <p-toolbar
   styleClass="
-    !relative !z-10 !p-2 !rounded-none
+    !relative !z-10 !px-2 !py-0 !rounded-none
     !border-x-0 !border-t-0
-    shadow-md
   "
 >
   <ng-template #start>
-    <div class="inline-flex items-center" (click)="goHome()">
+    <div class="inline-flex items-center cursor-pointer" (click)="goHome()">
       <p-avatar
         [image]="avatarSrc()"
-        class="mx-2" 
-        size="large" 
+        class="mx-2"
         shape="circle"
       />
-      
-      <h1 class="text-xl font-bold">Cezeta.</h1>
+
+      <span class="text-lg font-bold">Cezeta.</span>
     </div>
   </ng-template>
-  
+
   <ng-template #center>
+    @if (showTabs()) {
+      <!-- -mb-px: the active underline sits on the toolbar's bottom border -->
+      <nav class="inline-flex items-center gap-1 -mb-px">
+        @for (tab of tabs(); track tab.route) {
+          <a
+            class="
+              inline-flex items-center gap-2
+              px-3 py-3
+              text-sm font-medium text-muted-color
+              border-b-2 border-transparent
+              transition-colors
+              hover:text-color
+            "
+            [routerLink]="'/'+tab.route"
+            routerLinkActive="!text-primary !border-primary"
+            [attr.aria-label]="tab.label | translate"
+          >
+            <i [class]="'pi ' + tab.icon"></i>
+            <span class="hidden sm:inline">{{ tab.label | translate }}</span>
+          </a>
+        }
+      </nav>
+    }
   </ng-template>
 
   <ng-template #end>
@@ -28,33 +49,3 @@
     </div>
   </ng-template>
 </p-toolbar>
-
-@if (showTabs()) {
-  <p-tabs [value]="router.url">
-    <p-tablist 
-      class=" 
-        [&>_.p-tablist-content]:!border-b
-        [&>_.p-tablist-content]:!border-toolbar-border-color
-        [&>_.p-tablist-content]:!inline-flex
-        [&>_.p-tablist-content]:!justify-center
-        [&>_.p-tablist-content]:!bg-content-hover-background
-        [&>_.p-tablist-content]:!shadow-md
-
-        [&>_.p-tablist-content]:[&>_.p-tablist-tab-list]:[&>_.p-tablist-active-bar]:!h-[2px]
-      "
-    >
-      @for(tab of tabs(); track tab.route) {
-        <p-tab 
-          class="
-            !py-1 !bg-content-hover-background !border-b-0
-          " 
-          [value]="'/'+tab.route" 
-          [routerLink]="'/'+tab.route"
-        >
-          <i [class]="'pi ' + tab.icon"></i>
-          <span>{{ tab.label | translate }}</span>
-        </p-tab>
-      }
-    </p-tablist>
-  </p-tabs>
-}

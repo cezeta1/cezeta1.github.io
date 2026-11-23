@@ -7,7 +7,8 @@
 <p-card
   styleClass="
     mx-auto mt-4
-    border-4 bg-content-background border-toolbar-border-color
+    !shadow-none
+    border bg-content-background border-toolbar-border-color
     lg:max-w-screen-lg
   "
 >
@@ -25,7 +26,7 @@
   >
     <!-- Top scores -->
 
-    <div class="flex flex-col h-full w-full m-4">
+    <div class="flex flex-col h-full w-full p-4">
 
       <digital-display
         [label]="'game.time' | translate"
@@ -90,7 +91,7 @@
 
     <!--  Game grid -->
 
-    <blockable-div #sweeperGrid class="block w-fit h-fit min-w-fit min-h-fit mx-auto p-2">
+    <blockable-div #sweeperGrid class="block w-full md:w-auto md:shrink-0 h-fit mx-auto p-2">
       <sweeper-grid
         [xn]="xn"
         [yn]="yn"

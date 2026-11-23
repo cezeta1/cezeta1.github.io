@@ -1,231 +1,101 @@
-<h1 class="text-center text-xl font-bold mb-8">
-  {{ 'home.resume.title' | translate }}
-</h1>
+<div class="flex flex-wrap items-center justify-between gap-4 mb-10">
+  <h2 class="text-2xl font-semibold tracking-tight">
+    {{ 'home.resume.title' | translate }}
+  </h2>
 
-<div>
-  <ng-container *ngTemplateOutlet="tldr"></ng-container>
+  <p-button
+    outlined
+    size="small"
+    severity="secondary"
+    icon="pi pi-file-pdf"
+    label="Want it for takeout?"
+    (onClick)="onTLDR()"
+  ></p-button>
 </div>
 
-<!-- Small Template -->
+<!-- Timeline: dates | marker | entry -->
 
-<div class="flex flex-col items-center w-full gap-8 md:hidden">
-  @for (exp of experiences; track $index) {
-    <ng-container 
-      *ngTemplateOutlet="xpCardSm; context: { $implicit: exp }"
-    ></ng-container>
-  }
-</div>
+<ol class="flex flex-col">
+  @for (exp of experiences; track $index; let first = $first, last = $last) {
+    <li class="flex gap-4 md:gap-6">
 
-<!-- Large Template -->
-
-<div class="hidden flex-col items-center w-full gap-4 md:flex">
-  @for (exp of experiences; track $index) {
-    <ng-container
-      *ngTemplateOutlet="xpCardLg; context: { $implicit: exp }"
-    ></ng-container>
-  }
-</div>
-
-<!---- Templates ---->
-
-<!-- TLDR -->
-
-<ng-template #tldr>
-  <div 
-    class="
-      flex w-full justify-end
-      mb-8
-      md:relative md:m-0
-    "
-  >
-    <div 
-      class="
-        inline-flex items-center
-        md:absolute
-        -top-15 right-8
-        w-fit
-        rounded-lg 
-        border border-toolbar-border-color
-        shadow-lg 
-      "
-    >
-      <span class="mx-2 h-fit text-center text-sm text-muted-color">
-        Want it for takeout?
-      </span>
-    
-      <p-button
-        styleClass="text-text-color"
-        severity="danger"
-        icon="pi pi-file-pdf"
-        (onClick)="onTLDR()"
-      ></p-button>
-    </div>
-  </div>
-
-</ng-template>
-
-<!-- Experience card (SMALL) -->
-
-<ng-template #xpCardSm let-exp>
-  <p-panel
-    class="w-full" 
-    styleClass="
-      relative !shadow-lg 
-      [&>_.p-panel-header]:!bg-content-hover-background
-      [&>_.p-panel-header]:!border-b
-      [&>_.p-panel-header]:!py-4
-      [&>_.p-panel-header]:!flex
-      [&>_.p-panel-header]:!flex-col
-      [&>_.p-panel-header]:[&>_.p-panel-icons]:!w-full
-
-      [&>_.p-panel-content-container]:[&>_.p-panel-content]:!px-4
-      [&>_.p-panel-content-container]:[&>_.p-panel-content]:!py-4
-
-      [&>_.p-panel-content-container]:[&>_.p-panel-footer]:!border-t
-      [&>_.p-panel-content-container]:[&>_.p-panel-footer]:!border-toolbar-border-color
-      [&>_.p-panel-content-container]:[&>_.p-panel-footer]:!p-0
-    "
-  >
-    <ng-template #header>
-      <span class="mb-2 text-center text-lg font-bold">{{ exp.title }}</span>
-    </ng-template>
-
-    <ng-template #icons>
-      
-      <span class="flex flex-col [&>*]:self-start text-sm text-muted-color whitespace-nowrap">
-        <span class="inline-flex">
-          {{ exp.company }}
-          <a 
-            class="flex items-center justify-center ml-2"
-            [href]="exp.url" target="_blank"
-          ><i class="pi pi-link text-primary"></i></a>
-        </span>
-        <span class="flex items-center justify-end">
-          {{ exp.startDate }} – {{ exp.endDate }} 
-          <p-divider layout="vertical" styleClass="!py-1 !mx-2" /> 
-          {{ exp.country }}
-        </span>
-      </span>
-    </ng-template>
-
-    <!-- Content -->
-    <ul class="list-disc list-outside ml-4 [&>li+li]:mt-2">
-      @for (itm of exp.items; track itm) {
-        <li class="!text-sm !font-normal marker:text-primary">
-          <span [innerHTML]="itm"></span>
-        </li>
-      }
-    </ul>
-
-    @if (exp.techs) {
-      <ng-template #footer>
-        <div class="inline-flex flex-wrap max-w-full h-full m-4 gap-4">
-          @for (i of exp.techs; track i) {
-            <img
-              height="32" width="32" 
-              [src]="`https://cdn.simpleicons.org/${i}/black/white`"
-              [pTooltip]="i" tooltipPosition="bottom" 
-            />
-          }
-        </div>
-        
-      </ng-template>
-    }
-
-    <p-button class="absolute -top-4 -left-4" styleClass="shadow-lg" icon="pi pi-asterisk" [rounded]="true" />
-  </p-panel>
-</ng-template>
-
-<!-- Experience Card (LARGE) -->
-
-<ng-template #xpCardLg let-exp>
-
-  <div 
-    class="
-      inline-flex w-full gap-4 max-w-[90%] 
-      lg:max-w-[80%]
-    "
-  >
-
-    <div class="flex flex-col">
-      <p-button styleClass="shadow-lg" icon="pi pi-asterisk" [rounded]="true" />
-      <div class="vertical-line grow w-[3px]"></div>
-    </div>
-    
-    <p-panel 
-      class="w-full" 
-      styleClass="
-        !shadow-lg 
-        [&>_.p-panel-header]:!bg-content-hover-background
-        [&>_.p-panel-header]:!border-b
-        [&>_.p-panel-header]:!py-4
-
-        [&>_.p-panel-content-container]:[&>_.p-panel-content]:!px-4
-        [&>_.p-panel-content-container]:[&>_.p-panel-content]:!py-4
-
-        [&>_.p-panel-content-container]:[&>_.p-panel-footer]:!border-t
-        [&>_.p-panel-content-container]:[&>_.p-panel-footer]:!border-toolbar-border-color
-        [&>_.p-panel-content-container]:[&>_.p-panel-footer]:!p-0
-      "
-    >
-
-      <ng-template #header>
-        <span class="text-lg font-bold">{{ exp.title }}</span>
-      </ng-template>
-
-      <ng-template #icons>
+      <!-- Start year (rail, md and up); the exact range shows on hover -->
+      <div
+        class="
+          hidden md:block
+          w-12 shrink-0 pt-1
+          text-right text-sm leading-5 text-muted-color tabular-nums
+        "
+      >
         <span
-          class="
-            inline-flex w-full 
-            text-sm text-muted-color 
-            whitespace-nowrap
-          "
-        >
-          {{ exp.company }}
+          class="cursor-default"
+          [pTooltip]="exp.startDate + ' – ' + exp.endDate"
+          tooltipPosition="top"
+          tooltipStyleClass="whitespace-nowrap"
+          [attr.aria-label]="exp.startDate + ' – ' + exp.endDate"
+        >{{ exp.startDate.slice(-4) }}</span>
+      </div>
 
+      <!-- Marker: the line runs through every entry, the dot masks it -->
+      <div class="relative w-2.5 shrink-0">
+        <div
+          class="absolute left-1/2 -translate-x-1/2 w-px bg-content-border-color"
+          [ngClass]="{
+            'top-3': first,
+            'top-0': !first,
+            'bottom-0': !last,
+            'h-3': last && !first
+          }"
+        ></div>
+        <div
+          class="
+            relative mt-[9px] size-2.5
+            rounded-full bg-primary
+            ring-4 ring-content-background
+          "
+        ></div>
+      </div>
+
+      <!-- Entry -->
+      <div class="min-w-0 max-w-[65ch]" [ngClass]="{ 'pb-12': !last }">
+        <h3 class="text-lg font-semibold leading-7">{{ exp.title }}</h3>
+
+        <p class="mt-1 text-sm text-muted-color">
           <a
+            class="text-primary hover:underline"
             [href]="exp.url"
             target="_blank"
-            class="flex items-center justify-center ml-2"
-          >
-            <i class="pi pi-link text-primary"></i>
-          </a>
+            rel="noopener"
+          >{{ exp.company }}</a>
+          · {{ exp.country }}
+          <span class="md:hidden">· <span class="whitespace-nowrap">{{ exp.startDate }} – {{ exp.endDate }}</span></span>
+        </p>
 
-          <p-divider layout="vertical" styleClass="!py-1 !mx-2" />
+        <ul class="mt-4 ml-4 list-disc list-outside [&>li+li]:mt-3">
+          @for (itm of exp.items; track itm) {
+            <li class="text-sm leading-relaxed marker:text-primary">
+              <span [innerHTML]="itm"></span>
+            </li>
+          }
+        </ul>
 
-          {{ exp.startDate }} – {{ exp.endDate }}
-          
-          <p-divider layout="vertical" styleClass="!py-1 !mx-2" />
-
-          {{ exp.country }}
-        </span>
-      </ng-template>
-
-      <!-- Content -->
-      <ul class="list-disc list-outside ml-4 [&>li+li]:mt-2">
-        @for (itm of exp.items; track itm) {
-          <li class="!text-sm !font-normal marker:text-primary">
-            <span [innerHTML]="itm"></span>
-          </li>
-        }
-      </ul>
-
-      @if (exp.techs) {
-        <ng-template #footer>
-          <div class="inline-flex flex-wrap max-w-full h-full m-4 gap-4">
-            @for (i of exp.techs; track i) {
-              <img
-                height="32" width="32" 
-                [src]="`https://cdn.simpleicons.org/${i}/black/white`"
-                [pTooltip]="i" tooltipPosition="bottom" 
-              />
+        @if (exp.techs?.length) {
+          <ul class="flex flex-wrap gap-2 mt-4">
+            @for (tech of exp.techs; track tech) {
+              <li
+                class="
+                  px-2 py-0.5
+                  text-xs text-muted-color
+                  border border-content-border-color rounded-md
+                "
+              >
+                {{ tech }}
+              </li>
             }
-          </div>
-          
-        </ng-template>
-      }
+          </ul>
+        }
+      </div>
 
-    </p-panel>
-  </div>
-
-</ng-template>
+    </li>
+  }
+</ol>
