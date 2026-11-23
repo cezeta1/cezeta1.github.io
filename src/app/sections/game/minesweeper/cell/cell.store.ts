@@ -4,7 +4,7 @@ import {
   withMethods,
   withState
 } from '@ngrx/signals';
-import { withStateChange } from '../../../core/store-features/withStateChange.feature';
+import { withStateChange } from '../../../../core/store-features/withStateChange.feature';
 
 export interface CellState {
   val: number,

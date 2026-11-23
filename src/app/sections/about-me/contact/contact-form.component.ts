@@ -1,7 +1,7 @@
 import { CommonModule } from "@angular/common";
 import { Component, Inject, inject, Injector, signal } from "@angular/core";
 import { FormBuilder, ReactiveFormsModule, Validators } from "@angular/forms";
-import { TranslatePipe } from "@ngx-translate/core";
+import { TranslatePipe, TranslateService } from "@ngx-translate/core";
 import { Button } from "primeng/button";
 import { CZTextAreaComponent } from "../../../core/components/ui-components/cz-text-area/cz-text-area.component";
 import { CZTextInputComponent } from "../../../core/components/ui-components/cz-text-input/cz-text-input.component";
@@ -41,6 +41,7 @@ export class ContactFormComponent {
   private _emailSenderService = inject(EmailSenderService);
   private _reCaptchaV3Service = inject(ReCaptchaV3Service);
   private _fb = inject(FormBuilder);
+  private _translate = inject(TranslateService);
   
   protected isLoading = signal(false);
   protected contactForm = this._fb.group({
@@ -58,37 +59,45 @@ export class ContactFormComponent {
     this._reCaptchaV3Service
       .execute('contactFormSendEmail')
       .pipe(cz_takeUntilDestroyed(this._inj))
-      .subscribe((token) => {        
-        
-        if (!token)
-          return;
+      .subscribe({
+        next: (token) => {
+          if (!token) {
+            this._onSendError();
+            return;
+          }
 
-        let formSpreePayload = {
-          ...this.contactForm.value,
-          'g-recaptcha-response': token
-        };
+          let formSpreePayload = {
+            ...this.contactForm.value,
+            'g-recaptcha-response': token
+          };
 
-        this._sendEmail(formSpreePayload);
+          this._sendEmail(formSpreePayload);
+        },
+        error: () => this._onSendError()
       });
   }
-  
+
   private _sendEmail(formSpreePayload: any) {
     this._emailSenderService
       .sendEmail(formSpreePayload)
       .subscribe({
         next: (ret: any) => {
-          if (ret['ok'])
-            this._alertsService.showSuccess("Email sent! 😀");
-          else
-            this._alertsService.showError("There has been an error sending email 😥");
+          if (!ret?.['ok']) {
+            this._onSendError();
+            return;
+          }
 
+          this._alertsService.showSuccess(this._translate.instant('home.contact.send-success'));
           this.isLoading.set(false);
           this.contactForm.reset();
         },
-        error: (_ => {
-          this._alertsService.showError("There has been an error sending email 😥");
-          this.isLoading.set(false);
-        })
+        error: () => this._onSendError()
       });
+  }
+
+  // Keeps the form content so the user can retry
+  private _onSendError() {
+    this._alertsService.showError(this._translate.instant('home.contact.send-error'));
+    this.isLoading.set(false);
   }
 }

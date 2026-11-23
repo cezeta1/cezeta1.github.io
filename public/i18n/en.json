@@ -44,7 +44,9 @@
       "email": "Email",
       "subject": "Subject",
       "body": "Body",
-      "submit": "Send!"
+      "submit": "Send!",
+      "send-success": "Email sent! 😀",
+      "send-error": "There has been an error sending email 😥"
     }
   },
 

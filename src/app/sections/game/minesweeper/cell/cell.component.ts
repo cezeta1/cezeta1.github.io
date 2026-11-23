@@ -3,7 +3,7 @@ import { Component, computed, inject, Injector, OnInit, output, signal } from "@
 import { getState, watchState } from "@ngrx/signals";
 import { animate, AnimationParams } from "animejs";
 import { nanoid } from 'nanoid';
-import { cz_pairwiseMap, cz_takeUntilDestroyed } from "../../../core/utils";
+import { cz_pairwiseMap, cz_takeUntilDestroyed } from "../../../../core/utils";
 import { CellState, CellStore, initialState } from "./cell.store";
 
 @Component({
