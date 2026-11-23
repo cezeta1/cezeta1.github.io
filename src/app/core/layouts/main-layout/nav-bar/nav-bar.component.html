@@ -1,6 +1,6 @@
 <p-toolbar
   styleClass="
-    !relative !z-10 !px-2 !py-1 !rounded-none
+    !relative !z-10 !px-2 !py-0 !rounded-none
     !border-x-0 !border-t-0
   "
 >
@@ -18,12 +18,13 @@
 
   <ng-template #center>
     @if (showTabs()) {
-      <nav class="inline-flex items-center gap-1">
+      <!-- -mb-px: the active underline sits on the toolbar's bottom border -->
+      <nav class="inline-flex items-center gap-1 -mb-px">
         @for (tab of tabs(); track tab.route) {
           <a
             class="
               inline-flex items-center gap-2
-              px-3 py-2
+              px-3 py-3
               text-sm font-medium text-muted-color
               border-b-2 border-transparent
               transition-colors
