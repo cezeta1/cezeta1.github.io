@@ -74,5 +74,5 @@ import { Card } from 'primeng/card';
 export class GaslandsProjectCardComponent {
   protected translateRoot = "projects.cards.gaslands.";
   protected redirectToGithub = () => window.open('https://github.com/cezeta1/gaslands-app-ng', '_blank');
-  protected redirectToLive = () => window.open('https://cezeta1.github.io/gaslands-app-ng', '_blank');
+  protected redirectToLive = () => window.open('https://gaslands.cezeta.net/', '_blank');
 }

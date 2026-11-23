@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { AppRoutesEnum } from '../../app.routes';
 import { AboutMeComponent } from './about-me.component';
 
 export enum ExampleRoutesEnum {
@@ -7,14 +6,11 @@ export enum ExampleRoutesEnum {
 }
 
 export const sectionRoutes: Routes = [
-  
-  { path: '', redirectTo: ExampleRoutesEnum.Home, pathMatch: 'full' },
 
   // --- Content --- //
-  
-  { path: ExampleRoutesEnum.Home, component: AboutMeComponent },
 
-  // --- Wildcard --- //
-  
-  { path: '**', redirectTo: AppRoutesEnum.NotFound }
+  { path: ExampleRoutesEnum.Home, component: AboutMeComponent, pathMatch: 'full' },
+
+  // No wildcard here: this section is mounted at the app root, so unknown
+  // paths must fall through to the app-level routes (not-found, error).
 ]
