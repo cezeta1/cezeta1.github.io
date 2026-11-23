@@ -196,7 +196,6 @@ export class SweeperGridComponent implements AfterViewChecked, AfterViewInit {
       return;
 
     let notMineHidden = false;
-    let allMinesFlagged = true;
     let isGameOver = false;
 
     this._forEachCell(c => {
@@ -214,12 +213,6 @@ export class SweeperGridComponent implements AfterViewChecked, AfterViewInit {
           isGameOver = true;
           return false;
         }
-
-        // All mines flagged
-        if (!c.isFlagged) {
-          allMinesFlagged = false;
-          return false;
-        }
       }
 
       return;
@@ -230,7 +223,7 @@ export class SweeperGridComponent implements AfterViewChecked, AfterViewInit {
       return;
     }
 
-    if (!notMineHidden || allMinesFlagged) {
+    if (!notMineHidden) {
       this._onWin();
       return;
     }
@@ -272,7 +265,7 @@ export class SweeperGridComponent implements AfterViewChecked, AfterViewInit {
 
   // --- Utils --- //
 
-  private _getFlatIndex = (i: number, j: number) => i * this.xn() + j;
+  private _getFlatIndex = (i: number, j: number) => i * this.yn() + j;
 
   private _get3BV(): number {
     

@@ -44,7 +44,9 @@
       "email": "Email",
       "subject": "Asunto",
       "body": "Mensaje",
-      "submit": "Enviar"
+      "submit": "Enviar",
+      "send-success": "¡Email enviado! 😀",
+      "send-error": "Hubo un error al enviar el email 😥"
     }
   },
   
