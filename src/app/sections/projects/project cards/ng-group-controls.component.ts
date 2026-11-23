@@ -3,7 +3,6 @@ import { Router } from "@angular/router";
 import { Button } from "primeng/button";
 import { Card } from 'primeng/card';
 import { Message } from 'primeng/message';
-import { AppRoutesEnum } from "../../../app.routes";
 import { TranslatePipe } from "@ngx-translate/core";
 
 @Component({
@@ -100,5 +99,5 @@ export class NgGroupControlsProjectCardComponent {
   protected redirectToGithub = () => window.open('https://github.com/cezeta1/ng-group-controls', '_blank');
   protected redirectToNpm = () => window.open('https://www.npmjs.com/package/ng-group-controls', '_blank');
   protected redirectToLive = () => window.open('https://github.com/cezeta1/ng-group-controls', '_blank');
-  protected redirectToHome = () => this._router.navigate([AppRoutesEnum.Home]);
+  protected redirectToHome = () => this._router.navigate(['/']);
 }

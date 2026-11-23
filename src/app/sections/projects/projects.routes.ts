@@ -7,14 +7,12 @@ export enum ExampleRoutesEnum {
 }
 
 export const sectionRoutes: Routes = [
-  
-  { path: '', redirectTo: ExampleRoutesEnum.Home, pathMatch: 'full' },
 
   // --- Content --- //
-  
-  { path: ExampleRoutesEnum.Home, component: ProjectsComponent },
+
+  { path: ExampleRoutesEnum.Home, component: ProjectsComponent, pathMatch: 'full' },
 
   // --- Wildcard --- //
-  
-  { path: '**', redirectTo: AppRoutesEnum.NotFound }
+
+  { path: '**', redirectTo: `/${AppRoutesEnum.NotFound}` }
 ]
