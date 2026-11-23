@@ -95,8 +95,9 @@ export class SweeperGridComponent implements AfterViewChecked, AfterViewInit {
         let delay = staggerFn(target, idx, this._cellLength()) as number;
       
         setTimeout(() => target.toggleHidden(false), delay);
-      },
-      (ui, uj) => this._cellRefs()[ui][uj].state().val != 0
+
+        return target.state().val != 0;
+      }
     );
   }
 
@@ -196,7 +197,6 @@ export class SweeperGridComponent implements AfterViewChecked, AfterViewInit {
       return;
 
     let notMineHidden = false;
-    let allMinesFlagged = true;
     let isGameOver = false;
 
     this._forEachCell(c => {
@@ -214,12 +214,6 @@ export class SweeperGridComponent implements AfterViewChecked, AfterViewInit {
           isGameOver = true;
           return false;
         }
-
-        // All mines flagged
-        if (!c.isFlagged) {
-          allMinesFlagged = false;
-          return false;
-        }
       }
 
       return;
@@ -230,7 +224,7 @@ export class SweeperGridComponent implements AfterViewChecked, AfterViewInit {
       return;
     }
 
-    if (!notMineHidden || allMinesFlagged) {
+    if (!notMineHidden) {
       this._onWin();
       return;
     }
@@ -272,7 +266,7 @@ export class SweeperGridComponent implements AfterViewChecked, AfterViewInit {
 
   // --- Utils --- //
 
-  private _getFlatIndex = (i: number, j: number) => i * this.xn() + j;
+  private _getFlatIndex = (i: number, j: number) => i * this.yn() + j;
 
   private _get3BV(): number {
     
@@ -329,8 +323,7 @@ export class SweeperGridComponent implements AfterViewChecked, AfterViewInit {
   private _floodFill(
     i: number,
     j: number, 
-    actionFn: (ui: number, uj: number) => void,
-    breakFn: (ui: number, uj: number) => boolean
+    actionFn: (ui: number, uj: number) => void | boolean
   ): boolean[][] {
     let visitedCells: boolean[][] = 
       [].constructor(this.xn())
@@ -351,9 +344,7 @@ export class SweeperGridComponent implements AfterViewChecked, AfterViewInit {
 
       visitedCells[ui][uj] = true;
 
-      actionFn(ui, uj);
-            
-      if (breakFn(ui, uj))
+      if (actionFn(ui, uj))
         return;
 
       this._forEachAround(ui, uj, (_, xi, xj) => _loop(xi, xj));

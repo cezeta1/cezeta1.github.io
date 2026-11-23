@@ -9,8 +9,8 @@ import {
   withState
 } from '@ngrx/signals';
 import { BehaviorSubject } from 'rxjs';
-import { withStateChange } from '../../../core/store-features/withStateChange.feature';
-import { withTimer } from '../../../core/store-features/withTimer.feature';
+import { withStateChange } from '../../../../core/store-features/withStateChange.feature';
+import { withTimer } from '../../../../core/store-features/withTimer.feature';
 
 export interface SweeperState {
   time: number,
