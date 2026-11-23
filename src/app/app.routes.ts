@@ -6,7 +6,7 @@ import { PageNotFoundComponent } from './core/pages/page-not-found/page-not-foun
 
 export enum AppRoutesEnum {
   // * Sections * //
-  Home = 'home',
+  Home = '',
   Projects = 'projects',
   Game = 'game',
 
@@ -21,11 +21,26 @@ export enum AppRoutesEnum {
 // =========================================================== //
 
 export const routes: Routes = [
-  // --- Home route --- //
-  
-  { path: '', redirectTo: AppRoutesEnum.Home, pathMatch: 'full' },
-  
   // --- Sections --- //
+
+  {
+    path: AppRoutesEnum.Projects,
+    component: MainLayoutComponent,
+    loadChildren: () => import('./sections/projects/projects.routes').then(m => m.sectionRoutes)
+  },
+
+  {
+    path: AppRoutesEnum.Game,
+    component: MainLayoutComponent,
+    loadChildren: () => import('./sections/game/game.routes').then(m => m.sectionRoutes)
+  },
+
+  // --- Legacy URLs --- //
+
+  { path: 'home', redirectTo: AppRoutesEnum.Home, pathMatch: 'full' },
+
+  // --- Home (app root) --- //
+  // Its routes have no wildcard, so unmatched paths fall through to the routes below.
 
   {
     path: AppRoutesEnum.Home,
@@ -33,19 +48,6 @@ export const routes: Routes = [
     loadChildren: () => import('./sections/about-me/about-me.routes').then(m => m.sectionRoutes)
   },
 
-  {
-    path: AppRoutesEnum.Projects,
-    component: MainLayoutComponent,
-    loadChildren: () => import('./sections/projects/projects.routes').then(m => m.sectionRoutes)
-  },
-  
-
-  {
-    path: AppRoutesEnum.Game,
-    component: MainLayoutComponent,
-    loadChildren: () => import('./sections/game/game.routes').then(m => m.sectionRoutes)
-  },
-  
   // --- Extra Routes --- //
 
   {
@@ -56,8 +58,8 @@ export const routes: Routes = [
       { path: AppRoutesEnum.NotFound, component: PageNotFoundComponent }
     ]
   },
-  
+
   // --- Wildcard --- //
-  
+
   { path: '**', redirectTo: AppRoutesEnum.NotFound },
 ];

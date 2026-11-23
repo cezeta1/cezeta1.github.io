@@ -40,5 +40,5 @@ export class NavBarComponent {
     { route: AppRoutesEnum.Projects, label: 'projects.title',  icon: 'pi-star' }
   ]);
 
-  protected goHome = () => this.router.navigate([AppRoutesEnum.Home]);
+  protected goHome = () => this.router.navigate(['/']);
 }
