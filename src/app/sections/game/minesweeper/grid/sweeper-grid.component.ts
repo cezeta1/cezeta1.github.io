@@ -95,8 +95,9 @@ export class SweeperGridComponent implements AfterViewChecked, AfterViewInit {
         let delay = staggerFn(target, idx, this._cellLength()) as number;
       
         setTimeout(() => target.toggleHidden(false), delay);
-      },
-      (ui, uj) => this._cellRefs()[ui][uj].state().val != 0
+
+        return target.state().val != 0;
+      }
     );
   }
 
@@ -322,8 +323,7 @@ export class SweeperGridComponent implements AfterViewChecked, AfterViewInit {
   private _floodFill(
     i: number,
     j: number, 
-    actionFn: (ui: number, uj: number) => void,
-    breakFn: (ui: number, uj: number) => boolean
+    actionFn: (ui: number, uj: number) => void | boolean
   ): boolean[][] {
     let visitedCells: boolean[][] = 
       [].constructor(this.xn())
@@ -344,9 +344,7 @@ export class SweeperGridComponent implements AfterViewChecked, AfterViewInit {
 
       visitedCells[ui][uj] = true;
 
-      actionFn(ui, uj);
-            
-      if (breakFn(ui, uj))
+      if (actionFn(ui, uj))
         return;
 
       this._forEachAround(ui, uj, (_, xi, xj) => _loop(xi, xj));
